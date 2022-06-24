@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="TechSharkLib">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="TechSharkLib\Inc">
+      <UniqueIdentifier>{e413d111-a629-407a-ba18-085bcfd1745f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TechSharkLib\Src">
+      <UniqueIdentifier>{1095edcb-ec05-41c6-a2ed-57787fb219fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Inc">
+      <UniqueIdentifier>{85f34f94-4c6b-4b46-9f7b-94eb52d25257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Src">
+      <UniqueIdentifier>{7ef515c3-69ae-45a7-a280-9ad7187d0694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TechSharkLib\HLSL">
+      <UniqueIdentifier>{c069fea2-865b-41e1-9ccb-8015b40a83fe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TechSharkLib\Inc\KeyAssign.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\MiscTools.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Primitive.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Projector.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\RasterizerState.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\ResourceManager.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\SamplerState.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Scene.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Sprite.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\SpriteID.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\SpriteManager.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\StaticMesh.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\StaticMeshID.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\StaticMeshManager.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\StringTool.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\TechSharkLib.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Vector.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Window.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\WindowProcedure.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Arithmetic.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\BinaryData.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\BlendState.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Camera.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Configulation.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\ConstantBuffer.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DebugTools.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DepthStencilState.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DirectX11.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DummyTexture.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\EntityID.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\FrameStatus.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\GraphicsStateEnum.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\HighRandomValue.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\HighResolutionTimer.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\ImGuiCtrl.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Input.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SceneTitle.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\ImGui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SceneSelect.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SceneGameSingle.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SceneResultSingle.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\SamplerState.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Scene.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Sprite.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\SpriteManager.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\StaticMesh.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\StaticMeshManager.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\StringTool.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\TechSharkLib.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Vector.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Window.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\WindowProcedure.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\WinMain.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Arithmetic.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\BinaryData.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\BlendState.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Camera.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\ConstantBuffer.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DebugTools.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DepthStencilState.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DirectX11.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DummyTexture.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\FrameStatus.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\HighRandomValue.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\ImGuiCtrl.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Input.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\KeyAssign.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Primitive.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Projector.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\RasterizerState.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\SceneTitle.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_ja_gryph_ranges.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\SceneSelect.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\SceneGameSingle.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\SceneResultSingle.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TechSharkLib\HLSL\primitive.hlsli">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </None>
+    <None Include="TechSharkLib\HLSL\sprite.hlsli">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </None>
+    <None Include="TechSharkLib\HLSL\static_mesh.hlsli">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="TechSharkLib\HLSL\primitive_ps.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="TechSharkLib\HLSL\primitive_vs.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="TechSharkLib\HLSL\sprite_ps.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="TechSharkLib\HLSL\sprite_vs.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="TechSharkLib\HLSL\static_mesh_ps.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="TechSharkLib\HLSL\static_mesh_vs.hlsl">
+      <Filter>TechSharkLib\HLSL</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

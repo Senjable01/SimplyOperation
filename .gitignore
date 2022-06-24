@@ -1,0 +1,23 @@
+# .vsディレクトリを無視
+/.vs/
+
+# Debugディレクトリを無視
+/Debug/
+
+# Releaseディレクトリを無視
+/Release/
+
+# x64ディレクトリを無視
+/x64/
+
+# imgui.iniを無視
+imgui.ini
+
+# exeファイルを無視
+*.exe
+
+# csoファイルを無視
+*.cso
+
+# codファイルを無視
+*.cod

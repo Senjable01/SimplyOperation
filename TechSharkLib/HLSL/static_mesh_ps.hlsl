@@ -1,0 +1,10 @@
+#include "static_mesh.hlsli"
+Texture2D color_map : register(t0);
+SamplerState point_sampler_state : register(s0);
+SamplerState linear_sampler_state : register(s1);
+SamplerState anisotropic_sampler_state : register(s2);
+
+float4 main(VS_OUT pin) : SV_TARGET
+{
+    return color_map.Sample(anisotropic_sampler_state, pin.uv) * pin.color;
+}

@@ -1,0 +1,194 @@
+//------< include >-----------------------------------------------------------------------
+#include "../Inc/KeyAssign.h"
+#include "../DirectXTK/Inc/Keyboard.h"
+#include <Windows.h>
+
+//**************************************************************************************************
+// 
+// 
+//          TechSharkLib
+// 
+// 
+//**************************************************************************************************
+namespace TechSharkLib
+{
+    using Keys = DirectX::Keyboard::Keys;
+
+    const unsigned int KeyCodes::None               = Keys::None;
+    const unsigned int KeyCodes::Back               = Keys::Back; // BackSpace
+    const unsigned int KeyCodes::Tab                = Keys::Tab;
+    const unsigned int KeyCodes::Enter              = Keys::Enter;
+    const unsigned int KeyCodes::Pause              = Keys::Pause;
+    const unsigned int KeyCodes::CapsLock           = Keys::CapsLock;
+    const unsigned int KeyCodes::Kana               = Keys::Kana;
+    const unsigned int KeyCodes::Kanji              = Keys::Kanji;
+    const unsigned int KeyCodes::Escape             = Keys::Escape;
+    const unsigned int KeyCodes::ImeConvert         = Keys::ImeConvert;
+    const unsigned int KeyCodes::ImeNoConvert       = Keys::ImeNoConvert;
+    const unsigned int KeyCodes::Space              = Keys::Space;
+    const unsigned int KeyCodes::PageUp             = Keys::PageUp;
+    const unsigned int KeyCodes::PageDown           = Keys::PageDown;
+    const unsigned int KeyCodes::End                = Keys::End;
+    const unsigned int KeyCodes::Home               = Keys::Home;
+    const unsigned int KeyCodes::Left               = Keys::Left;
+    const unsigned int KeyCodes::Up                 = Keys::Up;
+    const unsigned int KeyCodes::Right              = Keys::Right;
+    const unsigned int KeyCodes::Down               = Keys::Down;
+    const unsigned int KeyCodes::Select             = Keys::Select;
+    const unsigned int KeyCodes::Print              = Keys::Print;
+    const unsigned int KeyCodes::Execute            = 0x2b;
+    const unsigned int KeyCodes::PrintScreen        = 0x2c;
+    const unsigned int KeyCodes::Insert             = 0x2d;
+    const unsigned int KeyCodes::Delete             = 0x2e;
+    const unsigned int KeyCodes::Help               = 0x2f;
+    const unsigned int KeyCodes::D0                 = 0x30;
+    const unsigned int KeyCodes::D1                 = 0x31;
+    const unsigned int KeyCodes::D2                 = 0x32;
+    const unsigned int KeyCodes::D3                 = 0x33;
+    const unsigned int KeyCodes::D4                 = 0x34;
+    const unsigned int KeyCodes::D5                 = 0x35;
+    const unsigned int KeyCodes::D6                 = 0x36;
+    const unsigned int KeyCodes::D7                 = 0x37;
+    const unsigned int KeyCodes::D8                 = 0x38;
+    const unsigned int KeyCodes::D9                 = 0x39;
+    const unsigned int KeyCodes::A                  = 0x41;
+    const unsigned int KeyCodes::B                  = 0x42;
+    const unsigned int KeyCodes::C                  = 0x43;
+    const unsigned int KeyCodes::D                  = 0x44;
+    const unsigned int KeyCodes::E                  = 0x45;
+    const unsigned int KeyCodes::F                  = 0x46;
+    const unsigned int KeyCodes::G                  = 0x47;
+    const unsigned int KeyCodes::H                  = 0x48;
+    const unsigned int KeyCodes::I                  = 0x49;
+    const unsigned int KeyCodes::J                  = 0x4a;
+    const unsigned int KeyCodes::K                  = 0x4b;
+    const unsigned int KeyCodes::L                  = 0x4c;
+    const unsigned int KeyCodes::M                  = 0x4d;
+    const unsigned int KeyCodes::N                  = 0x4e;
+    const unsigned int KeyCodes::O                  = 0x4f;
+    const unsigned int KeyCodes::P                  = 0x50;
+    const unsigned int KeyCodes::Q                  = 0x51;
+    const unsigned int KeyCodes::R                  = 0x52;
+    const unsigned int KeyCodes::S                  = 0x53;
+    const unsigned int KeyCodes::T                  = 0x54;
+    const unsigned int KeyCodes::U                  = 0x55;
+    const unsigned int KeyCodes::V                  = 0x56;
+    const unsigned int KeyCodes::W                  = 0x57;
+    const unsigned int KeyCodes::X                  = 0x58;
+    const unsigned int KeyCodes::Y                  = 0x59;
+    const unsigned int KeyCodes::Z                  = 0x5a;
+    const unsigned int KeyCodes::LeftWindows        = 0x5b;
+    const unsigned int KeyCodes::RightWindows       = 0x5c;
+    const unsigned int KeyCodes::Apps               = 0x5d;
+    const unsigned int KeyCodes::Sleep              = 0x5f;
+    const unsigned int KeyCodes::NumPad0            = 0x60;
+    const unsigned int KeyCodes::NumPad1            = 0x61;
+    const unsigned int KeyCodes::NumPad2            = 0x62;
+    const unsigned int KeyCodes::NumPad3            = 0x63;
+    const unsigned int KeyCodes::NumPad4            = 0x64;
+    const unsigned int KeyCodes::NumPad5            = 0x65;
+    const unsigned int KeyCodes::NumPad6            = 0x66;
+    const unsigned int KeyCodes::NumPad7            = 0x67;
+    const unsigned int KeyCodes::NumPad8            = 0x68;
+    const unsigned int KeyCodes::NumPad9            = 0x69;
+    const unsigned int KeyCodes::Multiply           = 0x6a;
+    const unsigned int KeyCodes::Add                = 0x6b;
+    const unsigned int KeyCodes::Separator          = 0x6c;
+    const unsigned int KeyCodes::Subtract           = 0x6d;
+    const unsigned int KeyCodes::Decimal            = 0x6e;
+    const unsigned int KeyCodes::Divide             = 0x6f;
+    const unsigned int KeyCodes::F1                 = 0x70;
+    const unsigned int KeyCodes::F2                 = 0x71;
+    const unsigned int KeyCodes::F3                 = 0x72;
+    const unsigned int KeyCodes::F4                 = 0x73;
+    const unsigned int KeyCodes::F5                 = 0x74;
+    const unsigned int KeyCodes::F6                 = 0x75;
+    const unsigned int KeyCodes::F7                 = 0x76;
+    const unsigned int KeyCodes::F8                 = 0x77;
+    const unsigned int KeyCodes::F9                 = 0x78;
+    const unsigned int KeyCodes::F10                = 0x79;
+    const unsigned int KeyCodes::F11                = 0x7a;
+    const unsigned int KeyCodes::F12                = 0x7b;
+    const unsigned int KeyCodes::F13                = 0x7c;
+    const unsigned int KeyCodes::F14                = 0x7d;
+    const unsigned int KeyCodes::F15                = 0x7e;
+    const unsigned int KeyCodes::F16                = 0x7f;
+    const unsigned int KeyCodes::F17                = 0x80;
+    const unsigned int KeyCodes::F18                = 0x81;
+    const unsigned int KeyCodes::F19                = 0x82;
+    const unsigned int KeyCodes::F20                = 0x83;
+    const unsigned int KeyCodes::F21                = 0x84;
+    const unsigned int KeyCodes::F22                = 0x85;
+    const unsigned int KeyCodes::F23                = 0x86;
+    const unsigned int KeyCodes::F24                = 0x87;
+    const unsigned int KeyCodes::NumLock            = 0x90;
+    const unsigned int KeyCodes::Scroll             = 0x91;
+    const unsigned int KeyCodes::LeftShift          = 0xa0;
+    const unsigned int KeyCodes::RightShift         = 0xa1;
+    const unsigned int KeyCodes::LeftControl        = 0xa2;
+    const unsigned int KeyCodes::RightControl       = 0xa3;
+    const unsigned int KeyCodes::LeftAlt            = 0xa4;
+    const unsigned int KeyCodes::RightAlt           = 0xa5;
+    const unsigned int KeyCodes::BrowserBack        = 0xa6;
+    const unsigned int KeyCodes::BrowserForward     = 0xa7;
+    const unsigned int KeyCodes::BrowserRefresh     = 0xa8;
+    const unsigned int KeyCodes::BrowserStop        = 0xa9;
+    const unsigned int KeyCodes::BrowserSearch      = 0xaa;
+    const unsigned int KeyCodes::BrowserFavorites   = 0xab;
+    const unsigned int KeyCodes::BrowserHome        = 0xac;
+    const unsigned int KeyCodes::VolumeMute         = 0xad;
+    const unsigned int KeyCodes::VolumeDown         = 0xae;
+    const unsigned int KeyCodes::VolumeUp           = 0xaf;
+    const unsigned int KeyCodes::MediaNextTrack     = 0xb0;
+    const unsigned int KeyCodes::MediaPreviousTrack = 0xb1;
+    const unsigned int KeyCodes::MediaStop          = 0xb2;
+    const unsigned int KeyCodes::MediaPlayPause     = 0xb3;
+    const unsigned int KeyCodes::LaunchMail         = 0xb4;
+    const unsigned int KeyCodes::SelectMedia        = 0xb5;
+    const unsigned int KeyCodes::LaunchApplication1 = 0xb6;
+    const unsigned int KeyCodes::LaunchApplication2 = 0xb7;
+    const unsigned int KeyCodes::OemSemicolon       = 0xba;
+    const unsigned int KeyCodes::OemPlus            = 0xbb;
+    const unsigned int KeyCodes::OemComma           = 0xbc;
+    const unsigned int KeyCodes::OemMinus           = 0xbd;
+    const unsigned int KeyCodes::OemPeriod          = 0xbe;
+    const unsigned int KeyCodes::OemQuestion        = 0xbf;
+    const unsigned int KeyCodes::OemTilde           = 0xc0;
+    const unsigned int KeyCodes::OemOpenBrackets    = 0xdb;
+    const unsigned int KeyCodes::OemPipe            = 0xdc;
+    const unsigned int KeyCodes::OemCloseBrackets   = 0xdd;
+    const unsigned int KeyCodes::OemQuotes          = 0xde;
+    const unsigned int KeyCodes::Oem8               = 0xdf;
+    const unsigned int KeyCodes::OemBackslash       = 0xe2;
+    const unsigned int KeyCodes::ProcessKey         = 0xe5;
+    const unsigned int KeyCodes::OemCopy            = 0xf2;
+    const unsigned int KeyCodes::OemAuto            = 0xf3;
+    const unsigned int KeyCodes::OemEnlW            = 0xf4;
+    const unsigned int KeyCodes::Attn               = 0xf6;
+    const unsigned int KeyCodes::Crsel              = 0xf7;
+    const unsigned int KeyCodes::Exsel              = 0xf8;
+    const unsigned int KeyCodes::EraseEof           = 0xf9;
+    const unsigned int KeyCodes::Play               = 0xfa;
+    const unsigned int KeyCodes::Zoom               = 0xfb;
+    const unsigned int KeyCodes::Pa1                = 0xfd;
+    const unsigned int KeyCodes::OemClear           = 0xfe;
+
+    static const unsigned int mouseLeft             = VK_LBUTTON;
+    static const unsigned int mouseMiddle           = VK_MBUTTON;
+    static const unsigned int mouseRight            = VK_RBUTTON;
+
+    const unsigned int KeyCodes::PadUp              = 0;
+    const unsigned int KeyCodes::PadDown            = 1;
+    const unsigned int KeyCodes::PadLeft            = 2;
+    const unsigned int KeyCodes::PadRight           = 3;
+    const unsigned int KeyCodes::PadA               = 4;
+    const unsigned int KeyCodes::PadB               = 5;
+    const unsigned int KeyCodes::PadX               = 6;
+    const unsigned int KeyCodes::PadY               = 7;
+    const unsigned int KeyCodes::PadLeftStick       = 8;
+    const unsigned int KeyCodes::PadRightStick      = 9;
+    const unsigned int KeyCodes::PadLeftShoulder    = 10;
+    const unsigned int KeyCodes::PadRightShoulder   = 11;
+    const unsigned int KeyCodes::PadBack            = 12;
+    const unsigned int KeyCodes::PadStart           = 13;
+}
