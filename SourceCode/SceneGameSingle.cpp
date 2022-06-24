@@ -16,6 +16,7 @@ using TechSharkLib::BIT_NO;
 using TechSharkLib::StaticMeshID;
 using TechSharkLib::Float3;
 
+//------< include >-----------------------------------------------------------------------
 namespace
 {
     SpriteID       backID       = {};
@@ -109,7 +110,7 @@ void SceneGameSingle::Update(float/*deltaTime*/)
     camera.DrawDebugGUI();
     if (ImGui::CollapsingHeader("3D"))
     {
-        ImGui::SliderInt("OBJ Type", &meshIndex, ROCK, PAPER);
+        ImGui::SliderInt("OBJ Type", &meshIndex, HAND::ROCK, HAND::PAPER);
         ImGui::SliderFloat3("light", &lightDirection.x, -20.0f, 20.0f);
         ImGui::SliderFloat3("position", &position.x, -50.0f, 50.0f);
         ImGui::InputFloat3("scale", &scale.x);
@@ -163,11 +164,11 @@ void SceneGameSingle::Render()
 
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID/*_CULLING*/);
     TechSharkLib::Project(&camera, lightDirection);
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
-    DirectX::XMFLOAT4X4 world = {};
-    DirectX::XMStoreFloat4x4(&world, S * R * T);
+    DirectX::XMMATRIX mtrxScale     = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+    DirectX::XMMATRIX mtrxRotate    = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+    DirectX::XMMATRIX mtrxTransform = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
+    DirectX::XMFLOAT4X4 world       = {};
+    DirectX::XMStoreFloat4x4(&world, mtrxScale * mtrxRotate * mtrxTransform);
     TechSharkLib::Render(staticMeshes[meshIndex], world);
 }
 
