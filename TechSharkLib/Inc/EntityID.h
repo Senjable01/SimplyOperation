@@ -24,6 +24,8 @@ class TYPENAME \
         {\
             return (src.id < dst.id);\
         }\
+        bool operator==(ID_TYPE idNo) { return id == idNo; }\
+        bool operator!=(ID_TYPE idNo) { return id == idNo; }\
 }
 
 #endif // !INCLUDED_INC_ENTITY_ID_H

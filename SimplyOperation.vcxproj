@@ -183,6 +183,8 @@
     <ClInclude Include="TechSharkLib\Inc\BinaryData.h" />
     <ClInclude Include="TechSharkLib\Inc\BlendState.h" />
     <ClInclude Include="TechSharkLib\Inc\Camera.h" />
+    <ClInclude Include="TechSharkLib\Inc\Component.h" />
+    <ClInclude Include="TechSharkLib\Inc\ComponentSystem.h" />
     <ClInclude Include="TechSharkLib\Inc\Configulation.h" />
     <ClInclude Include="TechSharkLib\Inc\ConstantBuffer.h" />
     <ClInclude Include="TechSharkLib\Inc\DebugTools.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="TechSharkLib\Inc\DummyTexture.h" />
     <ClInclude Include="TechSharkLib\Inc\EntityID.h" />
     <ClInclude Include="TechSharkLib\Inc\FrameStatus.h" />
+    <ClInclude Include="TechSharkLib\Inc\GameObject.h" />
     <ClInclude Include="TechSharkLib\Inc\GraphicsStateEnum.h" />
     <ClInclude Include="TechSharkLib\Inc\HighRandomValue.h" />
     <ClInclude Include="TechSharkLib\Inc\HighResolutionTimer.h" />
@@ -233,12 +236,14 @@
     <ClCompile Include="TechSharkLib\Src\BinaryData.cpp" />
     <ClCompile Include="TechSharkLib\Src\BlendState.cpp" />
     <ClCompile Include="TechSharkLib\Src\Camera.cpp" />
+    <ClCompile Include="TechSharkLib\Src\Component.cpp" />
     <ClCompile Include="TechSharkLib\Src\ConstantBuffer.cpp" />
     <ClCompile Include="TechSharkLib\Src\DebugTools.cpp" />
     <ClCompile Include="TechSharkLib\Src\DepthStencilState.cpp" />
     <ClCompile Include="TechSharkLib\Src\DirectX11.cpp" />
     <ClCompile Include="TechSharkLib\Src\DummyTexture.cpp" />
     <ClCompile Include="TechSharkLib\Src\FrameStatus.cpp" />
+    <ClCompile Include="TechSharkLib\Src\GameObject.cpp" />
     <ClCompile Include="TechSharkLib\Src\HighRandomValue.cpp" />
     <ClCompile Include="TechSharkLib\Src\ImGuiCtrl.cpp" />
     <ClCompile Include="TechSharkLib\Src\Input.cpp" />
