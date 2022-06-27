@@ -183,6 +183,9 @@
     <ClInclude Include="TechSharkLib\Inc\GameObject.h">
       <Filter>TechSharkLib\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\Transform3D.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -315,6 +318,9 @@
       <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
     <ClCompile Include="TechSharkLib\Src\GameObject.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\Transform3D.cpp">
       <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
   </ItemGroup>

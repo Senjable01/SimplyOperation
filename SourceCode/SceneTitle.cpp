@@ -7,6 +7,7 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
+#include "../TechSharkLib/Inc/Transform3D.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
@@ -38,6 +39,11 @@ void SceneTitle::Setup()
 {
     Scene::Setup();
     TechSharkLib::SetAssignData(0, keyAssignList, {});
+
+    TechSharkLib::GameObject* obj = nullptr;
+    objManager.CreateObject(&obj);
+    TechSharkLib::Transform3D* transform = nullptr;
+    obj->AddComponent<TechSharkLib::Transform3D>(&transform, TechSharkLib::Transform3DDesc{});
 }
 
 void SceneTitle::Update(float)

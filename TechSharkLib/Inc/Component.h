@@ -108,14 +108,14 @@ namespace TechSharkLib
             return id;
         }
         template<typename Arg, class... Args>
-        auto CreateComponent(Arg** output, const GameObject& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
+        auto CreateComponent(Arg** output, const GameObjectID& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
         {
-            ComponentID id = ComponentManager::nextId;
+            ComponentID id{ComponentManager::nextId};
             //Info C2440 --> 引数を間違っている可能性あり
             std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
             if (component == nullptr)
             {
-                ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME, L"コンポーネントの作成に失敗しました。");
+                ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
                 return ComponentID{};
             }
             ComponentManager::nextId++;
