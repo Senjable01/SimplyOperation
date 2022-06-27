@@ -32,7 +32,6 @@ namespace
 
 void SceneTitle::Init()
 {
-
 }
 
 void SceneTitle::Setup()
