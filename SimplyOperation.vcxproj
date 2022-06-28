@@ -213,6 +213,7 @@
     <ClInclude Include="TechSharkLib\Inc\StaticMesh.h" />
     <ClInclude Include="TechSharkLib\Inc\StaticMeshID.h" />
     <ClInclude Include="TechSharkLib\Inc\StaticMeshManager.h" />
+    <ClInclude Include="TechSharkLib\Inc\StaticMeshRenderer.h" />
     <ClInclude Include="TechSharkLib\Inc\StringTool.h" />
     <ClInclude Include="TechSharkLib\Inc\TechSharkLib.h" />
     <ClInclude Include="TechSharkLib\Inc\Transform3D.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="TechSharkLib\Src\SpriteManager.cpp" />
     <ClCompile Include="TechSharkLib\Src\StaticMesh.cpp" />
     <ClCompile Include="TechSharkLib\Src\StaticMeshManager.cpp" />
+    <ClCompile Include="TechSharkLib\Src\StaticMeshRenderer.cpp" />
     <ClCompile Include="TechSharkLib\Src\StringTool.cpp" />
     <ClCompile Include="TechSharkLib\Src\TechSharkLib.cpp" />
     <ClCompile Include="TechSharkLib\Src\Transform3D.cpp" />

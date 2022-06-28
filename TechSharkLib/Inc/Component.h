@@ -48,14 +48,14 @@ namespace TechSharkLib
     TSL_DEFINE_COMPONENT(Component);
     private:
         ComponentManager*   manager;
-        ComponentID         self;
+        ComponentID         selfID;
         GameObjectID        owner;
 
     public:
         Component() = delete;
-        Component(ComponentManager* manager, const ComponentID& self, const GameObjectID& owner) :
+        Component(ComponentManager* manager, const ComponentID& selfID, const GameObjectID& owner) :
             manager{manager},
-            self{self}, owner{owner}
+            selfID{selfID}, owner{owner}
         {
         }
         virtual ~Component() {}

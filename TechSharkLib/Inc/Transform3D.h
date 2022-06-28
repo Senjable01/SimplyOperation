@@ -61,14 +61,14 @@ namespace TechSharkLib
         DirectX::XMFLOAT3   rotation;
         DirectX::XMFLOAT4X4 transform;
 
-        const Transform3DDesc description;
+        Transform3DDesc     description;
 
     public:
         Transform3D() = delete;
-        Transform3D(ComponentManager* manager, const ComponentID& self, const GameObjectID& owner, const Transform3DDesc& desc) :
+        Transform3D(ComponentManager* manager, const ComponentID& selfID, const GameObjectID& owner, const Transform3DDesc& desc) :
             position{0.0f, 0.0f, 0.0f}, scale{0.0f, 0.0f, 0.0f}, rotation{0.0f, 0.0f, 0.0f}, transform{},
             description{desc},
-            Component{manager, self, owner}
+            Component{manager, selfID, owner}
         {
         }
         ~Transform3D() override {}
@@ -77,7 +77,7 @@ namespace TechSharkLib
         void Setup() override;
         void Update(float) override;
         void Render(float, float) override {}
-        void Deinit() override {}
+        void Deinit() override;
 
         void CalcTransform();
         void Clear() override;

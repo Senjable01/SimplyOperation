@@ -33,11 +33,17 @@ namespace TechSharkLib
         CalcTransform();
     }
 
+    void Transform3D::Deinit()
+    {
+        Clear();
+    }
+
     void Transform3D::Clear()
     {
         position    = {0.0f, 0.0f, 0.0f};
         scale       = {0.0f, 0.0f, 0.0f};
         rotation    = {0.0f, 0.0f, 0.0f};
+        description = {};
     }
 
     void Transform3D::CalcTransform()
