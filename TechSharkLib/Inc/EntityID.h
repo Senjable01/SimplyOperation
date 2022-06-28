@@ -28,7 +28,7 @@ class TYPENAME \
             return (src.id < dst.id);\
         }\
         bool operator==(ID_TYPE idNo) const { return id == idNo; }\
-        bool operator!=(ID_TYPE idNo) const { return id == idNo; }\
+        bool operator!=(ID_TYPE idNo) const { return id != idNo; }\
         friend std::ostream& operator<<(std::ostream& os, const TYPENAME& src) { os << src.id; return os; }\
         friend std::wostream& operator<<(std::wostream& os, const TYPENAME& src) { os << src.id; return os; }\
 }

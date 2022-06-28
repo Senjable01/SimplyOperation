@@ -86,8 +86,6 @@ void SceneGameSingle::Setup()
 
     objectIds.reserve(60u);
     CreateObject();
-    objManager.Init();
-    objManager.Setup();
 
     loadNum++;
 }
@@ -96,6 +94,7 @@ void SceneGameSingle::CreateObject()
 {
     GameObject* obj = nullptr;
     objectIds.emplace_back(objManager.CreateObject(&obj));
+    //UNDONE:09CreateObjectにコンポーネントを作るStrategyを渡す
     
     TechSharkLib::Transform3DDesc transform3dDesc = {};
     transform3dDesc.position    = { 0.0f, 0.0f, 0.0f };
@@ -108,6 +107,9 @@ void SceneGameSingle::CreateObject()
     rendererDesc.flipVCoord     = true;
     rendererDesc.materialColor  = {1.0f, 0.0f, 0.0f, 1.0f};
     obj->AddComponent<StaticMeshRenderer>(rendererDesc);
+
+    obj->Init();
+    obj->Setup();
 }
 
 void SceneGameSingle::EraseObject()
@@ -117,6 +119,12 @@ void SceneGameSingle::EraseObject()
 
     int random = std::rand() % num;
     objManager.Exclude(objectIds.at(random));
+    auto itr = objectIds.begin();
+    for (int i = 0; i < random; i++)
+    {
+        itr++;
+    }
+    objectIds.erase(itr);
 }
 
 void SceneGameSingle::Update(float/*deltaTime*/)
@@ -158,6 +166,7 @@ void SceneGameSingle::Update(float/*deltaTime*/)
     }
     if (ImGui::CollapsingHeader("ComponentSystem"))
     {
+        ImGui::Text("Num: %d", objectIds.size());
         if (ImGui::Button("Make Object"))
         {
             CreateObject();
@@ -215,12 +224,12 @@ void SceneGameSingle::Render()
 
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID/*_CULLING*/);
     TechSharkLib::Project(&camera, lightDirection);
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-    //DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-    //DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
-    //DirectX::XMFLOAT4X4 world = {};
-    //DirectX::XMStoreFloat4x4(&world, S * R * T);
-    //TechSharkLib::Render(staticMeshes[meshIndex], world);
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
+    DirectX::XMFLOAT4X4 world = {};
+    DirectX::XMStoreFloat4x4(&world, S * R * T);
+    TechSharkLib::Render(staticMeshes[meshIndex], world);
 
     objManager.Render();
 }

@@ -57,7 +57,7 @@ namespace TechSharkLib
         ComponentID AddComponent(Args&&... args)
         {
             ComponentID id = componentManager->CreateComponent<Arg>(selfID, std::forward<Args>(args)...);
-            //_ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
+            _ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
             componentIds.emplace_back(id);
             ExpressDebugLog(L"オブジェクト(", this, L")に", Arg::COMPONENT_NAME.c_str(), L"コンポーネント(ID:", id, L")を追加しました。");
             return id;
@@ -66,7 +66,7 @@ namespace TechSharkLib
         ComponentID AddComponent(Arg** output, Args&&... args)
         {
             ComponentID id = componentManager->CreateComponent<Arg>(output, selfID, std::forward<Args>(args)...);
-            //_ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
+            _ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
             componentIds.emplace_back(id);
             ExpressDebugLog(L"オブジェクト(", this, L")に", Arg::COMPONENT_NAME.c_str(), L"コンポーネント(ID:", id, L")を追加しました。");
             return id;
@@ -142,8 +142,8 @@ namespace TechSharkLib
             return id;
         }
 
-        void Init();
-        void Setup();
+        [[deprecated("個別に初期化することを推奨します。")]] void Init();
+        [[deprecated("個別に設定することを推奨します。")]] void Setup();
         void Update(float deltaTime = 0.0f);
         void Render(float scrollX = 0.0f, float scrollY = 0.0f);
         void Deinit();
