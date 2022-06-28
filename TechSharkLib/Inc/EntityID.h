@@ -1,6 +1,9 @@
 #ifndef INCLUDED_INC_ENTITY_ID_H
 #define INCLUDED_INC_ENTITY_ID_H
 
+//------< include >-----------------------------------------------------------------------
+#include <ostream>
+
 //**************************************************************************************************
 // 
 // 
@@ -24,6 +27,10 @@ class TYPENAME \
         {\
             return (src.id < dst.id);\
         }\
+        bool operator==(ID_TYPE idNo) const { return id == idNo; }\
+        bool operator!=(ID_TYPE idNo) const { return id != idNo; }\
+        friend std::ostream& operator<<(std::ostream& os, const TYPENAME& src) { os << src.id; return os; }\
+        friend std::wostream& operator<<(std::wostream& os, const TYPENAME& src) { os << src.id; return os; }\
 }
 
 #endif // !INCLUDED_INC_ENTITY_ID_H

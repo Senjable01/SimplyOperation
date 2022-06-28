@@ -2,6 +2,8 @@
 #include "SceneGameSingle.h"
 #include "../TechSharkLib/Inc/TechSharkLib.h"
 #include "../TechSharkLib/Inc/Arithmetic.h"
+#include "../TechSharkLib/Inc/Transform3D.h"
+#include "../TechSharkLib/Inc/StaticMeshRenderer.h"
 #include "SceneResultSingle.h"
 #include "../TechSharkLib/Inc/Configulation.h"
 #if USE_IMGUI
@@ -15,6 +17,9 @@ using TechSharkLib::SpriteBatchID;
 using TechSharkLib::BIT_NO;
 using TechSharkLib::StaticMeshID;
 using TechSharkLib::Float3;
+using TechSharkLib::GameObject;
+using TechSharkLib::Transform3D;
+using TechSharkLib::StaticMeshRenderer;
 
 //------< include >-----------------------------------------------------------------------
 namespace
@@ -45,6 +50,8 @@ namespace
     TechSharkLib::KeyAssignList keyAssignList = {
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home}
     };
+
+    std::vector<TechSharkLib::GameObjectID> objectIds;
 }
 
 //========================================================================================
@@ -78,7 +85,47 @@ void SceneGameSingle::Setup()
     camera.CalcAndSetPerspectiveMatrix(TechSharkLib::ToRadian(30.0f), TechSharkLib::AspectRatio(), 0.1f, 100.0f);
     TechSharkLib::SetProjector(TechSharkLib::SCENE_CONSTANTS::DEFAULT);
 
+    objectIds.reserve(60u);
+    CreateObject();
+
     loadNum++;
+}
+
+void SceneGameSingle::CreateObject()
+{
+    GameObject* obj = nullptr;
+    objectIds.emplace_back(objManager.CreateObject(&obj));
+    //UNDONE:09CreateObjectにコンポーネントを作るStrategyを渡す
+    
+    TechSharkLib::Transform3DDesc transform3dDesc = {};
+    transform3dDesc.position    = { 0.0f, 0.0f, 0.0f };
+    transform3dDesc.scale       = { 0.3f, 0.3f, 0.3f };
+    transform3dDesc.rotation    = { 0.0f, 0.0f, 0.0f };
+    obj->AddComponent<Transform3D>(transform3dDesc);
+
+    TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
+    rendererDesc.filePath       = L"./Data/三角化仮素材_グー/puroto_guu.obj";
+    rendererDesc.flipVCoord     = true;
+    rendererDesc.materialColor  = {1.0f, 0.0f, 0.0f, 1.0f};
+    obj->AddComponent<StaticMeshRenderer>(rendererDesc);
+
+    obj->Init();
+    obj->Setup();
+}
+
+void SceneGameSingle::EraseObject()
+{
+    size_t num = objectIds.size();
+    if (num == 0) return;
+
+    int random = std::rand() % num;
+    objManager.Exclude(objectIds.at(random));
+    auto itr = objectIds.begin();
+    for (int i = 0; i < random; i++)
+    {
+        itr++;
+    }
+    objectIds.erase(itr);
 }
 
 void SceneGameSingle::Update(float/*deltaTime*/)
@@ -88,6 +135,8 @@ void SceneGameSingle::Update(float/*deltaTime*/)
         Scene::ChangeScene<SceneResultSingle>();
         return;
     }
+
+    objManager.Update();
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
@@ -115,6 +164,18 @@ void SceneGameSingle::Update(float/*deltaTime*/)
         ImGui::SliderFloat3("position", &position.x, -50.0f, 50.0f);
         ImGui::InputFloat3("scale", &scale.x);
         ImGui::SliderFloat3("rotation", &rotation.x, TechSharkLib::ToRadian(-180.0f), TechSharkLib::ToRadian(180.0f));
+    }
+    if (ImGui::CollapsingHeader("ComponentSystem"))
+    {
+        ImGui::Text("Num: %d", objectIds.size());
+        if (ImGui::Button("Make Object"))
+        {
+            CreateObject();
+        }
+        if (ImGui::Button("Erase Object"))
+        {
+            EraseObject();
+        }
     }
     ImGui::End();
 
@@ -170,6 +231,8 @@ void SceneGameSingle::Render()
     DirectX::XMFLOAT4X4 world       = {};
     DirectX::XMStoreFloat4x4(&world, mtrxScale * mtrxRotate * mtrxTransform);
     TechSharkLib::Render(staticMeshes[meshIndex], world);
+
+    objManager.Render();
 }
 
 void SceneGameSingle::Deinit()
@@ -189,6 +252,8 @@ void SceneGameSingle::Deinit()
     scale       = Float3{0.5f, 0.5f, 0.5f};
     rotation    = Float3{};
     position    = Float3{};
+    objectIds.clear();
+    objManager.Deinit();
 
     TechSharkLib::SetDisplayFrameRate(false);
 }

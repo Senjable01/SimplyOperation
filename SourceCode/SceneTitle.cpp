@@ -7,6 +7,7 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
+#include "../TechSharkLib/Inc/Transform3D.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
@@ -31,7 +32,6 @@ namespace
 
 void SceneTitle::Init()
 {
-
 }
 
 void SceneTitle::Setup()
