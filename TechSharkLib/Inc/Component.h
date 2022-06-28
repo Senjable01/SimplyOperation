@@ -47,10 +47,13 @@ namespace TechSharkLib
     class Component
     {
     TSL_DEFINE_COMPONENT(Component);
-    protected:
+    private:
         ComponentManager*   manager;
         ComponentID         selfID;
         GameObjectID        owner;
+
+    protected:
+        GameObject* GetOwner();
 
     public:
         Component() = delete;
@@ -98,19 +101,19 @@ namespace TechSharkLib
         ~ComponentManager() {}
 
         template<typename Arg, class... Args>
-        auto CreateComponent(const GameObject& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
+        auto CreateComponent(const GameObjectID& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
         {
-            ComponentID id = ComponentManager::nextId;
+            ComponentID id{ComponentManager::nextId};
             //Info C2440 --> 引数を間違っている可能性あり
             std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
             if (component == false)
             {
-                ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME, L"コンポーネントの作成に失敗しました。");
+                ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
                 return ComponentID{};
             }
             ComponentManager::nextId++;
 
-            componentMap.emplace(id, component);
+            componentMap.emplace(id, std::move(component));
             
             return id;
         }
@@ -151,7 +154,7 @@ namespace TechSharkLib
             }
 
             Arg* component = dynamic_cast<Arg*>(result->second.get());
-            if (component == false)
+            if (!component)
             {
                 return nullptr;
             }

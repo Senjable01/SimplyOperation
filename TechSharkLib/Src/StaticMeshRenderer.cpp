@@ -34,14 +34,14 @@ namespace TechSharkLib
 
     void StaticMeshRenderer::Init()
     {
-        transform = manager->GetGameObjectManager()->GetGameObject(owner)->SearchComponent<Transform3D>();
+        transform = GetOwner()->SearchComponent<Transform3D>();
         _ASSERT_EXPR(transform != nullptr, L"Transform3Dコンポーネントの検索に失敗");
     }
 
     void StaticMeshRenderer::Setup()
     {
         meshId          = TechSharkLib::LoadStaticMesh(description.filePath.c_str(), description.flipVCoord);
-        materialColor   = this->materialColor;
+        materialColor   = description.materialColor;
     }
 
     void StaticMeshRenderer::Render(float, float)
