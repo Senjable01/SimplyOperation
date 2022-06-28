@@ -167,6 +167,9 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Entrant.h" />
+    <ClInclude Include="SourceCode\Recipe.h" />
+    <ClInclude Include="SourceCode\RockScissorsPaper.h" />
     <ClInclude Include="SourceCode\SceneGameSingle.h" />
     <ClInclude Include="SourceCode\SceneResultSingle.h" />
     <ClInclude Include="SourceCode\SceneSelect.h" />
@@ -226,6 +229,7 @@
     <ClCompile Include="SourceCode\SceneResultSingle.cpp" />
     <ClCompile Include="SourceCode\SceneTitle.cpp" />
     <ClCompile Include="SourceCode\SceneSelect.cpp" />
+    <ClCompile Include="SourceCode\Recipe.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui_demo.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui_draw.cpp" />

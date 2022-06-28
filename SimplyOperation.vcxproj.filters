@@ -189,6 +189,15 @@
     <ClInclude Include="TechSharkLib\Inc\StaticMeshRenderer.h">
       <Filter>TechSharkLib\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Recipe.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RockScissorsPaper.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Entrant.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -328,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="TechSharkLib\Src\StaticMeshRenderer.cpp">
       <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Recipe.cpp">
+      <Filter>Source\Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
