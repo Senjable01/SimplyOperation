@@ -148,6 +148,7 @@ namespace TechSharkLib
         void Render(float scrollX = 0.0f, float scrollY = 0.0f);
         void Deinit();
 
+        GameObject* GetGameObject(const GameObjectID& id) { return objectMap.at(id).get(); }
         void Exclude(const GameObjectID& id) { excludes.emplace(id); }
 
     };

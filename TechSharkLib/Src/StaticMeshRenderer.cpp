@@ -1,5 +1,6 @@
 //------< include >-----------------------------------------------------------------------
 #include "../Inc/StaticMeshRenderer.h"
+#include "../Inc/GameObject.h"
 #include "../Inc/Transform3D.h"
 #include "../Inc/TechSharkLib.h"
 
@@ -33,7 +34,8 @@ namespace TechSharkLib
 
     void StaticMeshRenderer::Init()
     {
-        //HACK:01 Transform3Dコンポーネントを取得する。
+        transform = manager->GetGameObjectManager()->GetGameObject(owner)->SearchComponent<Transform3D>();
+        _ASSERT_EXPR(transform != nullptr, L"Transform3Dコンポーネントの検索に失敗");
     }
 
     void StaticMeshRenderer::Setup()

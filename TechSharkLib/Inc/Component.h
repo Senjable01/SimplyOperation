@@ -37,6 +37,7 @@ namespace TechSharkLib
 
     class ComponentManager;
     class GameObject;
+    class GameObjectManager;
 
     //========================================================================================
     // 
@@ -46,7 +47,7 @@ namespace TechSharkLib
     class Component
     {
     TSL_DEFINE_COMPONENT(Component);
-    private:
+    protected:
         ComponentManager*   manager;
         ComponentID         selfID;
         GameObjectID        owner;
@@ -78,12 +79,18 @@ namespace TechSharkLib
     class ComponentManager
     {
     private:
+        GameObjectManager* gameObjectManager;
         std::map<ComponentID, std::unique_ptr<Component>> componentMap;
 
         static unsigned int nextId;
 
     public:
-        ComponentManager() {}
+        ComponentManager() = delete;
+        explicit ComponentManager(GameObjectManager* gameObjectManager) : 
+            gameObjectManager{gameObjectManager}
+        {
+            _ASSERT_EXPR(gameObjectManager, L"gameObjectManager‚ªnullptr");
+        }
         ComponentManager(const ComponentManager&) = delete;
         ComponentManager& operator=(const ComponentManager&) = delete;
         ComponentManager(ComponentManager&&) noexcept = delete;
@@ -161,6 +168,8 @@ namespace TechSharkLib
         {
             componentMap.erase(id);
         }
+
+        GameObjectManager* GetGameObjectManager() { return gameObjectManager; }
         
     };
 
