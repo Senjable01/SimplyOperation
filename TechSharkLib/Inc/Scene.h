@@ -76,6 +76,7 @@ namespace TechSharkLib
             }
         }
 
+        Scene* CurrentScene() { return currentScene.get(); }
         static SceneManager* GetInstance() { return &instance_; }
     };
 }
