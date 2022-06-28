@@ -106,7 +106,7 @@ namespace TechSharkLib
             ComponentID id{ComponentManager::nextId};
             //Info C2440 --> 引数を間違っている可能性あり
             std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
-            if (component == false)
+            if (!component)
             {
                 ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
                 return ComponentID{};
@@ -123,7 +123,7 @@ namespace TechSharkLib
             ComponentID id{ComponentManager::nextId};
             //Info C2440 --> 引数を間違っている可能性あり
             std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
-            if (component == nullptr)
+            if (!component)
             {
                 ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
                 return ComponentID{};
