@@ -85,7 +85,8 @@ void SceneGameSingle::Setup()
     camera.CalcAndSetPerspectiveMatrix(TechSharkLib::ToRadian(30.0f), TechSharkLib::AspectRatio(), 0.1f, 100.0f);
     TechSharkLib::SetProjector(TechSharkLib::SCENE_CONSTANTS::DEFAULT);
 
-    objectIds.reserve(60u);
+    objectIds.reserve(60);
+
     CreateObject();
 
     loadNum++;
@@ -93,24 +94,24 @@ void SceneGameSingle::Setup()
 
 void SceneGameSingle::CreateObject()
 {
-    GameObject* obj = nullptr;
-    objectIds.emplace_back(objManager.CreateObject(&obj));
-    //UNDONE:09CreateObjectにコンポーネントを作るStrategyを渡す
-    
-    TechSharkLib::Transform3DDesc transform3dDesc = {};
-    transform3dDesc.position    = { 0.0f, 0.0f, 0.0f };
-    transform3dDesc.scale       = { 0.3f, 0.3f, 0.3f };
-    transform3dDesc.rotation    = { 0.0f, 0.0f, 0.0f };
-    obj->AddComponent<Transform3D>(transform3dDesc);
+    TechSharkLib::GameObjectID objId = objManager.CreateObject();
+    objectIds.emplace_back(objId);
+
+    TechSharkLib::Transform3DDesc transformDesc = {};
+    transformDesc.position  = { 0.0f, 0.0f, 0.0f };
+    transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
+    transformDesc.rotation  = { 0.0f, 0.0f, 0.0f };
+    objManager.AttachComponent<Transform3D>(objId, transformDesc);
 
     TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
     rendererDesc.filePath       = L"./Data/三角化仮素材_グー/puroto_guu.obj";
     rendererDesc.flipVCoord     = true;
     rendererDesc.materialColor  = {1.0f, 0.0f, 0.0f, 1.0f};
-    obj->AddComponent<StaticMeshRenderer>(rendererDesc);
+    objManager.AttachComponent<StaticMeshRenderer>(objId, rendererDesc);
 
-    obj->Init();
-    obj->Setup();
+    objManager.Init(objId);
+    objManager.Setup(objId);
+
 }
 
 void SceneGameSingle::EraseObject()

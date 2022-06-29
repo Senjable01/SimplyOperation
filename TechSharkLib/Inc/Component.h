@@ -37,7 +37,6 @@ namespace TechSharkLib
 
     class ComponentManager;
     class GameObject;
-    class GameObjectManager;
 
     //========================================================================================
     // 
@@ -48,29 +47,28 @@ namespace TechSharkLib
     {
     TSL_DEFINE_COMPONENT(Component);
     private:
-        ComponentManager*   manager;
-        ComponentID         selfID;
-        GameObjectID        owner;
-
-    protected:
-        GameObject* GetOwner();
+        ComponentID selfId;
+        GameObject* owner;
 
     public:
         Component() = delete;
-        Component(ComponentManager* manager, const ComponentID& selfID, const GameObjectID& owner) :
-            manager{manager},
-            selfID{selfID}, owner{owner}
+        Component(const ComponentID& selfId, GameObject* owner) :
+            selfId{selfId}, owner{owner}
         {
+            _ASSERT_EXPR(owner != nullptr, L"ownerがnullptr");
         }
         virtual ~Component() {}
 
-        virtual void Init() = 0;
-        virtual void Setup() = 0;
-        virtual void Update(float/*deltaTime*/) = 0;
-        virtual void Render(float/*scrollX*/, float/*scrollY*/) = 0;
-        virtual void Deinit() = 0;
+        virtual void Init()     = 0;
+        virtual void Setup()    = 0;
+        virtual void Update(float /*deltaTime*/) = 0;
+        virtual void Render(float /*scrollX*/, float /*scrollY*/) = 0;
+        virtual void Deinit()   = 0;
 
-        virtual void Clear() = 0;
+        void ChangeOwner(GameObject* nextOwner) { owner = nextOwner; }
+
+        const ComponentID& SelfID() const noexcept { return selfId; }
+        GameObject* GetOwnerRef() { return owner; }
 
     };
 
@@ -82,67 +80,40 @@ namespace TechSharkLib
     class ComponentManager
     {
     private:
-        GameObjectManager* gameObjectManager;
         std::map<ComponentID, std::unique_ptr<Component>> componentMap;
 
         static unsigned int nextId;
 
     public:
-        ComponentManager() = delete;
-        explicit ComponentManager(GameObjectManager* gameObjectManager) : 
-            gameObjectManager{gameObjectManager}
-        {
-            _ASSERT_EXPR(gameObjectManager, L"gameObjectManagerがnullptr");
-        }
+        ComponentManager() {}
         ComponentManager(const ComponentManager&) = delete;
         ComponentManager& operator=(const ComponentManager&) = delete;
         ComponentManager(ComponentManager&&) noexcept = delete;
         ComponentManager& operator=(ComponentManager&&) noexcept = delete;
         ~ComponentManager() {}
 
-        template<typename Arg, class... Args>
-        auto CreateComponent(const GameObjectID& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
+        template<typename Arg, typename Desc>
+        auto CreateComponent(GameObject* owner, const Desc& description) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
         {
             ComponentID id{ComponentManager::nextId};
-            //Info C2440 --> 引数を間違っている可能性あり
-            std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
+            std::unique_ptr<Arg> component = std::make_unique<Arg>(id, owner, description);
             if (!component)
             {
                 ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
                 return ComponentID{};
             }
-            ComponentManager::nextId++;
 
+            ComponentManager::nextId++;
             componentMap.emplace(id, std::move(component));
-            
+
             return id;
         }
-        template<typename Arg, class... Args>
-        auto CreateComponent(Arg** output, const GameObjectID& owner, Args&&... args) -> decltype(Arg::TYPE, Arg::COMPONENT_NAME, ComponentID{})
-        {
-            ComponentID id{ComponentManager::nextId};
-            //Info C2440 --> 引数を間違っている可能性あり
-            std::unique_ptr<Arg> component = std::make_unique<Arg>(this, id, owner, std::forward<Args>(args)...);
-            if (!component)
-            {
-                ExpressDebugLog(L"<WARNING>: ", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの作成に失敗しました。");
-                return ComponentID{};
-            }
-            ComponentManager::nextId++;
-
-            if (output != nullptr)
-            {
-                *output = component.get();
-            }
-            componentMap.emplace(id, std::move(component));
-            return id;
-        }
-        template<typename Arg>
-        ComponentID CreateComponent(...)
-        {
-            static_assert(false, "The Template Argument is wrong or forget to define (type)::TYPE and (type)::COMPONENT_NAME.");
-            return ComponentID{};
-        }
+        //template<typename Arg, typename NonDesc> // 型がコンポーネントか調べるだけならいらないかも？
+        //ComponentID CreateComponent(GameObject*, const NonDesc&)
+        //{
+        //    static_assert(false, "The Template Argument is wrong or forget to define (type)::TYPE and (type)::COMPONENT_NAME.");
+        //    return ComponentID{};
+        //}
 
         template<typename Arg>
         Arg* QueryComponent(const ComponentID& id)
@@ -170,10 +141,9 @@ namespace TechSharkLib
         void Destroy(const ComponentID& id)
         {
             componentMap.erase(id);
+            ExpressDebugLog(L"コンポーネント(ID:", id, L")を削除しました。");
         }
 
-        GameObjectManager* GetGameObjectManager() { return gameObjectManager; }
-        
     };
 
 }

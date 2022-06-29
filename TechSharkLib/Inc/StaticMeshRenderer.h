@@ -19,10 +19,6 @@
 //**************************************************************************************************
 namespace TechSharkLib
 {
-    //------< class >-------------------------------------------------------------------------
-
-    class Transform3D;
-
     //========================================================================================
     // 
     //      StaticMeshRendererDesc
@@ -41,6 +37,10 @@ namespace TechSharkLib
         }
     };
 
+    //------< class >-------------------------------------------------------------------------
+
+    class Transform3D;
+
     //========================================================================================
     // 
     //      StaticMeshRenderer
@@ -50,20 +50,20 @@ namespace TechSharkLib
     {
     TSL_DEFINE_COMPONENT(StaticMeshRenderer);
     private:
-        Transform3D*                    transform;
+        Transform3D*            transform;
 
-        StaticMeshID                    meshId;
-        DirectX::XMFLOAT4               materialColor;
+        StaticMeshID            meshId;
+        DirectX::XMFLOAT4       materialColor;
 
-        StaticMeshRendererDesc          description;
+        StaticMeshRendererDesc  description;
 
     public:
         StaticMeshRenderer() = delete;
-        StaticMeshRenderer(ComponentManager* manager, const ComponentID& selfID, const GameObjectID& owner, const StaticMeshRendererDesc& desc) :
+        StaticMeshRenderer(const ComponentID& selfId, GameObject* owner, const StaticMeshRendererDesc& desc) : 
             transform{nullptr},
             meshId{}, materialColor{0.0f, 0.0f, 0.0f, 1.0f},
             description{desc},
-            Component{manager, selfID, owner}
+            Component{selfId, owner}
         {
         }
         ~StaticMeshRenderer() override;
@@ -73,8 +73,6 @@ namespace TechSharkLib
         void Update(float) override {};
         void Render(float, float) override;
         void Deinit() override;
-
-        void Clear() override;
 
         const StaticMeshID& MeshID() const noexcept { return meshId; }
         const DirectX::XMFLOAT4& MaterialColor() const noexcept { return materialColor; }

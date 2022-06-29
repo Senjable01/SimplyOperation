@@ -15,13 +15,5 @@ namespace recipe
 
     void CreateMesh(GameObjectManager* objManager)
     {
-        GameObject* obj = nullptr;
-        objManager->CreateObject(&obj);
-        _ASSERT_EXPR(obj != nullptr, L"GameObject‚Ì¶¬‚É¸”s");
-
-
-
-        obj->Init();
-        obj->Setup();
     }
 }

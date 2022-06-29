@@ -1,5 +1,8 @@
 #pragma once
 
+//------< include >-----------------------------------------------------------------------
+#include "Entrant.h"
+
 //========================================================================================
 // 
 //      RockScissorsPaper
@@ -33,6 +36,7 @@ public:
     RockScissorsPaper() : chara{} {}
     ~RockScissorsPaper() {}
 
+    void RegisterPlayer(Entrant* entrant);
     void Setup(Character::TYPE enemyType);
     // Œ‹‰Ê‚ð•Ô‚·(0 : –¢Œˆ’… / 1 ~ : Œˆ’…)
     int Fight();

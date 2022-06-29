@@ -20,6 +20,28 @@ namespace TechSharkLib
     // member function
     //------------------------------------------------------------------------------
 
+    GameObject& GameObject::operator=(const GameObject& src)
+    {
+        gameObjectManager   = src.gameObjectManager;
+        componentManager    = src.componentManager;
+
+        componentIds.clear();
+        const size_t size = src.componentIds.size();
+        componentIds.reserve(size);
+        for (size_t i = 0; i < size; i++)
+        {
+            /* コンポーネントIDをコピー */
+            ComponentID id = src.componentIds.at(i);
+            componentIds.emplace_back(id);
+            /* ownerを自身へ移す */
+            Component* component = componentManager->QueryComponent<Component>(id);
+            _ASSERT_EXPR(component, L"コンポーネントの取り寄せに失敗");
+            component->ChangeOwner(this);
+        }
+
+        return *this;
+    }
+
     void GameObject::Init()
     {
         for (auto& id : componentIds)
@@ -53,7 +75,9 @@ namespace TechSharkLib
         for (auto& id : componentIds)
         {
             GetComponent(id)->Deinit();
+            componentManager->Destroy(id);
         }
+        componentIds.clear();
     }
 
     //========================================================================================
@@ -66,50 +90,76 @@ namespace TechSharkLib
     // member function
     //------------------------------------------------------------------------------
 
+    GameObjectID GameObjectManager::CreateObject()
+    {
+        GameObjectID id{GameObjectManager::nextId};
+        objectMap.emplace(id, GameObject{this, componentManager.get(), id});
+        ExpressDebugLog(L"GameObject(ID:", id, L")を作成しました。");
+        GameObjectManager::nextId++;
+        return id;
+    }
+
+    void GameObjectManager::Init(const GameObjectID& id)
+    {
+        objectMap.at(id).Init();
+    }
+    void GameObjectManager::Setup(const GameObjectID& id)
+    {
+        objectMap.at(id).Setup();
+    }
     void GameObjectManager::Init()
     {
+        ExpressDebugLog(L"<WARNING>: 個別にGameObjectを初期化することを推奨します。後に作成する場合は必ず初期化して下さい。");
         for (auto& obj : objectMap)
         {
-            obj.second->Init();
+            obj.second.Init();
         }
     }
     void GameObjectManager::Setup()
     {
+        ExpressDebugLog(L"<WARNING>: 個別にGameObjectを設定することを推奨します。後に作成する場合は必ず設定して下さい。");
         for (auto& obj : objectMap)
         {
-            obj.second->Setup();
+            obj.second.Setup();
         }
     }
     void GameObjectManager::Update(float deltaTime)
     {
         for (auto& obj : objectMap)
         {
-            obj.second->Update(deltaTime);
+            obj.second.Update(deltaTime);
         }
 
-        for (auto& remove : excludes)
+        for (auto itr = excludes.cbegin(), end = excludes.cend(); itr != end;)
         {
-            auto find = objectMap.find(remove);
-            if (find != objectMap.end())
+            auto find = objectMap.find(*itr);
+            if (find == objectMap.end())
             {
-                objectMap.erase(find);
+                itr++;
+                continue;
             }
+            find->second.Deinit();
+            objectMap.erase(find);
+            ExpressDebugLog(L"GameObject(ID:", *itr, L")を削除しました。");
+            itr = excludes.erase(itr);
         }
-        excludes.clear();
+        _ASSERT_EXPR(excludes.empty(), L"未削除のGameObjectを確認");
+
     }
     void GameObjectManager::Render(float scrollX, float scrollY)
     {
         for (auto& obj : objectMap)
         {
-            obj.second->Render(scrollX, scrollY);
+            obj.second.Render(scrollX, scrollY);
         }
     }
     void GameObjectManager::Deinit()
     {
         for (auto& obj : objectMap)
         {
-            obj.second->Deinit();
+            obj.second.Deinit();
         }
+        objectMap.clear();
     }
 
     //------------------------------------------------------------------------------

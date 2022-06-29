@@ -198,6 +198,9 @@
     <ClInclude Include="SourceCode\Entrant.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Config.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -339,6 +342,12 @@
       <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Recipe.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Entrant.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Config.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
   </ItemGroup>

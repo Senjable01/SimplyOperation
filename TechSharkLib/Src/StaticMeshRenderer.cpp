@@ -34,30 +34,22 @@ namespace TechSharkLib
 
     void StaticMeshRenderer::Init()
     {
-        transform = GetOwner()->SearchComponent<Transform3D>();
+        transform = GetOwnerRef()->SearchComponent<Transform3D>();
         _ASSERT_EXPR(transform != nullptr, L"Transform3Dコンポーネントの検索に失敗");
     }
-
     void StaticMeshRenderer::Setup()
     {
-        meshId          = TechSharkLib::LoadStaticMesh(description.filePath.c_str(), description.flipVCoord);
-        materialColor   = description.materialColor;
+        meshId = TechSharkLib::LoadStaticMesh(description.filePath.c_str(), description.flipVCoord);
+        materialColor = description.materialColor;
     }
-
     void StaticMeshRenderer::Render(float, float)
     {
         if (transform == nullptr) return;
 
-        const DirectX::XMFLOAT4X4& local = transform->Transform();
+        const DirectX::XMFLOAT4X4 local = transform->Transform();
         TechSharkLib::Render(meshId, local, materialColor);
     }
-
     void StaticMeshRenderer::Deinit()
-    {
-        Clear();
-    }
-
-    void StaticMeshRenderer::Clear()
     {
         transform       = nullptr;
         TechSharkLib::Release(meshId);

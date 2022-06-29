@@ -49,7 +49,7 @@ namespace TechSharkLib
 
     //====================================================================================
     // 
-    //      Transform
+    //      Transform3D
     // 
     //====================================================================================
     class Transform3D : public Component
@@ -65,10 +65,10 @@ namespace TechSharkLib
 
     public:
         Transform3D() = delete;
-        Transform3D(ComponentManager* manager, const ComponentID& selfID, const GameObjectID& owner, const Transform3DDesc& desc) :
+        Transform3D(const ComponentID& selfId, GameObject* owner, const Transform3DDesc& desc) : 
             position{0.0f, 0.0f, 0.0f}, scale{0.0f, 0.0f, 0.0f}, rotation{0.0f, 0.0f, 0.0f}, transform{},
             description{desc},
-            Component{manager, selfID, owner}
+            Component{selfId, owner}
         {
         }
         ~Transform3D() override {}
@@ -80,12 +80,11 @@ namespace TechSharkLib
         void Deinit() override;
 
         void CalcTransform();
-        void Clear() override;
 
         const DirectX::XMFLOAT3& Position() const noexcept { return position; }
         const DirectX::XMFLOAT3& Scale() const noexcept { return scale; }
         const DirectX::XMFLOAT3& Rotation() const noexcept { return rotation; }
-        const DirectX::XMFLOAT4X4 Transform() const noexcept { return transform; }
+        const DirectX::XMFLOAT4X4& Transform() const noexcept { return transform; }
 
         void SetPosition(float x, float y, float z) { position.x = x, position.y = y, position.z = z; }
         void SetPosition(const DirectX::XMFLOAT3& position) { this->position = position; }
@@ -93,8 +92,8 @@ namespace TechSharkLib
         void SetScale(const DirectX::XMFLOAT3& scale) { this->scale = scale; }
         void SetRotation(float x, float y, float z) { rotation.x = x, rotation.y = y, rotation.z = z; }
         void SetRotation(const DirectX::XMFLOAT3& rotation) { this->rotation = rotation; }
-
     };
+
 }
 
 #endif // !INCLUDED_INC_TRANSFORM_3D_H

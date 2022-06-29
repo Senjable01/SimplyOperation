@@ -32,43 +32,36 @@ namespace TechSharkLib
     class GameObject
     {
     private:
-        GameObjectManager*  gameObjectManager;
-        ComponentManager*   componentManager;
-        GameObjectID        selfID;
-        std::vector<ComponentID> componentIds;
+        GameObjectManager*          gameObjectManager;
+        ComponentManager*           componentManager;
+        GameObjectID                selfId;
+        std::vector<ComponentID>    componentIds;
 
-        Component* GetComponent(const ComponentID& id)
-        {
-            return componentManager->QueryComponent<Component>(id);
-        }
+        Component* GetComponent(const ComponentID& id) { return componentManager->QueryComponent<Component>(id); }
 
     public:
         GameObject() = delete;
         GameObject(
             GameObjectManager* gameObjectManager, ComponentManager* componentManager,
-            const GameObjectID& selfID
-        ) : 
+            const GameObjectID& selfId
+        ) :
             gameObjectManager{gameObjectManager}, componentManager{componentManager},
-            selfID{selfID}
+            selfId{selfId}
         {
+            _ASSERT_EXPR(gameObjectManager != nullptr,  L"gameObjectManagerがnullptr");
+            _ASSERT_EXPR(componentManager != nullptr,   L"componentManagerがnullptr");
+            componentIds.reserve(4);
+            ExpressDebugLog(L"GameObject(ID:", selfId, L")が作成されました。");
         }
+        GameObject& operator=(const GameObject& src);
 
-        template<typename Arg, class... Args>
-        ComponentID AddComponent(Args&&... args)
+        template<typename Arg, typename Desc>
+        ComponentID AddComponent(const Desc& desc)
         {
-            ComponentID id = componentManager->CreateComponent<Arg>(selfID, std::forward<Args>(args)...);
+            ComponentID id = componentManager->CreateComponent<Arg>(this, desc);
             _ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
             componentIds.emplace_back(id);
-            ExpressDebugLog(L"オブジェクト(", this, L")に", Arg::COMPONENT_NAME.c_str(), L"コンポーネント(ID:", id, L")を追加しました。");
-            return id;
-        }
-        template<typename Arg, class... Args>
-        ComponentID AddComponent(Arg** output, Args&&... args)
-        {
-            ComponentID id = componentManager->CreateComponent<Arg>(output, selfID, std::forward<Args>(args)...);
-            _ASSERT_EXPR(id != ERROR_COMPONENT_ID, L"コンポーネントの作成に失敗");
-            componentIds.emplace_back(id);
-            ExpressDebugLog(L"オブジェクト(", this, L")に", Arg::COMPONENT_NAME.c_str(), L"コンポーネント(ID:", id, L")を追加しました。");
+            ExpressDebugLog(L"オブジェクト(", selfId, L")に", Arg::COMPONENT_NAME.c_str(), L"コンポーネント(ID:", id, L")を追加しました。");
             return id;
         }
 
@@ -82,10 +75,9 @@ namespace TechSharkLib
                 {
                     continue;
                 }
-
                 return component;
             }
-            ExpressDebugLog(L"<WARNING>: オブジェクト(", this, L")の", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの検索は失敗しました。");
+            ExpressDebugLog(L"<WARNING>: オブジェクト(ID:", selfId, L")の", Arg::COMPONENT_NAME.c_str(), L"コンポーネントの検索は失敗しました。");
             return nullptr;
         }
 
@@ -94,7 +86,7 @@ namespace TechSharkLib
         void Update(float deltaTime);
         void Render(float scrollX, float scrollY);
         void Deinit();
-        
+
     };
 
     //========================================================================================
@@ -105,7 +97,7 @@ namespace TechSharkLib
     class GameObjectManager
     {
     private:
-        std::map<GameObjectID, std::unique_ptr<GameObject>>  objectMap;
+        std::map<GameObjectID, GameObject>  objectMap;
         std::set<GameObjectID>              excludes;
         std::unique_ptr<ComponentManager>   componentManager;
 
@@ -114,7 +106,7 @@ namespace TechSharkLib
     public:
         GameObjectManager() : componentManager{nullptr}
         {
-            componentManager = std::make_unique<ComponentManager>(this);
+            componentManager = std::make_unique<ComponentManager>();
         }
         GameObjectManager(const GameObjectManager&) = delete;
         GameObjectManager& operator=(const GameObjectManager&) = delete;
@@ -122,35 +114,21 @@ namespace TechSharkLib
         GameObjectManager& operator=(GameObjectManager&&) noexcept = delete;
         ~GameObjectManager() {}
 
-        GameObjectID CreateObject(GameObject** output = nullptr)
-        {
-            GameObjectID id{GameObjectManager::nextId};
-            std::unique_ptr<GameObject> object = std::make_unique<GameObject>(this, componentManager.get(), id);
-            if (object == nullptr)
-            {
-                ExpressDebugLog(L"<WARNING>: GameObjectの作成に失敗しました。");
-                _ASSERT_EXPR(false, L"GameObjectの作成に失敗");
-                return GameObjectID{};
-            }
-            GameObjectManager::nextId++;
+        GameObjectID CreateObject();
 
-            if (output != nullptr)
-            {
-                *output = object.get();
-            }
-            objectMap.emplace(id, std::move(object));
-            return id;
-        }
+        template<typename Arg, typename Desc>
+        void AttachComponent(const GameObjectID& id, const Desc& desc) { objectMap.at(id).AddComponent<Arg>(desc); }
 
-        [[deprecated("個別に初期化することを推奨します。")]] void Init();
-        [[deprecated("個別に設定することを推奨します。")]] void Setup();
+        void Init(const GameObjectID& id);
+        void Setup(const GameObjectID& id);
+        void Init();
+        void Setup();
         void Update(float deltaTime = 0.0f);
         void Render(float scrollX = 0.0f, float scrollY = 0.0f);
         void Deinit();
 
-        GameObject* GetGameObject(const GameObjectID& id) { return objectMap.at(id).get(); }
+        GameObject* GetGameObjectRef(const GameObjectID& id) { return &objectMap.at(id); }
         void Exclude(const GameObjectID& id) { excludes.emplace(id); }
-
     };
 
 }

@@ -12,7 +12,7 @@ namespace TechSharkLib
 {
     //====================================================================================
     // 
-    //      Transform
+    //      Transform3D
     // 
     //====================================================================================
 
@@ -27,18 +27,11 @@ namespace TechSharkLib
         rotation    = description.rotation;
         CalcTransform();
     }
-
     void Transform3D::Update(float)
     {
         CalcTransform();
     }
-
     void Transform3D::Deinit()
-    {
-        Clear();
-    }
-
-    void Transform3D::Clear()
     {
         position    = {0.0f, 0.0f, 0.0f};
         scale       = {0.0f, 0.0f, 0.0f};
@@ -53,7 +46,7 @@ namespace TechSharkLib
         DirectX::XMMATRIX mtrixPosition = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
         DirectX::XMStoreFloat4x4(&transform, mtrixScale * mtrixRotation * mtrixPosition);
     }
-    
+
     //------------------------------------------------------------------------------
     // instance
     //------------------------------------------------------------------------------
