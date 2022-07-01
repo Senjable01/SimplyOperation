@@ -104,7 +104,7 @@ void SceneGameSingle::CreateObject()
     objManager.AttachComponent<Transform3D>(objId, transformDesc);
 
     TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
-    rendererDesc.filePath       = L"./Data/éOäpâªâºëfçﬁ_ÉOÅ[/puroto_guu.obj";
+    rendererDesc.objFilePath       = L"./Data/éOäpâªâºëfçﬁ_ÉOÅ[/puroto_guu.obj";
     rendererDesc.flipVCoord     = true;
     rendererDesc.materialColor  = {1.0f, 0.0f, 0.0f, 1.0f};
     objManager.AttachComponent<StaticMeshRenderer>(objId, rendererDesc);

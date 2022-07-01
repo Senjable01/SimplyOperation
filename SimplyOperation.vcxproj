@@ -169,8 +169,8 @@
   <ItemGroup>
     <ClInclude Include="SourceCode\Config.h" />
     <ClInclude Include="SourceCode\Entrant.h" />
+    <ClInclude Include="SourceCode\GameMode.h" />
     <ClInclude Include="SourceCode\Recipe.h" />
-    <ClInclude Include="SourceCode\RockScissorsPaper.h" />
     <ClInclude Include="SourceCode\SceneGameSingle.h" />
     <ClInclude Include="SourceCode\SceneResultSingle.h" />
     <ClInclude Include="SourceCode\SceneSelect.h" />
@@ -228,6 +228,7 @@
   <ItemGroup>
     <ClCompile Include="SourceCode\Config.cpp" />
     <ClCompile Include="SourceCode\Entrant.cpp" />
+    <ClCompile Include="SourceCode\GameMode.cpp" />
     <ClCompile Include="SourceCode\SceneGameSingle.cpp" />
     <ClCompile Include="SourceCode\SceneResultSingle.cpp" />
     <ClCompile Include="SourceCode\SceneTitle.cpp" />

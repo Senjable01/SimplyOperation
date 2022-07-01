@@ -39,7 +39,7 @@ namespace TechSharkLib
     }
     void StaticMeshRenderer::Setup()
     {
-        meshId = TechSharkLib::LoadStaticMesh(description.filePath.c_str(), description.flipVCoord);
+        meshId = TechSharkLib::LoadStaticMesh(description.objFilePath.c_str(), description.flipVCoord);
         materialColor = description.materialColor;
     }
     void StaticMeshRenderer::Render(float, float)

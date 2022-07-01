@@ -1,7 +1,6 @@
 //------< include >---------------------------------------------------------------------- -
 #include "../Inc/Arithmetic.h"
 #include <utility>
-#include <algorithm>
 #include <cmath>
 
 //**************************************************************************************************
@@ -17,10 +16,9 @@ namespace TechSharkLib
 
     template<typename Arg> inline Arg Clamp(Arg input, Arg low, Arg high)
     {
-        if (high < low)
-        {
-            std::swap(high, low);
-        }
+        Arg oldLow = low;
+        low     = (std::min)(low, high);
+        high    = (std::max)(high, oldLow);
 
         return (std::max)(
             (std::min)(input, high), low

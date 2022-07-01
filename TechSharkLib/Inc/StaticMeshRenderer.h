@@ -26,13 +26,13 @@ namespace TechSharkLib
     //========================================================================================
     struct StaticMeshRendererDesc
     {
-        std::wstring        filePath;
+        std::wstring        objFilePath;
         bool                flipVCoord;
         DirectX::XMFLOAT4   materialColor;
 
-        StaticMeshRendererDesc() : filePath{}, flipVCoord{false}, materialColor{0.0f, 0.0f, 0.0f, 1.0f} {}
+        StaticMeshRendererDesc() : objFilePath{}, flipVCoord{false}, materialColor{0.0f, 0.0f, 0.0f, 1.0f} {}
         StaticMeshRendererDesc(const wchar_t* objFilePath, bool reverseVCoord, const DirectX::XMFLOAT4& materialColor) :
-            filePath{objFilePath}, flipVCoord{reverseVCoord}, materialColor{materialColor}
+            objFilePath{objFilePath}, flipVCoord{reverseVCoord}, materialColor{materialColor}
         {
         }
     };
@@ -77,6 +77,8 @@ namespace TechSharkLib
         const StaticMeshID& MeshID() const noexcept { return meshId; }
         const DirectX::XMFLOAT4& MaterialColor() const noexcept { return materialColor; }
 
+        void SetMeshID(const StaticMeshID& meshId) { this->meshId = meshId; }
+        void ReloadMesh(const wchar_t* objFilePath);
         void SetMaterialColor(float red, float green, float blue, float alpha)
         {
             materialColor.x = red;
