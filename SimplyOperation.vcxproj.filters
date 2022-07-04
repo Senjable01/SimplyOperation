@@ -198,6 +198,12 @@
     <ClInclude Include="SourceCode\GameMode.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Strategy.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GameRule.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
     <ClInclude Include="SourceCode\Entrant.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
@@ -345,9 +351,6 @@
       <Filter>Source\Src</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Config.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\GameMode.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Entrant.cpp">

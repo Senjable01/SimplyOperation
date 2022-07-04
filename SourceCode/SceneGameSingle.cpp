@@ -98,9 +98,9 @@ void SceneGameSingle::CreateObject()
     objectIds.emplace_back(objId);
 
     TechSharkLib::Transform3DDesc transformDesc = {};
-    transformDesc.position  = { 0.0f, 0.0f, 0.0f };
-    transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
-    transformDesc.rotation  = { 0.0f, 0.0f, 0.0f };
+    transformDesc.position  = {0.0f, 0.0f, 0.0f};
+    transformDesc.scale     = {0.3f, 0.3f, 0.3f};
+    transformDesc.rotation  = {0.0f, 0.0f, 0.0f};
     objManager.AttachComponent<Transform3D>(objId, transformDesc);
 
     TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
@@ -129,7 +129,7 @@ void SceneGameSingle::EraseObject()
     objectIds.erase(itr);
 }
 
-void SceneGameSingle::Update(float/*deltaTime*/)
+void SceneGameSingle::Update(float deltaTime)
 {
     if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_00)
     {

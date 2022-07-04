@@ -7,12 +7,14 @@ namespace config
 {
     namespace key
     {
-        extern TechSharkLib::KeyAssign rock0;
-        extern TechSharkLib::KeyAssign scissors0;
-        extern TechSharkLib::KeyAssign paper0;
-        extern TechSharkLib::KeyAssign rock1;
-        extern TechSharkLib::KeyAssign scissors1;
-        extern TechSharkLib::KeyAssign paper1;
+        extern TechSharkLib::KeyAssign up0;
+        extern TechSharkLib::KeyAssign right0;
+        extern TechSharkLib::KeyAssign left0;
+        extern TechSharkLib::KeyAssign down0;
+        extern TechSharkLib::KeyAssign up1;
+        extern TechSharkLib::KeyAssign right1;
+        extern TechSharkLib::KeyAssign left1;
+        extern TechSharkLib::KeyAssign down1;
     }
 
     namespace gamerule
