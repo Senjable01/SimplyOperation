@@ -32,6 +32,7 @@ public:
     }
 
     void Update(float deltaTime);
+    void Clear();
 
     Entrant* GetEntrant01() const { return entrant01; }
     Entrant* GetEntrant02() const { return entrant02; }

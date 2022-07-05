@@ -24,3 +24,11 @@ void GameMode::Update(float deltaTime)
 
     timerSec += deltaTime;
 }
+
+void GameMode::Clear()
+{
+    entrant01 = nullptr;
+    entrant02 = nullptr;
+    gameRule.reset(nullptr);
+    nextRule.reset(nullptr);
+}

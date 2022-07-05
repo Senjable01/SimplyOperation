@@ -10,15 +10,11 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
-#define TEST_GAMEMODE 1
-#if TEST_GAMEMODE
 #include "GameMode.h"
 #include "GameRule.h"
 #include "Entrant.h"
 #include "Config.h"
 #include "Recipe.h"
-
-#endif // TEST_GAMEMODE
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::SpriteID;
@@ -58,7 +54,6 @@ namespace
 
     TechSharkLib::KeyAssignList keyAssignList = {
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home},
-        #if TEST_GAMEMODE
         config::key::left0,
         config::key::right0,
         config::key::up0,
@@ -67,17 +62,7 @@ namespace
         config::key::right1,
         config::key::up1,
         config::key::down1,
-
-        #endif // TEST_GAMEMODE
-
     };
-
-    std::vector<TechSharkLib::GameObjectID> objectIds;
-
-    #if TEST_GAMEMODE
-    GameMode gameMode = {};
-
-    #endif // TEST_GAMEMODE
 
 }
 
@@ -101,10 +86,7 @@ void SceneGameSingle::Init()
     staticMeshes[HAND::SCISSORS]    = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_É`ÉáÉL/puroto_choki.obj", true);
     staticMeshes[HAND::PAPER]       = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_ÉpÅ[/puroto_paa.obj", true);
 
-    #if TEST_GAMEMODE
     Entrant::LoadMeshes();
-
-    #endif // TEST_GAMEMODE
 }
 
 void SceneGameSingle::Setup()
@@ -117,60 +99,17 @@ void SceneGameSingle::Setup()
     camera.CalcAndSetPerspectiveMatrix(TechSharkLib::ToRadian(30.0f), TechSharkLib::AspectRatio(), 0.1f, 100.0f);
     TechSharkLib::SetProjector(TechSharkLib::SCENE_CONSTANTS::DEFAULT);
 
-    objectIds.reserve(60);
-
     CreateObject();
 
-    #if TEST_GAMEMODE
     gameMode.SetGameRule<RockScissorsPaper>();
-
-    #endif // TEST_GAMEMODE
 
     loadNum++;
 }
 
 void SceneGameSingle::CreateObject()
 {
-    #if TEST_GAMEMODE
     recipe::CreateEntrant01(&objManager, &gameMode);
     recipe::CreateEntrant02(&objManager, &gameMode, true);
-
-    #else
-    TechSharkLib::GameObjectID objId = objManager.CreateObject();
-    objectIds.emplace_back(objId);
-
-    TechSharkLib::Transform3DDesc transformDesc = {};
-    transformDesc.position  = {0.0f, 0.0f, 0.0f};
-    transformDesc.scale     = {0.3f, 0.3f, 0.3f};
-    transformDesc.rotation  = {0.0f, 0.0f, 0.0f};
-    objManager.AttachComponent<Transform3D>(objId, transformDesc);
-
-    TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
-    rendererDesc.objFilePath       = L"./Data/éOäpâªâºëfçﬁ_ÉOÅ[/puroto_guu.obj";
-    rendererDesc.flipVCoord     = true;
-    rendererDesc.materialColor  = {1.0f, 0.0f, 0.0f, 1.0f};
-    objManager.AttachComponent<StaticMeshRenderer>(objId, rendererDesc);
-
-    objManager.Init(objId);
-    objManager.Setup(objId);
-
-    #endif // TEST_GAMEMODE
-
-}
-
-void SceneGameSingle::EraseObject()
-{
-    size_t num = objectIds.size();
-    if (num == 0) return;
-
-    int random = std::rand() % num;
-    objManager.Exclude(objectIds.at(random));
-    auto itr = objectIds.begin();
-    for (int i = 0; i < random; i++)
-    {
-        itr++;
-    }
-    objectIds.erase(itr);
 }
 
 void SceneGameSingle::Update(float deltaTime)
@@ -182,10 +121,7 @@ void SceneGameSingle::Update(float deltaTime)
     }
 
     objManager.Update();
-    #if TEST_GAMEMODE
     gameMode.Update(deltaTime);
-
-    #endif // TEST_GAMEMODE
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
@@ -214,21 +150,6 @@ void SceneGameSingle::Update(float deltaTime)
         ImGui::InputFloat3("scale", &scale.x);
         ImGui::SliderFloat3("rotation", &rotation.x, TechSharkLib::ToRadian(-180.0f), TechSharkLib::ToRadian(180.0f));
     }
-    #if !TEST_GAMEMODE
-    if (ImGui::CollapsingHeader("ComponentSystem"))
-    {
-        ImGui::Text("Num: %d", objectIds.size());
-        if (ImGui::Button("Make Object"))
-        {
-            CreateObject();
-        }
-        if (ImGui::Button("Erase Object"))
-        {
-            EraseObject();
-        }
-    }
-
-    #endif // !TEST_GAMEMODE
     ImGui::End();
 
     #endif // USE_IMGUI
@@ -304,14 +225,10 @@ void SceneGameSingle::Deinit()
     scale       = Float3{0.5f, 0.5f, 0.5f};
     rotation    = Float3{};
     position    = Float3{};
-    objectIds.clear();
     objManager.Deinit();
 
     TechSharkLib::SetDisplayFrameRate(false);
 
-    #if TEST_GAMEMODE
-    gameMode = {};
+    gameMode.Clear();
     Entrant::UnloadMeshes();
-
-    #endif // TEST_GAMEMODE
 }
