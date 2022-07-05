@@ -25,7 +25,7 @@ private:
     void Run(GameMode*) override;
     void PhaseReception(GameMode* gameMode);
     ENTRANT_HAND ShootHand(Entrant*);
-    int PhaseShootHand(GameMode* gameMode);
+    void PhaseShootHand(GameMode* gameMode);
     void PhaseResult(GameMode* gameMode);
 
 public:

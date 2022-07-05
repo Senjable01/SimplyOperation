@@ -60,7 +60,7 @@ ENTRANT_HAND RockScissorsPaper::ShootHand(Entrant* entrant)
     return ENTRANT_HAND::NONE;
 }
 
-int RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
+void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
 {
     // 手を出していないならランダムに決める
     ENTRANT_HAND hands[] = { ENTRANT_HAND::ROCK, ENTRANT_HAND::SCISSORS, ENTRANT_HAND::PAPER };
@@ -90,7 +90,7 @@ int RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
     phase = PHASE::IDLE;
 
     // 結果をリターン
-    return result;
+    gameMode->SetResult(result);
 }
 
 void RockScissorsPaper::PhaseResult(GameMode* gameMode)
