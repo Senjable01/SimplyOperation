@@ -10,6 +10,15 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
+#define TEST_GAMEMODE 1
+#if TEST_GAMEMODE
+#include "GameMode.h"
+#include "GameRule.h"
+#include "Entrant.h"
+#include "Config.h"
+#include "Recipe.h"
+
+#endif // TEST_GAMEMODE
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::SpriteID;
@@ -48,10 +57,28 @@ namespace
     Float3 position = {};
 
     TechSharkLib::KeyAssignList keyAssignList = {
-        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home}
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home},
+        #if TEST_GAMEMODE
+        config::key::left0,
+        config::key::right0,
+        config::key::up0,
+        config::key::down0,
+        config::key::left1,
+        config::key::right1,
+        config::key::up1,
+        config::key::down1,
+
+        #endif // TEST_GAMEMODE
+
     };
 
     std::vector<TechSharkLib::GameObjectID> objectIds;
+
+    #if TEST_GAMEMODE
+    GameMode gameMode = {};
+
+    #endif // TEST_GAMEMODE
+
 }
 
 //========================================================================================
@@ -73,6 +100,11 @@ void SceneGameSingle::Init()
     staticMeshes[HAND::ROCK]        = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_ÉOÅ[/puroto_guu.obj", true);
     staticMeshes[HAND::SCISSORS]    = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_É`ÉáÉL/puroto_choki.obj", true);
     staticMeshes[HAND::PAPER]       = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_ÉpÅ[/puroto_paa.obj", true);
+
+    #if TEST_GAMEMODE
+    Entrant::LoadMeshes();
+
+    #endif // TEST_GAMEMODE
 }
 
 void SceneGameSingle::Setup()
@@ -89,11 +121,21 @@ void SceneGameSingle::Setup()
 
     CreateObject();
 
+    #if TEST_GAMEMODE
+    gameMode.SetGameRule<RockScissorsPaper>();
+
+    #endif // TEST_GAMEMODE
+
     loadNum++;
 }
 
 void SceneGameSingle::CreateObject()
 {
+    #if TEST_GAMEMODE
+    recipe::CreateEntrant01(&objManager, &gameMode);
+    recipe::CreateEntrant02(&objManager, &gameMode, true);
+
+    #else
     TechSharkLib::GameObjectID objId = objManager.CreateObject();
     objectIds.emplace_back(objId);
 
@@ -111,6 +153,8 @@ void SceneGameSingle::CreateObject()
 
     objManager.Init(objId);
     objManager.Setup(objId);
+
+    #endif // TEST_GAMEMODE
 
 }
 
@@ -138,6 +182,10 @@ void SceneGameSingle::Update(float deltaTime)
     }
 
     objManager.Update();
+    #if TEST_GAMEMODE
+    gameMode.Update(deltaTime);
+
+    #endif // TEST_GAMEMODE
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
@@ -166,6 +214,7 @@ void SceneGameSingle::Update(float deltaTime)
         ImGui::InputFloat3("scale", &scale.x);
         ImGui::SliderFloat3("rotation", &rotation.x, TechSharkLib::ToRadian(-180.0f), TechSharkLib::ToRadian(180.0f));
     }
+    #if !TEST_GAMEMODE
     if (ImGui::CollapsingHeader("ComponentSystem"))
     {
         ImGui::Text("Num: %d", objectIds.size());
@@ -178,6 +227,8 @@ void SceneGameSingle::Update(float deltaTime)
             EraseObject();
         }
     }
+
+    #endif // !TEST_GAMEMODE
     ImGui::End();
 
     #endif // USE_IMGUI
@@ -257,4 +308,10 @@ void SceneGameSingle::Deinit()
     objManager.Deinit();
 
     TechSharkLib::SetDisplayFrameRate(false);
+
+    #if TEST_GAMEMODE
+    gameMode = {};
+    Entrant::UnloadMeshes();
+
+    #endif // TEST_GAMEMODE
 }

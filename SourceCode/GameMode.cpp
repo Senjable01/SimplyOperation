@@ -20,5 +20,7 @@ void GameMode::Update(float deltaTime)
         nextRule = nullptr;
     }
 
+    (*gameRule)(this);
+
     timerSec += deltaTime;
 }

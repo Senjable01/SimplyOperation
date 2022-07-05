@@ -230,6 +230,8 @@
   <ItemGroup>
     <ClCompile Include="SourceCode\Config.cpp" />
     <ClCompile Include="SourceCode\Entrant.cpp" />
+    <ClCompile Include="SourceCode\GameMode.cpp" />
+    <ClCompile Include="SourceCode\GameRule.cpp" />
     <ClCompile Include="SourceCode\SceneGameSingle.cpp" />
     <ClCompile Include="SourceCode\SceneResultSingle.cpp" />
     <ClCompile Include="SourceCode\SceneTitle.cpp" />

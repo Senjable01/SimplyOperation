@@ -59,7 +59,7 @@ public:
     Entrant(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const EntrantDesc& desc) : 
         transform{nullptr},
         keyBind{}, activekey{false},
-        meshNo{static_cast<size_t>(ENTRANT_HAND::NONE)},
+        meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
         description{desc},
         TechSharkLib::Component{selfId, owner}
     {

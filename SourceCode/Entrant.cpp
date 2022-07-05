@@ -72,7 +72,7 @@ int Entrant::KeyInputSingle()
             return keyBind.keyDown;
     }
 
-    return NULL;
+    return -1;
 
 }
 
@@ -96,3 +96,11 @@ void Entrant::UnloadMeshes()
         TechSharkLib::Release(mesh);
     }
 }
+
+//------------------------------------------------------------------------------
+// instance
+//------------------------------------------------------------------------------
+
+std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(ENTRANT_HAND::VALUE)> Entrant::meshes;
+
+TSL_IMPLEMENT_COMPONENT(Entrant, "Entrant");

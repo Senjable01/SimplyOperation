@@ -31,16 +31,11 @@ void RockScissorsPaper::Run(GameMode* gameMode)
         break;
     }
 
-    if (entrant01Hand == ENTRANT_HAND::NONE)
-        entrant01Hand = ShootHand(gameMode->GetEntrant01());
-    if (entrant02Hand == ENTRANT_HAND::NONE)
-        entrant02Hand = ShootHand(gameMode->GetEntrant01());
-
 }
 
 void RockScissorsPaper::PhaseReception(GameMode* gameMode)
 {
-    if (config::gamerule::rsp::IDLE_SEC < gameMode->TimerSec())
+    if (config::gamerule::rsp::RECEPTION_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
         phase = PHASE::SHOOT;
@@ -49,7 +44,7 @@ void RockScissorsPaper::PhaseReception(GameMode* gameMode)
     if (entrant01Hand == ENTRANT_HAND::NONE)
         entrant01Hand = ShootHand(gameMode->GetEntrant01());
     if (entrant02Hand == ENTRANT_HAND::NONE)
-        entrant02Hand = ShootHand(gameMode->GetEntrant01());
+        entrant02Hand = ShootHand(gameMode->GetEntrant02());
 }
 
 ENTRANT_HAND RockScissorsPaper::ShootHand(Entrant* entrant)
@@ -57,11 +52,11 @@ ENTRANT_HAND RockScissorsPaper::ShootHand(Entrant* entrant)
     int singleKey = entrant->KeyInputSingle();
     auto keyBind = entrant->GetKeyBind();
     if (singleKey == keyBind->keyUp)
-        return ENTRANT_HAND::ROCK;
-    if (singleKey == keyBind->keyRight)
         return ENTRANT_HAND::SCISSORS;
-    if (singleKey == keyBind->keyLeft)
+    if (singleKey == keyBind->keyRight)
         return ENTRANT_HAND::PAPER;
+    if (singleKey == keyBind->keyLeft)
+        return ENTRANT_HAND::ROCK;
     return ENTRANT_HAND::NONE;
 }
 
@@ -96,4 +91,9 @@ int RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
 
     // åãâ ÇÉäÉ^Å[Éì
     return result;
+}
+
+void RockScissorsPaper::PhaseResult(GameMode* gameMode)
+{
+
 }

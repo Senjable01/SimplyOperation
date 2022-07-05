@@ -356,6 +356,12 @@
     <ClCompile Include="SourceCode\Entrant.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\GameMode.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GameRule.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="TechSharkLib\HLSL\primitive.hlsli">
