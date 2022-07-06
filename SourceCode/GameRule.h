@@ -19,7 +19,7 @@ private:
     enum HAND { ROCK = 0, SCISSORS, PAPER, NUM, NONE = 0 };
     ENTRANT_HAND entrant01Hand;
     ENTRANT_HAND entrant02Hand;
-    enum class PHASE { RECEPTION = 0, SHOOT, IDLE };
+    enum class PHASE { RECEPTION = 1, SHOOT, IDLE };
     PHASE phase;
 
     void PhaseReception(GameMode* gameMode);
@@ -53,7 +53,8 @@ private:
     int pushRequire02;
 
     enum class PHASE {
-        RECEPTION = 0,
+        SETUP = 0,
+        RECEPTION,
         JUDGE,
         IDLE
     } phase;
@@ -71,7 +72,7 @@ private:
 public:
     PushHands() : 
         pushRequire01{0}, pushRequire02{0},
-        phase{PHASE::RECEPTION}
+        phase{PHASE::SETUP}
     {
     }
 

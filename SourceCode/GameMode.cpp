@@ -23,7 +23,6 @@ void GameMode::Update(float deltaTime)
     {
         gameRule    = std::move(nextRule);
         nextRule    = nullptr;
-        result      = RESULT::NONE;
     }
 
     #if USE_IMGUI

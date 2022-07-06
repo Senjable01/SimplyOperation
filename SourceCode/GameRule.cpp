@@ -124,7 +124,7 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
 void RockScissorsPaper::PhaseIdle(GameMode* gameMode)
 {
     //TODO:âüÇµçáÇ¢Ç÷ÇÃëJà⁄Çñ≥å¯âªíÜ
-    #if 0
+    #if 1
     if (config::gamerule::rsp::IDLE_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
@@ -200,6 +200,10 @@ void PushHands::Run(GameMode* gameMode)
 {
     switch (phase)
     {
+    case PHASE::SETUP:
+        Setup(gameMode);
+        phase = PHASE::RECEPTION;
+        /*fallthrough*/
     case PHASE::RECEPTION:
         PhaseReception(gameMode);
         break;
@@ -209,8 +213,9 @@ void PushHands::Run(GameMode* gameMode)
     case PHASE::IDLE:
         PhaseIdle(gameMode);
         break;
-
     }
+
+    DrawDebugGUI(gameMode);
 }
 
 void PushHands::PhaseReception(GameMode* gameMode)
@@ -329,4 +334,17 @@ void PushHands::PhaseIdle(GameMode* gameMode)
 
     #endif // 0
 
+}
+
+void PushHands::DrawDebugGUI(GameMode* gameMode)
+{
+    #if USE_IMGUI
+    if (ImGui::CollapsingHeader("PushHands", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text("Current Phase : %d", static_cast<int>(phase));
+        ImGui::Text("Timer(In Second) : %f", gameMode->TimerSec());
+        ImGui::InputInt("PushRequire01", &pushRequire01, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
+        ImGui::InputInt("PushRequire02", &pushRequire02, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
+    }
+    #endif // USE_IMGUI
 }
