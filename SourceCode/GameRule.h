@@ -19,14 +19,17 @@ private:
     enum HAND { ROCK = 0, SCISSORS, PAPER, NUM, NONE = 0 };
     ENTRANT_HAND entrant01Hand;
     ENTRANT_HAND entrant02Hand;
-    enum class PHASE { RECEPTION = 0, SHOOT, IDLE };
+    enum class PHASE { RECEPTION = 1, SHOOT, IDLE };
     PHASE phase;
 
-    void Run(GameMode*) override;
     void PhaseReception(GameMode* gameMode);
     ENTRANT_HAND ShootHand(Entrant*);
     void PhaseShootHand(GameMode* gameMode);
-    void PhaseResult(GameMode* gameMode);
+    void PhaseIdle(GameMode* gameMode);
+
+    void DrawDebugGUI();
+
+    void Run(GameMode*) override;
 
 public:
     RockScissorsPaper() : 
@@ -44,7 +47,35 @@ public:
 //========================================================================================
 class PushHands : public Behavior<GameMode>
 {
+// 左右キー(スティックの傾き)で判定
 private:
+    int pushRequire01;
+    int pushRequire02;
 
+    enum class PHASE {
+        SETUP = 0,
+        RECEPTION,
+        JUDGE,
+        IDLE
+    } phase;
+    void PhaseReception(GameMode* gameMode);
+    void PhaseJudge(GameMode* gameMode);
+    void PhaseIdle(GameMode* gameMode);
+
+    void CheckPush(Entrant* entrant, int* counter);
+    int JudgeResult(GameMode* gameMode);
+
+    void DrawDebugGUI();
+
+    void Run(GameMode*) override;
+
+public:
+    PushHands() : 
+        pushRequire01{0}, pushRequire02{0},
+        phase{PHASE::SETUP}
+    {
+    }
+
+    void Setup(GameMode* gameMode);
 
 };

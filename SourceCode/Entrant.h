@@ -47,7 +47,7 @@ private:
         int keyUp       = NULL;
         int keyDown     = NULL;
     } keyBind;
-    bool activekey;
+    bool activeKey;
 
     static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(ENTRANT_HAND::VALUE)> meshes;
     int meshNo;
@@ -58,7 +58,7 @@ public:
     Entrant() = delete;
     Entrant(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const EntrantDesc& desc) : 
         transform{nullptr},
-        keyBind{}, activekey{false},
+        keyBind{}, activeKey{false},
         meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
         description{desc},
         TechSharkLib::Component{selfId, owner}
@@ -73,6 +73,8 @@ public:
     void Deinit() override;
 
     int KeyInputSingle();
+    int KeyInput();
+    bool IsActiveKey() const noexcept { return activeKey; }
     const KeyBind* GetKeyBind() const { return &keyBind; }
 
     void SetMeshNo(ENTRANT_HAND hand);

@@ -34,7 +34,7 @@ void Entrant::Setup()
         keyBind.keyUp       = (1 << description.keyUp);
         keyBind.keyDown     = (1 << description.keyDown);
     }
-    activekey = description.activeKey;
+    activeKey = description.activeKey;
     meshNo = static_cast<int>(ENTRANT_HAND::NONE);
 }
 void Entrant::Render(float, float)
@@ -56,7 +56,7 @@ void Entrant::Deinit()
 
 int Entrant::KeyInputSingle()
 {
-    if (activekey)
+    if (activeKey)
     {
         auto CheckTrigger = [inputTrigger = TechSharkLib::keyTrigger(0)](int key) -> bool {
             return !(inputTrigger ^ key);
@@ -72,8 +72,25 @@ int Entrant::KeyInputSingle()
             return keyBind.keyDown;
     }
 
-    return -1;
+    return NULL;
+}
 
+int Entrant::KeyInput()
+{
+    int trigger = NULL;
+
+    if (activeKey)
+    {
+        auto CheckTrigger = [inputTrigger = TechSharkLib::keyTrigger(0)](int key, int* trigger) -> void {
+            *trigger |= inputTrigger & key;
+        };
+        CheckTrigger(keyBind.keyLeft, &trigger);
+        CheckTrigger(keyBind.keyRight, &trigger);
+        CheckTrigger(keyBind.keyUp, &trigger);
+        CheckTrigger(keyBind.keyDown, &trigger);
+    }
+
+    return trigger;
 }
 
 void Entrant::SetMeshNo(ENTRANT_HAND hand)
