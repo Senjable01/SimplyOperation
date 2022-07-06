@@ -54,6 +54,7 @@ namespace
 
     TechSharkLib::KeyAssignList keyAssignList = {
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home},
+        {BIT_NO::BIT_01, TechSharkLib::KeyCodes::End},
         config::key::left0,
         config::key::right0,
         config::key::up0,
@@ -116,8 +117,12 @@ void SceneGameSingle::Update(float deltaTime)
 {
     if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_00)
     {
-        Scene::ChangeScene<SceneResultSingle>();
+        Scene::ChangeScene<SceneGameSingle>();
         return;
+    }
+    if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_01)
+    {
+        Scene::ChangeScene<SceneResultSingle>();
     }
 
     objManager.Update();
