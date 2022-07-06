@@ -3,6 +3,7 @@
 #include "GameMode.h"
 #include "Config.h"
 #include "../TechSharkLib/Inc/KeyAssign.h"
+#include <algorithm>
 
 //========================================================================================
 // 
@@ -27,7 +28,7 @@ void RockScissorsPaper::Run(GameMode* gameMode)
         PhaseShootHand(gameMode);
         break;
     case PHASE::IDLE:
-        PhaseResult(gameMode);
+        PhaseIdle(gameMode);
         break;
     }
 
@@ -51,6 +52,8 @@ ENTRANT_HAND RockScissorsPaper::ShootHand(Entrant* entrant)
 {
     int singleKey = entrant->KeyInputSingle();
     auto keyBind = entrant->GetKeyBind();
+    if (singleKey == NULL)
+        return ENTRANT_HAND::NONE;
     if (singleKey == keyBind->keyUp)
         return ENTRANT_HAND::SCISSORS;
     if (singleKey == keyBind->keyRight)
@@ -74,16 +77,16 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
     gameMode->GetEntrant02()->SetMeshNo(entrant02Hand);
 
     // 勝敗を決める
-    int result = 0;
+    int result = GameMode::RESULT::NONE;
     if (entrant01Hand == entrant02Hand)
         result = GameMode::RESULT::DRAW;
     else if (
         (static_cast<int>(entrant01Hand) + 1) % static_cast<int>(ENTRANT_HAND::VALUE)
         <= static_cast<int>(entrant02Hand)
     )
-        result = GameMode::RESULT::WIN_0;
-    else
         result = GameMode::RESULT::WIN_1;
+    else
+        result = GameMode::RESULT::WIN_2;
 
     // 次のフェーズへ
     gameMode->ResetTimer();
@@ -93,7 +96,196 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
     gameMode->SetResult(result);
 }
 
-void RockScissorsPaper::PhaseResult(GameMode* gameMode)
+void RockScissorsPaper::PhaseIdle(GameMode* gameMode)
 {
+    //TODO:押し合いへの遷移を無効化中
+    #if 0
+    if (config::gamerule::rsp::IDLE_SEC < gameMode->TimerSec())
+    {
+        gameMode->ResetTimer();
+        gameMode->SetGameRule<PushHands>();
+        return;
+    }
+
+    #endif // 0
+
+}
+
+//========================================================================================
+// 
+//      PushHands
+// 
+//========================================================================================
+
+//------------------------------------------------------------------------------
+// member function
+//------------------------------------------------------------------------------
+
+void PushHands::Setup(GameMode* gameMode)
+{
+    bool isPlayer01 = gameMode->GetEntrant01()->IsActiveKey();
+    bool isPlayer02 = gameMode->GetEntrant02()->IsActiveKey();
+    _ASSERT_EXPR(isPlayer01 == true || isPlayer02 == true, L"どちらか片方がプレイヤーである必要があります。");
+
+    namespace push_hands = config::gamerule::push_hands;
+
+    /* 必要なプッシュ数を計算 */
+    switch (gameMode->LastResult())
+    {
+    case GameMode::RESULT::DRAW:
+        pushRequire01 = push_hands::BASE_PUSH_COUNT;
+        pushRequire02 = push_hands::BASE_PUSH_COUNT;
+        break;
+
+    case GameMode::RESULT::WIN_1:
+        pushRequire01 = push_hands::BASE_PUSH_COUNT;
+        pushRequire02 = push_hands::BASE_PUSH_COUNT + push_hands::PENALTY_PUSH_COUNT;
+        break;
+
+    case GameMode::RESULT::WIN_2:
+        pushRequire01 = push_hands::BASE_PUSH_COUNT + push_hands::PENALTY_PUSH_COUNT;
+        pushRequire02 = push_hands::BASE_PUSH_COUNT;
+        break;
+
+    default:
+        _ASSERT_EXPR(false, L"resultの値が不適切");
+        break;
+
+    }
+
+}
+
+void PushHands::Run(GameMode* gameMode)
+{
+    switch (phase)
+    {
+    case PHASE::RECEPTION:
+        PhaseReception(gameMode);
+        break;
+    case PHASE::JUDGE:
+        PhaseJudge(gameMode);
+        break;
+    case PHASE::IDLE:
+        PhaseIdle(gameMode);
+        break;
+
+    }
+}
+
+void PushHands::PhaseReception(GameMode* gameMode)
+{
+    CheckPush(gameMode->GetEntrant01(), &pushRequire01);
+    CheckPush(gameMode->GetEntrant02(), &pushRequire02);
+    
+    if (
+        pushRequire01 == 0 || pushRequire02 == 0 ||
+        config::gamerule::push_hands::RECEPTION_SEC < gameMode->TimerSec()
+    )
+    {
+        gameMode->ResetTimer();
+        phase = PHASE::JUDGE;
+        return;
+    }
+}
+void PushHands::CheckPush(Entrant* entrant, int* counter)
+{
+    int trigger = entrant->KeyInput();
+    if (trigger & (entrant->GetKeyBind()->keyLeft | entrant->GetKeyBind()->keyRight))
+    {
+        (*counter)--;
+    }
+}
+
+void PushHands::PhaseJudge(GameMode* gameMode)
+{
+    /* 値を調整 */
+    pushRequire01 = (std::max)(pushRequire01, 0);
+    pushRequire02 = (std::max)(pushRequire02, 0);
+
+    /* 勝敗を判定 */
+    int result = GameMode::RESULT::NONE;
+    
+    gameMode->SetResult(result);
+
+    /* 遷移の準備 */
+    gameMode->ResetTimer();
+    phase = PHASE::IDLE;
+}
+int PushHands::JudgeResult(GameMode* gameMode)
+{
+    int result = GameMode::RESULT::NONE;
+
+    // 同タイミングで押し切った場合
+    if (pushRequire01 == pushRequire02)
+    {
+        result = GameMode::RESULT::DRAW;
+    }
+    // 先に01が押し切った場合
+    else if (pushRequire01 == 0 && pushRequire01 < pushRequire02)
+    {
+        result = GameMode::RESULT::WIN_1;
+    }
+    // 先に02が押し切った場合
+    else if (pushRequire02 == 0 && pushRequire02 < pushRequire01)
+    {
+        result = GameMode::RESULT::WIN_2;
+    }
+    // どちらも時間切れの場合
+    else
+    {
+        bool isPlayer01 = gameMode->GetEntrant01()->IsActiveKey();
+        bool isPlayer02 = gameMode->GetEntrant02()->IsActiveKey();
+
+        // 01がプレイヤーの場合
+        if (isPlayer01 == false && isPlayer02 == true)
+        {
+            result = GameMode::RESULT::WIN_2;
+        }
+        // 02がプレイヤーの場合
+        else if (isPlayer01 == false && isPlayer02 == true)
+        {
+            result = GameMode::RESULT::WIN_1;
+        }
+        // 両方ともNPCの場合
+        else if (isPlayer01 == false && isPlayer02 == false)
+        {
+            result = GameMode::RESULT::DRAW;
+        }
+        // 両方ともプレイヤーの場合
+        else /*if (isPlayer01 == true && isPlayer02)*/
+        {
+            // 同じ場合
+            if (pushRequire01 == pushRequire02)
+            {
+                result = GameMode::RESULT::DRAW;
+            }
+            // 01が押していた場合
+            else if (pushRequire01 < pushRequire02)
+            {
+                result = GameMode::RESULT::WIN_1;
+            }
+            // 02が押していた場合
+            else if (pushRequire02 < pushRequire01)
+            {
+                result = GameMode::RESULT::WIN_2;
+            }
+        }
+    }
+
+    return result;
+}
+
+void PushHands::PhaseIdle(GameMode* gameMode)
+{
+    //TODO:あっち向いてほいへの遷移を無効化中
+    #if 0
+    if (config::gamerule::push_hands::IDLE_SEC < gameMode->TimerSec())
+    {
+        gameMode->ResetTimer();
+        gameMode->SetGameRule<PushHands>();
+        return;
+    }
+
+    #endif // 0
 
 }

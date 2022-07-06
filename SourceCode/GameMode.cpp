@@ -16,8 +16,9 @@ void GameMode::Update(float deltaTime)
 {
     if (nextRule != nullptr)
     {
-        gameRule = std::move(nextRule);
-        nextRule = nullptr;
+        gameRule    = std::move(nextRule);
+        nextRule    = nullptr;
+        result      = RESULT::NONE;
     }
 
     (*gameRule)(this);
