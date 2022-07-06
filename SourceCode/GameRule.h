@@ -27,7 +27,7 @@ private:
     void PhaseShootHand(GameMode* gameMode);
     void PhaseIdle(GameMode* gameMode);
 
-    void DrawDebugGUI(GameMode* gameMode);
+    void DrawDebugGUI();
 
     void Run(GameMode*) override;
 
@@ -65,7 +65,7 @@ private:
     void CheckPush(Entrant* entrant, int* counter);
     int JudgeResult(GameMode* gameMode);
 
-    void DrawDebugGUI(GameMode* gameMode);
+    void DrawDebugGUI();
 
     void Run(GameMode*) override;
 

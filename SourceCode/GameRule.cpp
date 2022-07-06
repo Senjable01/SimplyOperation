@@ -53,7 +53,7 @@ void RockScissorsPaper::Run(GameMode* gameMode)
     }
 
     #if USE_IMGUI
-    DrawDebugGUI(gameMode);
+    DrawDebugGUI();
 
     #endif // USE_IMGUI
 
@@ -107,7 +107,7 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
         result = GameMode::RESULT::DRAW;
     else if (
         (static_cast<int>(entrant01Hand) + 1) % static_cast<int>(ENTRANT_HAND::VALUE)
-        <= static_cast<int>(entrant02Hand)
+        == static_cast<int>(entrant02Hand)
     )
         result = GameMode::RESULT::WIN_1;
     else
@@ -136,13 +136,12 @@ void RockScissorsPaper::PhaseIdle(GameMode* gameMode)
 
 }
 
-void RockScissorsPaper::DrawDebugGUI(GameMode* gameMode)
+void RockScissorsPaper::DrawDebugGUI()
 {
     #if USE_IMGUI
     if (ImGui::CollapsingHeader("RockScissorsPaper", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
     {
         ImGui::Text("Current Phase : %d", static_cast<int>(phase));
-        ImGui::Text("Timer(In Second) : %f", gameMode->TimerSec());
         std::string hand01 = "Entrant01 : " + debugHandName.at(entrant01Hand);
         ImGui::Text(hand01.c_str());
         std::string hand02 = "Entrant02 : " + debugHandName.at(entrant02Hand);
@@ -215,7 +214,7 @@ void PushHands::Run(GameMode* gameMode)
         break;
     }
 
-    DrawDebugGUI(gameMode);
+    DrawDebugGUI();
 }
 
 void PushHands::PhaseReception(GameMode* gameMode)
@@ -249,8 +248,7 @@ void PushHands::PhaseJudge(GameMode* gameMode)
     pushRequire02 = (std::max)(pushRequire02, 0);
 
     /* èüîsÇîªíË */
-    int result = GameMode::RESULT::NONE;
-    
+    int result = JudgeResult(gameMode);
     gameMode->SetResult(result);
 
     /* ëJà⁄ÇÃèÄîı */
@@ -336,13 +334,12 @@ void PushHands::PhaseIdle(GameMode* gameMode)
 
 }
 
-void PushHands::DrawDebugGUI(GameMode* gameMode)
+void PushHands::DrawDebugGUI()
 {
     #if USE_IMGUI
     if (ImGui::CollapsingHeader("PushHands", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
     {
         ImGui::Text("Current Phase : %d", static_cast<int>(phase));
-        ImGui::Text("Timer(In Second) : %f", gameMode->TimerSec());
         ImGui::InputInt("PushRequire01", &pushRequire01, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
         ImGui::InputInt("PushRequire02", &pushRequire02, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
     }

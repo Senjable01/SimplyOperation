@@ -7,6 +7,21 @@
 
 #endif // USE_IMGUI
 
+//------< namespace >---------------------------------------------------------------------
+namespace
+{
+    #if USE_IMGUI
+    std::map<int, std::string> debugResult = {
+        {GameMode::RESULT::DRAW,    "Draw"},
+        {GameMode::RESULT::WIN_1,   "Win01"},
+        {GameMode::RESULT::WIN_2,   "Win02"},
+        {GameMode::RESULT::NONE,    "None"},
+    };
+
+    #endif // USE_IMGUI
+
+}
+
 //========================================================================================
 // 
 //      GameMode
@@ -27,6 +42,12 @@ void GameMode::Update(float deltaTime)
 
     #if USE_IMGUI
     ImGui::Begin("GameMode");
+    if (ImGui::CollapsingHeader("Status", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text("Timer(In Sec) : %f", timerSec);
+        std::string debugLastResult = "LastResult : " + debugResult.at(lastResult);
+        ImGui::Text(debugLastResult.c_str());
+    }
     (*gameRule)(this);
     ImGui::End();
 
