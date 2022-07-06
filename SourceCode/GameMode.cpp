@@ -1,6 +1,11 @@
 //------< include >-----------------------------------------------------------------------
 #include "GameMode.h"
 #include <utility>
+#include "../TechSharkLib/Inc/Configulation.h"
+#if USE_IMGUI
+#include "../TechSharkLib/Inc/ImGuiCtrl.h"
+
+#endif // USE_IMGUI
 
 //========================================================================================
 // 
@@ -21,7 +26,15 @@ void GameMode::Update(float deltaTime)
         result      = RESULT::NONE;
     }
 
+    #if USE_IMGUI
+    ImGui::Begin("GameMode");
     (*gameRule)(this);
+    ImGui::End();
+
+    #else
+    (*gameRule)(this);
+
+    #endif // USE_IMGUI
 
     timerSec += deltaTime;
 }

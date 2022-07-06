@@ -4,6 +4,26 @@
 #include "Config.h"
 #include "../TechSharkLib/Inc/KeyAssign.h"
 #include <algorithm>
+#include "../TechSharkLib/Inc/Configulation.h"
+#if USE_IMGUI
+#include "../TechSharkLib/Inc/ImGuiCtrl.h"
+
+#endif // USE_IMGUI
+
+//------< namespace >---------------------------------------------------------------------
+namespace
+{
+    #if USE_IMGUI
+    std::map<ENTRANT_HAND, std::string> debugHandName = {
+        {ENTRANT_HAND::ROCK,        "Rock"},
+        {ENTRANT_HAND::SCISSORS,    "Scissors"},
+        {ENTRANT_HAND::PAPER,       "Paper"},
+        {ENTRANT_HAND::VALUE,       "VALUE"},
+        {ENTRANT_HAND::NONE,        "None"},
+    };
+    #endif // USE_IMGUI
+
+}
 
 //========================================================================================
 // 
@@ -31,6 +51,11 @@ void RockScissorsPaper::Run(GameMode* gameMode)
         PhaseIdle(gameMode);
         break;
     }
+
+    #if USE_IMGUI
+    DrawDebugGUI(gameMode);
+
+    #endif // USE_IMGUI
 
 }
 
@@ -109,6 +134,22 @@ void RockScissorsPaper::PhaseIdle(GameMode* gameMode)
 
     #endif // 0
 
+}
+
+void RockScissorsPaper::DrawDebugGUI(GameMode* gameMode)
+{
+    #if USE_IMGUI
+    if (ImGui::CollapsingHeader("RockScissorsPaper", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text("Current Phase : %d", static_cast<int>(phase));
+        ImGui::Text("Timer(In Second) : %f", gameMode->TimerSec());
+        std::string hand01 = "Entrant01 : " + debugHandName.at(entrant01Hand);
+        ImGui::Text(hand01.c_str());
+        std::string hand02 = "Entrant02 : " + debugHandName.at(entrant02Hand);
+        ImGui::Text(hand02.c_str());
+    }
+
+    #endif // USE_IMGUI
 }
 
 //========================================================================================
