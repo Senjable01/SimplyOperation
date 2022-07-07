@@ -79,3 +79,33 @@ public:
     void Setup(GameMode* gameMode);
 
 };
+
+//========================================================================================
+// 
+//      DirectionBattle
+// 
+//========================================================================================
+class DirectionBattle : public Behavior<GameMode>
+{
+private:
+    enum class PHASE {
+        SETUP = 0,
+        RECEPTION,
+        JUDGE,
+        IDLE
+    } phase;
+    void PhaseSetup(GameMode* gameMode);
+    void PhaseReception(GameMode* gameMode);
+    void PhaseJudge(GameMode* gameMode);
+    void PhaseIdle(GameMode* gameMode);
+
+    void CheckDirection(Entrant* entrant);
+    void JudgeResult(GameMode* gameMode);
+
+    void Run(GameMode*) override;
+    void DrawDebugGUI();
+
+public:
+    DirectionBattle() : phase{PHASE::SETUP} {}
+
+};
