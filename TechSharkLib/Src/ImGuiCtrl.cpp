@@ -25,7 +25,7 @@ namespace TechSharkLib
         {
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
-            ImGui::GetIO().Fonts->AddFontFromFileTTF("C:/Windows/Fonts/consola.ttf", 14.0f, nullptr, glyphRangesJapanese);
+            ImGui::GetIO().Fonts->AddFontFromFileTTF("C:/Windows/Fonts/meiryo.ttc", 18.0f, nullptr, glyphRangesJapanese);
             ImGui_ImplWin32_Init(windowHandle);
             _ASSERT_EXPR(immediateContext, L"immediateContext‚ÌŽæ“¾‚ÉŽ¸”s");
             ImGui_ImplDX11_Init(device, immediateContext);

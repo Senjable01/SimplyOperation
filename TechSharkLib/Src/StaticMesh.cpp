@@ -61,7 +61,6 @@ namespace TechSharkLib
         HRESULT hr{S_OK};
 
         //////// SRVを作成 ////////
-        //HACK:02 リリース時に法線マップが描画されることがある。
         auto LoadSRV = [&hr, &device, texture2dDesc = D3D11_TEXTURE2D_DESC{}, this](
                 const std::wstring& texPath, ID3D11ShaderResourceView** srv
             ) mutable -> void {
@@ -97,7 +96,7 @@ namespace TechSharkLib
                 if (0 < material.normalMapPath.size())
                     LoadSRV(material.normalMapPath, &material.normalMapSRV);
                 else
-                    CreateDummyColorMap(device, &material.normalMapSRV, 16);
+                    CreateDummyNormalMap(device, &material.normalMapSRV, 16);
             }
         }
 
@@ -205,6 +204,15 @@ namespace TechSharkLib
 
     StaticMesh::~StaticMesh()
     {
+        ResourceManager& resourceManager = *(ResourceManager::GetInstance());
+        for (auto& mtl : materialData)
+        {
+            if (mtl.textureSRV)
+                resourceManager.ReleaseShaderResourceView(mtl.textureSRV);
+            if (mtl.normalMapSRV)
+                resourceManager.ReleaseShaderResourceView(mtl.normalMapSRV);
+        }
+
         SafeRelease(vertexBuffer);
         SafeRelease(indexBuffer);
         SafeRelease(vertexShader);
