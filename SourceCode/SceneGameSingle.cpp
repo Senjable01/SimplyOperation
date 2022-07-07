@@ -26,7 +26,7 @@ using TechSharkLib::GameObject;
 using TechSharkLib::Transform3D;
 using TechSharkLib::StaticMeshRenderer;
 
-//------< include >-----------------------------------------------------------------------
+//------< namespace >---------------------------------------------------------------------
 namespace
 {
     SpriteID       backID       = {};
@@ -164,7 +164,14 @@ void SceneGameSingle::Update(float deltaTime)
 void SceneGameSingle::Render()
 {
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID/*_CULLING*/);
-    TechSharkLib::Render(backID, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TechSharkLib::Render(
+        backID,
+        0.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f
+    );
 
     if (drawBrickByBatch)
     {
@@ -201,7 +208,7 @@ void SceneGameSingle::Render()
         }
     }
 
-    TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID/*_CULLING*/);
+    TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
     TechSharkLib::Project(&camera, lightDirection);
     DirectX::XMMATRIX mtrxScale     = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
     DirectX::XMMATRIX mtrxRotate    = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
