@@ -7,6 +7,9 @@
 
 #endif // USE_IMGUI
 
+//------< pragma >------------------------------------------------------------------------
+#pragma warning (disable : 26812)
+
 //------< namespace >---------------------------------------------------------------------
 namespace
 {
@@ -41,6 +44,8 @@ void GameMode::Update(float deltaTime)
     }
 
     #if USE_IMGUI
+    ImGui::SetNextWindowPos(ImVec2(200, 100), ImGuiCond_::ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(300, 400), ImGuiCond_::ImGuiCond_Once);
     ImGui::Begin("GameMode");
     if (ImGui::CollapsingHeader("Status", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
     {

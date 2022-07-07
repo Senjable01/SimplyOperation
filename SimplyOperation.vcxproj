@@ -186,6 +186,7 @@
     <ClInclude Include="TechSharkLib\ImGui\imstb_textedit.h" />
     <ClInclude Include="TechSharkLib\ImGui\imstb_truetype.h" />
     <ClInclude Include="TechSharkLib\Inc\Arithmetic.h" />
+    <ClInclude Include="TechSharkLib\Inc\AudioManager.h" />
     <ClInclude Include="TechSharkLib\Inc\BinaryData.h" />
     <ClInclude Include="TechSharkLib\Inc\BlendState.h" />
     <ClInclude Include="TechSharkLib\Inc\Camera.h" />
@@ -196,6 +197,8 @@
     <ClInclude Include="TechSharkLib\Inc\DebugTools.h" />
     <ClInclude Include="TechSharkLib\Inc\DepthStencilState.h" />
     <ClInclude Include="TechSharkLib\Inc\DirectX11.h" />
+    <ClInclude Include="TechSharkLib\Inc\DirectXTKMusic.h" />
+    <ClInclude Include="TechSharkLib\Inc\DirectXTKSound.h" />
     <ClInclude Include="TechSharkLib\Inc\DummyTexture.h" />
     <ClInclude Include="TechSharkLib\Inc\EntityID.h" />
     <ClInclude Include="TechSharkLib\Inc\FrameStatus.h" />
@@ -246,6 +249,7 @@
     <ClCompile Include="TechSharkLib\ImGui\imgui_tables.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="TechSharkLib\Src\Arithmetic.cpp" />
+    <ClCompile Include="TechSharkLib\Src\AudioManager.cpp" />
     <ClCompile Include="TechSharkLib\Src\BinaryData.cpp" />
     <ClCompile Include="TechSharkLib\Src\BlendState.cpp" />
     <ClCompile Include="TechSharkLib\Src\Camera.cpp" />
@@ -254,6 +258,8 @@
     <ClCompile Include="TechSharkLib\Src\DebugTools.cpp" />
     <ClCompile Include="TechSharkLib\Src\DepthStencilState.cpp" />
     <ClCompile Include="TechSharkLib\Src\DirectX11.cpp" />
+    <ClCompile Include="TechSharkLib\Src\DirectXTKMusic.cpp" />
+    <ClCompile Include="TechSharkLib\Src\DirectXTKSound.cpp" />
     <ClCompile Include="TechSharkLib\Src\DummyTexture.cpp" />
     <ClCompile Include="TechSharkLib\Src\FrameStatus.cpp" />
     <ClCompile Include="TechSharkLib\Src\GameObject.cpp" />

@@ -207,6 +207,15 @@
     <ClInclude Include="SourceCode\Entrant.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\AudioManager.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DirectXTKMusic.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TechSharkLib\Inc\DirectXTKSound.h">
+      <Filter>TechSharkLib\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -361,6 +370,15 @@
     </ClCompile>
     <ClCompile Include="SourceCode\GameRule.cpp">
       <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\AudioManager.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DirectXTKMusic.cpp">
+      <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TechSharkLib\Src\DirectXTKSound.cpp">
+      <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

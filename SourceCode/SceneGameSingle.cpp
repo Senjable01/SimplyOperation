@@ -130,8 +130,8 @@ void SceneGameSingle::Update(float deltaTime)
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
-    ImGui::Text("Load Num %d", loadNum);
-    if (ImGui::Button("Reload"))
+    ImGui::Text(u8"ロード数 %d", loadNum);
+    if (ImGui::Button(u8"リロード"))
     {
         Scene::ChangeScene<SceneGameSingle>();
         ImGui::End();
@@ -142,14 +142,14 @@ void SceneGameSingle::Update(float deltaTime)
     ImGui::NewLine();
     if (ImGui::CollapsingHeader("2D"))
     {
-        ImGui::Checkbox("DrawBrickByBatch", &drawBrickByBatch);
+        ImGui::Checkbox(u8"SpriteBatchで描画", &drawBrickByBatch);
         ImGui::SliderInt("column", &brickColumn, 0, MAX_COLUMN);
         ImGui::SliderInt("row", &brickRow, 0, MAX_ROW);
     }
     camera.DrawDebugGUI();
     if (ImGui::CollapsingHeader("3D"))
     {
-        ImGui::SliderInt("OBJ Type", &meshIndex, HAND::ROCK, HAND::PAPER);
+        ImGui::SliderInt(u8"モデルの種類", &meshIndex, HAND::ROCK, HAND::PAPER);
         ImGui::SliderFloat3("light", &lightDirection.x, -20.0f, 20.0f);
         ImGui::SliderFloat3("position", &position.x, -50.0f, 50.0f);
         ImGui::InputFloat3("scale", &scale.x);
