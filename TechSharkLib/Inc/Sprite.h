@@ -77,6 +77,7 @@ namespace TechSharkLib
         {
             vertices.emplace_back(position, color, uv);
         }
+        bool IsZeroVertex() { return vertices.empty(); }
 
     public:
         SpriteBase(ID3D11Device* device, const wchar_t* filePath, size_t vertexCapacity);

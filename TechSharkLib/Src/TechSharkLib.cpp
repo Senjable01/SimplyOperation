@@ -6,6 +6,7 @@
 #include "../Inc/StaticMeshManager.h"
 #include "../Inc/Projector.h"
 #include "../Inc/Input.h"
+#include "../Inc/AudioManager.h"
 #include "../Inc/ResourceManager.h"
 #if USE_IMGUI
 #include "../Inc/ImGuiCtrl.h"
@@ -34,6 +35,7 @@ namespace TechSharkLib
         StaticMeshManager   staticMeshManager   = {};
         Projector           projector           = {};
         InputManager        inputManager        = {};
+        AudioManager        audioManager        = {};
         ResourceManager*    resourceManager     = nullptr; // (キャッシュ用)
 
     } manager;
@@ -51,6 +53,7 @@ namespace TechSharkLib
         manager.staticMeshManager.Initialize(manager.graphics.GetDevice(), manager.graphics.GetContext());
         manager.projector.Initialize(manager.graphics.GetDevice(), manager.graphics.GetContext());
         manager.inputManager.Initialize(windowHandle);
+        manager.audioManager.Initialize();
         #if USE_IMGUI
         imgui::Initialize(windowHandle, manager.graphics.GetDevice(), manager.graphics.GetContext());
 
@@ -64,6 +67,7 @@ namespace TechSharkLib
         #endif // USE_IMGUI
         manager.spriteManager.ReleaseAll();
         manager.staticMeshManager.ReleaseAll();
+        manager.audioManager.Uninitialize();
         manager.projector.Uninitialize();
         manager.resourceManager->Clear();
         manager.graphics.Uninitialze();
@@ -251,6 +255,88 @@ namespace TechSharkLib
     const KeyBit& keyState(size_t gamePadNo)
     {
         return manager.inputManager.keyState(gamePadNo);
+    }
+
+    /* Audio */
+    void UpdateAudio(float deltaTime)
+    {
+        manager.audioManager.Update(deltaTime);
+    }
+    void LoadMusic(int musicNo, const wchar_t* waveFilePath, float volume)
+    {
+        manager.audioManager.LoadMusic(musicNo, waveFilePath, volume);
+    }
+    void Play(int musicNo, bool isLoop)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Play(isLoop);
+    }
+    void Stop(int musicNo)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Stop();
+    }
+    void Pause(int musicNo)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Pause();
+    }
+    void Resume(int musicNo)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Resume();
+    }
+    void Fade(int musicNo, float sec, float volume)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Fade(sec, volume);
+    }
+    float Volume(int musicNo)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->Volume();
+    }
+    void SetVolume(int musicNo, float volume)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->SetVolume(volume);
+    }
+    bool IsLoop(int musicNo)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->IsLoop();
+    }
+    float Pan(int musicNo)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->Pan();
+    }
+    float AdjustPan(int musicNo, float addPan)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->AdjustPan(addPan);
+    }
+    float Pitch(int musicNo)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->Pitch();
+    }
+    float AdjustPitch(int musicNo, float addPitch)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->AdjustPitch(addPitch);
+    }
+    bool IsInUse(int musicNo)
+    {
+        return manager.audioManager.GetMusicRef(musicNo)->IsInUse();
+    }
+    void Release(int musicNo)
+    {
+        manager.audioManager.GetMusicRef(musicNo)->Unload();
+    }
+    void LoadSound(int soundNo, const wchar_t* xwbFilePath, float volume)
+    {
+        manager.audioManager.LoadSound(soundNo, xwbFilePath, volume);
+    }
+    void Play(int xwbNo, int trackNo)
+    {
+        manager.audioManager.GetSoundRef(xwbNo)->Play(trackNo);
+    }
+    void Stop(int xwbNo, int trackNo)
+    {
+        manager.audioManager.GetSoundRef(xwbNo)->Stop(trackNo);
+    }
+    void SetVolume(int xwbNo, int trackNo, float volume)
+    {
+        manager.audioManager.GetSoundRef(xwbNo)->SetVolume(trackNo, volume);
     }
 
 }

@@ -430,6 +430,7 @@ namespace TechSharkLib
     }
     void SpriteBatch::End(ID3D11DeviceContext* immediateContext)
     {
+        if (IsZeroVertex()) return; // 描画する頂点数(ポリゴン)が0ならリターン
         RenderFinalize(immediateContext, D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     }
 

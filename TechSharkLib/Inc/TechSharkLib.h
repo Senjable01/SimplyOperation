@@ -112,6 +112,30 @@ namespace TechSharkLib
     const KeyBit& keyTriggerUp(size_t gamePadNo);
     const KeyBit& keyState(size_t gamePadNo);
 
+    /* Audio */
+    //UNDONE:09 音楽用、サウンド用のIDを用意する。
+    void UpdateAudio(float deltaTime);
+    void LoadMusic(int musicNo, const wchar_t* waveFilePath, float volume);
+    void Play(int musicNo, bool isLoop);
+    void Stop(int musicNo);
+    void Pause(int musicNo);
+    void Resume(int musicNo);
+    void Fade(int musicNo, float sec, float volume);
+    float Volume(int musicNo);
+    void SetVolume(int musicNo, float volume);
+    // DirectX::SoundState State(int musicNo);
+    bool IsLoop(int musicNo);
+    float Pan(int musicNo);
+    float AdjustPan(int musicNo, float addPan);
+    float Pitch(int musicNo);
+    float AdjustPitch(int musicNo, float addPitch);
+    bool IsInUse(int musicNo);
+    void Release(int musicNo);
+    void LoadSound(int soundNo, const wchar_t* xwbFilePath, float volume);
+    void Play(int xwbNo, int trackNo);
+    void Stop(int xwbNo, int trackNo);
+    void SetVolume(int xwbNo, int trackNo, float volume);
+
 }
 
 #endif // !INCLUDED_TECH_SHARK_LIB_H
