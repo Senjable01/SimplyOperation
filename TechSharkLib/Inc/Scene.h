@@ -6,6 +6,7 @@
 
 //------< include >-----------------------------------------------------------------------
 #include <memory>
+#include <utility>
 
 //**************************************************************************************************
 // 
@@ -39,10 +40,10 @@ namespace TechSharkLib
 
         std::unique_ptr<Scene>&& Run();
 
-        template<typename Arg> void ChangeScene()
+        template<typename Arg, typename... Args> void ChangeScene(Args&&... args)
         {
             _ASSERT_EXPR(nextScene == nullptr, L"シーン遷移前に既に呼び出されています。");
-            nextScene = std::make_unique<Arg>(); // 次のシーンを作成
+            nextScene = std::make_unique<Arg>(std::forward<Args>(args)...); // 次のシーンを作成
         }
 
     };
@@ -66,10 +67,10 @@ namespace TechSharkLib
         SceneManager(SceneManager&&) noexcept = delete;
         SceneManager& operator=(SceneManager&&) noexcept = delete;
 
-        template<typename Arg> void Execute()
+        template<typename Arg, typename... Args> void Execute(Args&&... args)
         {
             _ASSERT_EXPR(currentScene == nullptr, L"ゲーム内に既に呼び出されています。");
-            currentScene = std::make_unique<Arg>();
+            currentScene = std::make_unique<Arg>(std::forward<Args>(args)...);
             while (currentScene != nullptr)
             {
                 currentScene = std::move(currentScene->Run());

@@ -11,6 +11,8 @@
 class SceneResultSingle : public TechSharkLib::Scene
 {
 private:
+    int result;
+
     void Init() override;
     void Setup() override;
     void Update(float/*deltaTime*/) override;
@@ -18,7 +20,7 @@ private:
     void Deinit() override;
 
 public:
-    SceneResultSingle() : TechSharkLib::Scene{} {}
+    SceneResultSingle(int result) : result{result}, TechSharkLib::Scene{} {}
     ~SceneResultSingle() override {}
 
 };

@@ -70,4 +70,5 @@ void GameMode::Clear()
     entrant02 = nullptr;
     gameRule.reset(nullptr);
     nextRule.reset(nullptr);
+    isFinished = false;
 }
