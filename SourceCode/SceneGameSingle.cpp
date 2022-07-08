@@ -102,7 +102,7 @@ void SceneGameSingle::Setup()
 
     CreateObject();
 
-    gameMode.SetGameRule<RockScissorsPaper>();
+    gameMode.SetNextRule<RockScissorsPaper>();
 
     loadNum++;
 }

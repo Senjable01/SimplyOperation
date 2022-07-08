@@ -37,5 +37,11 @@ namespace config
             constexpr float IDLE_SEC            = 1.5f;
         }
 
+        namespace direction_battle
+        {
+            constexpr float RECEPTION_SEC   = 1.5f;
+            constexpr float IDLE_SEC        = 1.5f;
+        }
+
     }
 }

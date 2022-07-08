@@ -21,6 +21,13 @@ namespace
         {ENTRANT_HAND::VALUE,       "VALUE"},
         {ENTRANT_HAND::NONE,        "None"},
     };
+    std::map<int, std::string> debugDirection = {
+        { -1,   "None" },
+        { 0,    "Left" },
+        { 1,    "Up" },
+        { 2,    "Right" },
+        { 3,    "Down" }
+    };
     #endif // USE_IMGUI
 
 }
@@ -128,7 +135,7 @@ void RockScissorsPaper::PhaseIdle(GameMode* gameMode)
     if (config::gamerule::rsp::IDLE_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
-        gameMode->SetGameRule<PushHands>();
+        gameMode->SetNextRule<PushHands>();
         return;
     }
 
@@ -343,5 +350,152 @@ void PushHands::DrawDebugGUI()
         ImGui::InputInt("PushRequire01", &pushRequire01, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
         ImGui::InputInt("PushRequire02", &pushRequire02, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
     }
+    #endif // USE_IMGUI
+}
+
+//========================================================================================
+// 
+//      DirectionBattle
+// 
+//========================================================================================
+
+//------------------------------------------------------------------------------
+// member function
+//------------------------------------------------------------------------------
+
+void DirectionBattle::Run(GameMode* gameMode)
+{
+    switch (phase)
+    {
+    case PHASE::SETUP:
+        PhaseSetup(gameMode);
+        /*fallthrough*/
+
+    case PHASE::RECEPTION:
+        PhaseReception(gameMode);
+        break;
+
+    case PHASE::JUDGE:
+        PhaseJudge(gameMode);
+        break;
+
+    case PHASE::IDLE:
+        PhaseIdle(gameMode);
+        break;
+    }
+
+    DrawDebugGUI();
+}
+
+void DirectionBattle::PhaseSetup(GameMode* gameMode)
+{
+    switch (gameMode->LastResult())
+    {
+    case GameMode::RESULT::DRAW:
+        // 引き分けなら最初に戻る
+        gameMode->SetNextRule<RockScissorsPaper>();
+        return;
+    case GameMode::RESULT::WIN_1:
+        roleFlag = ROLE::ATK_DEF;
+        break;
+    case GameMode::RESULT::WIN_2:
+        roleFlag = ROLE::DEF_ATK;
+        break;
+    default:
+        _ASSERT_EXPR(false, L"resultの値が不適切");
+        break;
+    }
+
+    phase = PHASE::RECEPTION;
+}
+
+void DirectionBattle::PhaseReception(GameMode* gameMode)
+{
+    if (config::gamerule::direction_battle::RECEPTION_SEC < gameMode->TimerSec())
+    {
+        gameMode->ResetTimer();
+        phase = PHASE::JUDGE;
+        return;
+    }
+
+    if (direction01 == DIRECTION::NONE)
+        direction01 = CheckDirection(gameMode->GetEntrant01());
+    if (direction02 == DIRECTION::NONE)
+        direction02 = FlipHorizontal(CheckDirection(gameMode->GetEntrant01()));
+}
+int DirectionBattle::CheckDirection(Entrant* entrant)
+{
+    int singleKey   = entrant->KeyInputSingle();
+    auto keyBind    = entrant->GetKeyBind();
+
+    if (singleKey == NULL)
+        return DIRECTION::NONE;
+    if (singleKey == keyBind->keyUp)
+        return DIRECTION::UP;
+    if (singleKey == keyBind->keyDown)
+        return DIRECTION::DOWN;
+    if (singleKey == keyBind->keyLeft)
+        return DIRECTION::LEFT;
+    if (singleKey == keyBind->keyRight)
+        return DIRECTION::RIGHT;
+
+    return DIRECTION::NONE;
+}
+
+void DirectionBattle::PhaseJudge(GameMode* gameMode)
+{
+    /* 向きを決めていないなら自動で決定する。 */
+    DIRECTION allDirection[] = { DIRECTION::LEFT, DIRECTION::UP, DIRECTION::RIGHT, DIRECTION::DOWN };
+    if (direction01 == DIRECTION::NONE)
+        direction01 == allDirection[std::rand() % ARRAYSIZE(allDirection)];
+    if (direction02 == DIRECTION::NONE)
+        direction02 == allDirection[std::rand() % ARRAYSIZE(allDirection)];
+
+    /* 勝敗を決定 */
+    int result = JudgeResult(gameMode);
+    gameMode->SetResult(result);
+
+    /* 遷移の準備 */
+    gameMode->ResetTimer();
+    phase = PHASE::IDLE;
+}
+int DirectionBattle::JudgeResult(GameMode* gameMode)
+{
+    if (direction01 != direction02)
+        return GameMode::RESULT::DRAW;
+
+    if (roleFlag == ROLE::ATK_DEF)
+        return GameMode::RESULT::WIN_1;
+    else if (roleFlag == ROLE::DEF_ATK)
+        return GameMode::RESULT::WIN_2;
+
+    _ASSERT_EXPR(false, L"roleFlgの値が不適切");
+}
+
+void DirectionBattle::PhaseIdle(GameMode* gameMode)
+{
+    if (config::gamerule::push_hands::IDLE_SEC < gameMode->TimerSec())
+    {
+        gameMode->ResetTimer();
+        if (gameMode->LastResult() == GameMode::RESULT::DRAW)
+            gameMode->SetNextRule<RockScissorsPaper>();
+        else
+            gameMode->Finish();
+        return;
+    }
+}
+
+void DirectionBattle::DrawDebugGUI()
+{
+    #if USE_IMGUI
+    if (ImGui::CollapsingHeader(u8"あっち向いてほい", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text(u8"現在フェーズ : %d", static_cast<int>(phase));
+        std::string entrant01 = "Entrant01 : " + debugDirection.at(direction01);
+        ImGui::Text(entrant01.c_str());
+        std::string entrant02 = "Entrant02 : " + debugDirection.at(direction02);
+        ImGui::Text(entrant02.c_str());
+    }
+
     #endif // USE_IMGUI
 }

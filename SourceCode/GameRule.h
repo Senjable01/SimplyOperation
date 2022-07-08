@@ -99,13 +99,26 @@ private:
     void PhaseJudge(GameMode* gameMode);
     void PhaseIdle(GameMode* gameMode);
 
-    void CheckDirection(Entrant* entrant);
-    void JudgeResult(GameMode* gameMode);
+    enum ROLE : std::uint8_t { ATK_DEF = (1 << 1), DEF_ATK = (1 << 0) };
+    std::uint8_t roleFlag;
+    enum DIRECTION : int { LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3, NONE = -1 };
+    int direction01, direction02;
+    int CheckDirection(Entrant* entrant);
+    int FlipHorizontal(int direction)
+    {
+        return (direction % 2 == 0) ? (direction + 2) % 2 : direction;
+    }
+    int JudgeResult(GameMode* gameMode);
 
     void Run(GameMode*) override;
     void DrawDebugGUI();
 
 public:
-    DirectionBattle() : phase{PHASE::SETUP} {}
+    DirectionBattle() : 
+        phase{PHASE::SETUP},
+        roleFlag{0x00},
+        direction01{DIRECTION::NONE}, direction02{DIRECTION::NONE}
+    {
+    }
 
 };
