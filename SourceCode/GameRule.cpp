@@ -329,11 +329,11 @@ int PushHands::JudgeResult(GameMode* gameMode)
 void PushHands::PhaseIdle(GameMode* gameMode)
 {
     //TODO:‚ ‚Á‚¿Œü‚¢‚Ä‚Ù‚¢‚Ö‚Ì‘JˆÚ‚ğ–³Œø‰»’†
-    #if 0
+    #if 1
     if (config::gamerule::push_hands::IDLE_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
-        gameMode->SetGameRule<PushHands>();
+        gameMode->SetNextRule<DirectionBattle>();
         return;
     }
 
@@ -419,9 +419,14 @@ void DirectionBattle::PhaseReception(GameMode* gameMode)
     }
 
     if (direction01 == DIRECTION::NONE)
+    {
         direction01 = CheckDirection(gameMode->GetEntrant01());
+    }
     if (direction02 == DIRECTION::NONE)
-        direction02 = FlipHorizontal(CheckDirection(gameMode->GetEntrant01()));
+    {
+        //direction02 = FlipHorizontal(CheckDirection(gameMode->GetEntrant01()));
+        direction02 = CheckDirection(gameMode->GetEntrant02());
+    }
 }
 int DirectionBattle::CheckDirection(Entrant* entrant)
 {
@@ -447,9 +452,17 @@ void DirectionBattle::PhaseJudge(GameMode* gameMode)
     /* Œü‚«‚ğŒˆ‚ß‚Ä‚¢‚È‚¢‚È‚ç©“®‚ÅŒˆ’è‚·‚éB */
     DIRECTION allDirection[] = { DIRECTION::LEFT, DIRECTION::UP, DIRECTION::RIGHT, DIRECTION::DOWN };
     if (direction01 == DIRECTION::NONE)
-        direction01 == allDirection[std::rand() % ARRAYSIZE(allDirection)];
+        direction01 = allDirection[std::rand() % ARRAYSIZE(allDirection)];
     if (direction02 == DIRECTION::NONE)
-        direction02 == allDirection[std::rand() % ARRAYSIZE(allDirection)];
+    {
+        #if DEBUG_MODE
+        direction02 = DIRECTION::UP;
+
+        #else
+        direction02 = allDirection[std::rand() % ARRAYSIZE(allDirection)];
+
+        #endif // DEBUG_MODE
+    }
 
     /* Ÿ”s‚ğŒˆ’è */
     int result = JudgeResult(gameMode);
@@ -474,7 +487,7 @@ int DirectionBattle::JudgeResult(GameMode* gameMode)
 
 void DirectionBattle::PhaseIdle(GameMode* gameMode)
 {
-    if (config::gamerule::push_hands::IDLE_SEC < gameMode->TimerSec())
+    if (config::gamerule::direction_battle::IDLE_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
         if (gameMode->LastResult() == GameMode::RESULT::DRAW)

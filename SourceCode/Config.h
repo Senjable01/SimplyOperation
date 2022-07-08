@@ -39,8 +39,8 @@ namespace config
 
         namespace direction_battle
         {
-            constexpr float RECEPTION_SEC   = 1.5f;
-            constexpr float IDLE_SEC        = 1.5f;
+            constexpr float RECEPTION_SEC   = 2.5f;
+            constexpr float IDLE_SEC        = 2.5f;
         }
 
     }
