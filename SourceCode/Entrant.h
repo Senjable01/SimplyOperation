@@ -28,7 +28,11 @@ struct EntrantDesc
 // 
 //========================================================================================
 enum class ENTRANT_HAND {
-    ROCK = 0, SCISSORS, PAPER, VALUE, NONE = -1
+    ROCK = 0, SCISSORS, PAPER,
+    FINGER_1P, FINGER_2P,
+    VALUE,
+    HAND_VALUE = 3,
+    NONE = -1
 };
 
 //========================================================================================
@@ -39,6 +43,9 @@ enum class ENTRANT_HAND {
 class Entrant : public TechSharkLib::Component
 {
 TSL_DEFINE_COMPONENT(Entrant);
+public:
+    enum DIRECTION : int {LEFT, UP, RIGHT, DOWN, DIRECTION_NUM, NONE = -1};
+
 private:
     TechSharkLib::Transform3D* transform;
 
@@ -56,6 +63,9 @@ private:
     static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(TYPE::VALUE)> heads;
     bool isSecondEntrant;
 
+    DirectX::XMFLOAT3 rotations[DIRECTION::DIRECTION_NUM];
+    int direction;
+
     EntrantDesc description;
 
 public:
@@ -65,6 +75,7 @@ public:
         keyBind{}, activeKey{false},
         meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
         isSecondEntrant{false},
+        rotations{}, direction{DIRECTION::NONE},
         description{desc},
         TechSharkLib::Component{selfId, owner}
     {
@@ -83,6 +94,7 @@ public:
     const KeyBind* GetKeyBind() const { return &keyBind; }
 
     void SetMeshNo(ENTRANT_HAND hand);
+    void SetDirection(int direction) { this->direction = direction; }
 
     static void LoadMeshes();
     static void UnloadMeshes();

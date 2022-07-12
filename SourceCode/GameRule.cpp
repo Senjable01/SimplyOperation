@@ -18,7 +18,7 @@ namespace
         {ENTRANT_HAND::ROCK,        "Rock"},
         {ENTRANT_HAND::SCISSORS,    "Scissors"},
         {ENTRANT_HAND::PAPER,       "Paper"},
-        {ENTRANT_HAND::VALUE,       "VALUE"},
+        {ENTRANT_HAND::HAND_VALUE,  "HAND_VALUE"},
         {ENTRANT_HAND::NONE,        "None"},
     };
     std::map<int, std::string> debugDirection = {
@@ -100,9 +100,9 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
     // 手を出していないならランダムに決める
     ENTRANT_HAND hands[] = { ENTRANT_HAND::ROCK, ENTRANT_HAND::SCISSORS, ENTRANT_HAND::PAPER };
     if (entrant01Hand == ENTRANT_HAND::NONE)
-        entrant01Hand = hands[std::rand() % static_cast<int>(ENTRANT_HAND::VALUE)];
+        entrant01Hand = hands[std::rand() % (static_cast<int>(ENTRANT_HAND::HAND_VALUE))];
     if (entrant02Hand == ENTRANT_HAND::NONE)
-        entrant02Hand = hands[std::rand() % static_cast<int>(ENTRANT_HAND::VALUE)];
+        entrant02Hand = hands[std::rand() % (static_cast<int>(ENTRANT_HAND::HAND_VALUE))];
 
     // 手をセット
     gameMode->GetEntrant01()->SetMeshNo(entrant01Hand);
@@ -113,7 +113,7 @@ void RockScissorsPaper::PhaseShootHand(GameMode* gameMode)
     if (entrant01Hand == entrant02Hand)
         result = GameMode::RESULT::DRAW;
     else if (
-        (static_cast<int>(entrant01Hand) + 1) % static_cast<int>(ENTRANT_HAND::VALUE)
+        (static_cast<int>(entrant01Hand) + 1) % static_cast<int>(ENTRANT_HAND::HAND_VALUE)
         == static_cast<int>(entrant02Hand)
     )
         result = GameMode::RESULT::WIN_1;
@@ -389,6 +389,9 @@ void DirectionBattle::Run(GameMode* gameMode)
 
 void DirectionBattle::PhaseSetup(GameMode* gameMode)
 {
+    gameMode->GetEntrant01()->SetMeshNo(ENTRANT_HAND::NONE);
+    gameMode->GetEntrant02()->SetMeshNo(ENTRANT_HAND::NONE);
+
     switch (gameMode->LastResult())
     {
     case GameMode::RESULT::DRAW:
@@ -456,7 +459,7 @@ void DirectionBattle::PhaseJudge(GameMode* gameMode)
     if (direction02 == DIRECTION::NONE)
     {
         #if DEBUG_MODE
-        direction02 = DIRECTION::UP;
+        direction02 = DIRECTION::RIGHT;
 
         #else
         direction02 = allDirection[std::rand() % ARRAYSIZE(allDirection)];
@@ -469,6 +472,11 @@ void DirectionBattle::PhaseJudge(GameMode* gameMode)
     gameMode->SetResult(result);
 
     /* 遷移の準備 */
+    gameMode->GetEntrant01()->SetMeshNo(ENTRANT_HAND::FINGER_1P);
+    gameMode->GetEntrant01()->SetDirection(direction01);
+    gameMode->GetEntrant02()->SetMeshNo(ENTRANT_HAND::FINGER_2P);
+    gameMode->GetEntrant02()->SetDirection(direction02);
+
     gameMode->ResetTimer();
     phase = PHASE::IDLE;
 }
@@ -491,7 +499,13 @@ void DirectionBattle::PhaseIdle(GameMode* gameMode)
     {
         gameMode->ResetTimer();
         if (gameMode->LastResult() == GameMode::RESULT::DRAW)
+        {
+            gameMode->GetEntrant01()->SetMeshNo(ENTRANT_HAND::NONE);
+            gameMode->GetEntrant01()->SetDirection(Entrant::DIRECTION::NONE);
+            gameMode->GetEntrant02()->SetMeshNo(ENTRANT_HAND::NONE);
+            gameMode->GetEntrant02()->SetDirection(Entrant::DIRECTION::NONE);
             gameMode->SetNextRule<RockScissorsPaper>();
+        }
         else
             gameMode->Finish();
         return;

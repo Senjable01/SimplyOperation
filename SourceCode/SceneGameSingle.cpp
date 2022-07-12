@@ -87,12 +87,18 @@ void SceneGameSingle::Setup()
 
 void SceneGameSingle::CreateGameObjects(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode)
 {
-    recipe::CreateMesh(
-        objManager,
-        L"./Data/Models/Haikei/Haikei.obj",
-        {0.0f, 0.0f, 24.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
-        "Haikei"
-    );
+    //recipe::CreateMesh(
+    //    objManager,
+    //    L"./Data/Models/Haikei/Haikei.obj",
+    //    {0.0f, 0.0f, 24.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
+    //    "Haikei"
+    //);
+    //recipe::CreateMesh(
+    //    objManager,
+    //    L"./Data/Models/Hand_yubisasi_A/Hand_yubisasi_A.obj",
+    //    {0.0f, 0.0f, -2.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
+    //    "Haikei"
+    //);
 
     recipe::CreateEntrant01(objManager, gameMode);
     recipe::CreateEntrant02(objManager, gameMode, true);

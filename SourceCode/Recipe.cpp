@@ -80,7 +80,7 @@ namespace recipe
         TechSharkLib::GameObjectID objId = objManager->CreateObject();
 
         TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = { -1.5f, 0.0f, 0.0f };
+        transformDesc.position  = { -1.0f, -0.5f, -1.0f };
         transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
         transformDesc.rotation  = { 1.8f, 0.0f, 0.0f };
         objManager->AttachComponent<Transform3D>(objId, transformDesc);
@@ -105,7 +105,7 @@ namespace recipe
         TechSharkLib::GameObjectID objId = objManager->CreateObject();
 
         TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = { 1.5f, 0.0f, 0.0f };
+        transformDesc.position  = { 1.0f, 0.5f, 1.0f };
         transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
         transformDesc.rotation  = { 1.8f, 0.0f, 0.0f };
         objManager->AttachComponent<Transform3D>(objId, transformDesc);
