@@ -74,6 +74,8 @@ namespace TechSharkLib
         void Render(float, float) override;
         void Deinit() override;
 
+        void DrawDebugGUI();
+
         const StaticMeshID& MeshID() const noexcept { return meshId; }
         const DirectX::XMFLOAT4& MaterialColor() const noexcept { return materialColor; }
 

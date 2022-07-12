@@ -1,7 +1,6 @@
 //------< include >-----------------------------------------------------------------------
 #include "GameMode.h"
 #include <utility>
-#include "../TechSharkLib/Inc/Configulation.h"
 #if USE_IMGUI
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
@@ -52,16 +51,24 @@ void GameMode::Update(float deltaTime)
         ImGui::Text("Timer(In Sec) : %f", timerSec);
         std::string debugLastResult = "LastResult : " + debugResult.at(lastResult);
         ImGui::Text(debugLastResult.c_str());
+        if (ImGui::Button("Play / Stop"))
+        {
+            isActive = !isActive;
+        }
     }
-    (*gameRule)(this);
+    if (isActive)
+    {
+        (*gameRule)(this);
+        timerSec += deltaTime;
+    }
     ImGui::End();
 
     #else
     (*gameRule)(this);
+    timerSec += deltaTime;
 
     #endif // USE_IMGUI
 
-    timerSec += deltaTime;
 }
 
 void GameMode::Clear()
@@ -70,5 +77,6 @@ void GameMode::Clear()
     entrant02 = nullptr;
     gameRule.reset(nullptr);
     nextRule.reset(nullptr);
-    isFinished = false;
+    isFinished  = false;
+    isActive    = false;
 }

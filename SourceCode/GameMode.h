@@ -3,7 +3,7 @@
 //------< include >-----------------------------------------------------------------------
 #include "Entrant.h"
 #include "GameRule.h"
-#include <memory>
+#include "../TechSharkLib/Inc/Configulation.h"
 
 //========================================================================================
 // 
@@ -32,12 +32,21 @@ private:
     int lastResult;
     bool isFinished;
 
+    #if USE_IMGUI
+    bool isActive;
+
+    #endif // USE_IMGUI
+
 public:
     GameMode() : 
         entrant01{nullptr}, entrant02{nullptr},
         gameRule{nullptr}, nextRule{nullptr},
         timerSec{0.0f},
         lastResult{RESULT::NONE}, isFinished{false}
+        #if USE_IMGUI
+        , isActive{true}
+
+        #endif // USE_IMGUI
     {
     }
 

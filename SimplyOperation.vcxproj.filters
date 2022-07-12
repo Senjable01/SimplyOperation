@@ -216,6 +216,15 @@
     <ClInclude Include="TechSharkLib\Inc\DirectXTKSound.h">
       <Filter>TechSharkLib\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Obj3DDebugger.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\FourWayGuide.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Utility.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -379,6 +388,15 @@
     </ClCompile>
     <ClCompile Include="TechSharkLib\Src\DirectXTKSound.cpp">
       <Filter>TechSharkLib\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Obj3DDebuger.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\FourWayGuide.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Utility.cpp">
+      <Filter>Source\Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

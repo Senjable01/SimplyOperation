@@ -80,6 +80,7 @@ namespace TechSharkLib
         void Deinit() override;
 
         void CalcTransform();
+        void DrawDebugGUI();
 
         const DirectX::XMFLOAT3& Position() const noexcept { return position; }
         const DirectX::XMFLOAT3& Scale() const noexcept { return scale; }

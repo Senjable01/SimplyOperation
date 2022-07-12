@@ -3,6 +3,7 @@
 #include "../TechSharkLib/Inc/GameObject.h"
 #include "../TechSharkLib/Inc/StaticMeshRenderer.h"
 #include "../TechSharkLib/Inc/TechSharkLib.h"
+#include "Utility.h"
 
 //========================================================================================
 // 
@@ -34,8 +35,9 @@ void Entrant::Setup()
         keyBind.keyUp       = (1 << description.keyUp);
         keyBind.keyDown     = (1 << description.keyDown);
     }
-    activeKey = description.activeKey;
-    meshNo = static_cast<int>(ENTRANT_HAND::NONE);
+    activeKey       = description.activeKey;
+    meshNo          = static_cast<int>(ENTRANT_HAND::NONE);
+    isSecondEntrant = description.isSecondEntrant;
 }
 void Entrant::Render(float, float)
 {
@@ -45,6 +47,19 @@ void Entrant::Render(float, float)
 
     const DirectX::XMFLOAT4X4 local = transform->Transform();
     TechSharkLib::Render(meshes.at(meshNo), local, {1.0f, 1.0f, 1.0f, 1.0f});
+
+    if (isSecondEntrant)
+    {
+        DirectX::XMFLOAT4X4 transform = util::CalcTransform(
+            { 1.0f, 1.0f, 1.0f },
+            { 0.0f, DirectX::XM_PI, 0.0f },
+            { 0.0f, 0.0f, 0.0f }
+        );
+        TechSharkLib::Render(
+            heads.at(static_cast<size_t>(activeKey ? TYPE::PC : TYPE::NPC)),
+            transform, { 1.0f, 1.0f, 1.0f, 1.0f }
+        );
+    }
 
 }
 void Entrant::Deinit()
@@ -101,14 +116,20 @@ void Entrant::SetMeshNo(ENTRANT_HAND hand)
 
 void Entrant::LoadMeshes()
 {
-    meshes.at(static_cast<size_t>(ENTRANT_HAND::ROCK))      = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_ÉOÅ[/puroto_guu.obj", true);
-    meshes.at(static_cast<size_t>(ENTRANT_HAND::SCISSORS))  = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_É`ÉáÉL/puroto_choki.obj", true);
-    meshes.at(static_cast<size_t>(ENTRANT_HAND::PAPER))     = TechSharkLib::LoadStaticMesh(L"./Data/éOäpâªâºëfçﬁ_ÉpÅ[/puroto_paa.obj", true);
+    meshes.at(static_cast<size_t>(ENTRANT_HAND::ROCK))      = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_guu/puroto_guu.obj", true);
+    meshes.at(static_cast<size_t>(ENTRANT_HAND::SCISSORS))  = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_choki/puroto_choki.obj", true);
+    meshes.at(static_cast<size_t>(ENTRANT_HAND::PAPER))     = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_paa/puroto_paa.obj", true);
+    heads.at(static_cast<size_t>(Entrant::TYPE::PC))        = TechSharkLib::LoadStaticMesh(L"./Data/Models/Player_Face/Player_Face.obj", true);
+    heads.at(static_cast<size_t>(Entrant::TYPE::NPC))       = TechSharkLib::LoadStaticMesh(L"./Data/Models/Enemy_Face/Enemy_Face.obj", true);
 }
 
 void Entrant::UnloadMeshes()
 {
     for (auto& mesh : meshes)
+    {
+        TechSharkLib::Release(mesh);
+    }
+    for (auto& mesh : heads)
     {
         TechSharkLib::Release(mesh);
     }
@@ -119,5 +140,6 @@ void Entrant::UnloadMeshes()
 //------------------------------------------------------------------------------
 
 std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(ENTRANT_HAND::VALUE)> Entrant::meshes;
+std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(Entrant::TYPE::VALUE)> Entrant::heads;
 
 TSL_IMPLEMENT_COMPONENT(Entrant, "Entrant");

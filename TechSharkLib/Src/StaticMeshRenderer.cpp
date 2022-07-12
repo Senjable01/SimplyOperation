@@ -3,6 +3,11 @@
 #include "../Inc/GameObject.h"
 #include "../Inc/Transform3D.h"
 #include "../Inc/TechSharkLib.h"
+#include "../Inc/Configulation.h"
+#if USE_IMGUI
+#include "../Inc/ImGuiCtrl.h"
+
+#endif // USE_IMGUI
 
 //**************************************************************************************************
 // 
@@ -55,6 +60,14 @@ namespace TechSharkLib
         TechSharkLib::Release(meshId);
         materialColor   = {0.0f, 0.0f, 0.0f, 1.0f};
         description     = {};
+    }
+
+    void StaticMeshRenderer::DrawDebugGUI()
+    {
+        if (ImGui::CollapsingHeader("StaticMeshRenderer"))
+        {
+            ImGui::ColorEdit4("materialColor", &materialColor.x);
+        }
     }
 
     //------------------------------------------------------------------------------

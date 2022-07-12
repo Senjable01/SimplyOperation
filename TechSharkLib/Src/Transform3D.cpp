@@ -1,5 +1,10 @@
 //------< include >-----------------------------------------------------------------------
 #include "../Inc/Transform3D.h"
+#include "../Inc/Configulation.h"
+#if USE_IMGUI
+#include "../Inc/ImGuiCtrl.h"
+
+#endif // USE_IMGUI
 
 //**************************************************************************************************
 // 
@@ -45,6 +50,19 @@ namespace TechSharkLib
         DirectX::XMMATRIX mtrixRotation = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
         DirectX::XMMATRIX mtrixPosition = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
         DirectX::XMStoreFloat4x4(&transform, mtrixScale * mtrixRotation * mtrixPosition);
+    }
+
+    void Transform3D::DrawDebugGUI()
+    {
+        #if USE_IMGUI
+        if (ImGui::CollapsingHeader("Transform3D"))
+        {
+            ImGui::InputFloat3("position", &position.x);
+            ImGui::InputFloat3("scale", &scale.x);
+            ImGui::SliderFloat3("rotation", &rotation.x, -DirectX::XM_PI, DirectX::XM_PI);
+        }
+
+        #endif // USE_IMGUI
     }
 
     //------------------------------------------------------------------------------

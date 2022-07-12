@@ -26,7 +26,7 @@ private:
     void Render() override;
     void Deinit() override;
 
-    void CreateObject();
+    static void CreateGameObjects(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode);
 
 public:
     SceneGameSingle() : 

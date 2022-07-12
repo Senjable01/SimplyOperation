@@ -19,6 +19,7 @@ struct EntrantDesc
     TechSharkLib::BIT_NO keyUp;
     TechSharkLib::BIT_NO keyDown;
     bool activeKey;
+    bool isSecondEntrant;
 };
 
 //========================================================================================
@@ -51,6 +52,9 @@ private:
 
     static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(ENTRANT_HAND::VALUE)> meshes;
     int meshNo;
+    enum TYPE : int {PC = 0, NPC, VALUE};
+    static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(TYPE::VALUE)> heads;
+    bool isSecondEntrant;
 
     EntrantDesc description;
 
@@ -60,6 +64,7 @@ public:
         transform{nullptr},
         keyBind{}, activeKey{false},
         meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
+        isSecondEntrant{false},
         description{desc},
         TechSharkLib::Component{selfId, owner}
     {
