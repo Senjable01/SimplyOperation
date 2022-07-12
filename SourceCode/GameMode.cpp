@@ -22,6 +22,8 @@ namespace
 
     #endif // USE_IMGUI
 
+    bool onceNoAddSec = true;
+
 }
 
 //========================================================================================
@@ -59,13 +61,28 @@ void GameMode::Update(float deltaTime)
     if (isActive)
     {
         (*gameRule)(this);
-        timerSec += deltaTime;
+        //TODO:[Info01] ロードが長い分deltaTimeが進み、見かけ上勝手にジャンケンが終わっているように見えるバグの応急措置(根本的な解決ではない)
+        if (onceNoAddSec)
+        {
+            onceNoAddSec = false;
+        }
+        else
+        {
+            timerSec += deltaTime;
+        }
     }
     ImGui::End();
 
     #else
     (*gameRule)(this);
-    timerSec += deltaTime;
+    if (onceNoAddSec)
+    {
+        onceNoAddSec = false;
+    }
+    else
+    {
+        timerSec += deltaTime;
+    }
 
     #endif // USE_IMGUI
 

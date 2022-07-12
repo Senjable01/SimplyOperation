@@ -63,11 +63,13 @@ private:
     void PhaseIdle(GameMode* gameMode);
 
     void CheckPush(Entrant* entrant, int* counter);
+    void PushMovement(Entrant* entrant, float timeSec);
     int JudgeResult(GameMode* gameMode);
 
     void DrawDebugGUI();
 
     void Run(GameMode*) override;
+
 
 public:
     PushHands() : 

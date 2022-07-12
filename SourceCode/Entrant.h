@@ -49,6 +49,8 @@ public:
 private:
     TechSharkLib::Transform3D* transform;
 
+    DirectX::XMFLOAT3 firstPosition;
+
     struct KeyBind {
         int keyLeft     = NULL;
         int keyRight    = NULL;
@@ -72,6 +74,7 @@ public:
     Entrant() = delete;
     Entrant(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const EntrantDesc& desc) : 
         transform{nullptr},
+        firstPosition{},
         keyBind{}, activeKey{false},
         meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
         isSecondEntrant{false},
@@ -92,9 +95,14 @@ public:
     int KeyInput();
     bool IsActiveKey() const noexcept { return activeKey; }
     const KeyBind* GetKeyBind() const { return &keyBind; }
+    const DirectX::XMFLOAT3& Position() { return transform->Position(); }
+    const DirectX::XMFLOAT3& FirstPosition() { return firstPosition; }
 
     void SetMeshNo(ENTRANT_HAND hand);
     void SetDirection(int direction) { this->direction = direction; }
+    void SetPosition(float x, float y, float z) { transform->SetPosition(x, y, z); }
+    void SetPosition(const DirectX::XMFLOAT3& position) { transform->SetPosition(position); }
+    void ResetPosition() { transform->SetPosition(firstPosition); }
 
     static void LoadMeshes();
     static void UnloadMeshes();

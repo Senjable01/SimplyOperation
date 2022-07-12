@@ -28,6 +28,8 @@ void Entrant::Init()
 }
 void Entrant::Setup()
 {
+    firstPosition = transform->Position();
+
     if (description.activeKey)
     {
         keyBind.keyLeft     = (1 << description.keyLeft);

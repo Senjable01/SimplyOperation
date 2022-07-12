@@ -226,6 +226,13 @@ void PushHands::Run(GameMode* gameMode)
 
 void PushHands::PhaseReception(GameMode* gameMode)
 {
+    const float timerSec = gameMode->TimerSec();
+    if (1.0f < timerSec / 0.1f && std::fmodf(timerSec, 0.1f))
+    {
+        PushMovement(gameMode->GetEntrant01(), gameMode->TimerSec());
+        PushMovement(gameMode->GetEntrant02(), gameMode->TimerSec());
+    }
+
     CheckPush(gameMode->GetEntrant01(), &pushRequire01);
     CheckPush(gameMode->GetEntrant02(), &pushRequire02);
     
@@ -246,6 +253,28 @@ void PushHands::CheckPush(Entrant* entrant, int* counter)
     {
         (*counter)--;
     }
+}
+void PushHands::PushMovement(Entrant* entrant, float timeSec)
+{
+    constexpr float VEC_X = 0.04f;
+    constexpr float VEC_Y = 0.04f;
+    constexpr float VEC_Z = 0.04f;
+
+    DirectX::XMFLOAT3 position = entrant->FirstPosition();
+    DirectX::XMFLOAT3 velocity = {
+        VEC_X * static_cast<float>(std::rand() % 10) / 10,
+        VEC_Y * static_cast<float>(std::rand() % 10) / 10,
+        VEC_Z * static_cast<float>(std::rand() % 10) / 10,
+    };
+    velocity.x = (std::rand() % 1) ? velocity.x : -velocity.x;
+    velocity.y = (std::rand() % 1) ? velocity.y : -velocity.y;
+    velocity.z = (std::rand() % 1) ? velocity.z : -velocity.z;
+    position = {
+        position.x + velocity.x,
+        position.y + velocity.y,
+        position.z + velocity.z
+    };
+    entrant->SetPosition(position);
 }
 
 void PushHands::PhaseJudge(GameMode* gameMode)
@@ -333,6 +362,8 @@ void PushHands::PhaseIdle(GameMode* gameMode)
     if (config::gamerule::push_hands::IDLE_SEC < gameMode->TimerSec())
     {
         gameMode->ResetTimer();
+        gameMode->GetEntrant01()->ResetPosition();
+        gameMode->GetEntrant02()->ResetPosition();
         gameMode->SetNextRule<DirectionBattle>();
         return;
     }

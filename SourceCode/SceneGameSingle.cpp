@@ -73,9 +73,9 @@ void SceneGameSingle::Setup()
     camera.LookAt({0.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
     camera.CalcAndSetPerspectiveMatrix(TechSharkLib::ToRadian(30.0f), TechSharkLib::AspectRatio(), 0.1f, 100.0f);
     
-    std::thread th(CreateGameObjects, &objManager, &gameMode);
-    th.join();
-    //CreateGameObjects(&objManager, &gameMode);
+    //std::thread th(CreateGameObjects, &objManager, &gameMode);
+    //th.join();
+    CreateGameObjects(&objManager, &gameMode);
     lightDirection = Float4{ 0.0f, 0.0f, 10.0f, 1.0f };
 
     TechSharkLib::SetProjector(TechSharkLib::SCENE_CONSTANTS::DEFAULT);
@@ -87,12 +87,12 @@ void SceneGameSingle::Setup()
 
 void SceneGameSingle::CreateGameObjects(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode)
 {
-    //recipe::CreateMesh(
-    //    objManager,
-    //    L"./Data/Models/Haikei/Haikei.obj",
-    //    {0.0f, 0.0f, 24.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
-    //    "Haikei"
-    //);
+    recipe::CreateMesh(
+        objManager,
+        L"./Data/Models/Haikei/Haikei.obj",
+        {0.0f, 0.0f, 24.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
+        "Haikei"
+    );
     //recipe::CreateMesh(
     //    objManager,
     //    L"./Data/Models/Hand_yubisasi_A/Hand_yubisasi_A.obj",
