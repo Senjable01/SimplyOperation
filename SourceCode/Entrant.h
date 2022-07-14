@@ -1,11 +1,14 @@
-#pragma once
+#ifndef INCLUDED_ENTRANT_H
+#define INCLUDED_ENTRANT_H
 
 //------< include >-----------------------------------------------------------------------
 #include "../TechSharkLib/Inc/Component.h"
 #include "../TechSharkLib/Inc/KeyAssign.h"
 #include "../TechSharkLib/Inc/Transform3D.h"
-#include <array>
+#include "../TechSharkLib/Inc/StaticMeshRenderer.h"
 #include "../TechSharkLib/Inc/StaticMeshID.h"
+#include <array>
+#include "Config.h"
 
 //========================================================================================
 // 
@@ -14,25 +17,11 @@
 //========================================================================================
 struct EntrantDesc
 {
-    TechSharkLib::BIT_NO keyLeft;
-    TechSharkLib::BIT_NO keyRight;
-    TechSharkLib::BIT_NO keyUp;
-    TechSharkLib::BIT_NO keyDown;
-    bool activeKey;
-    bool isSecondEntrant;
-};
-
-//========================================================================================
-// 
-//      ENTRANT_HAND
-// 
-//========================================================================================
-enum class ENTRANT_HAND {
-    ROCK = 0, SCISSORS, PAPER,
-    FINGER_1P, FINGER_2P,
-    VALUE,
-    HAND_VALUE = 3,
-    NONE = -1
+    TechSharkLib::KeyAssign* keyLeft;
+    TechSharkLib::KeyAssign* keyRight;
+    TechSharkLib::KeyAssign* keyUp;
+    TechSharkLib::KeyAssign* keyDown;
+    unsigned int typeFlags; // config::entrant::TYPE_FLAG enum
 };
 
 //========================================================================================
@@ -44,67 +33,64 @@ class Entrant : public TechSharkLib::Component
 {
 TSL_DEFINE_COMPONENT(Entrant);
 public:
-    enum DIRECTION : int {LEFT, UP, RIGHT, DOWN, DIRECTION_NUM, NONE = -1};
+    using TYPE_FLAG = config::entrant::TYPE_FLAG;
+    using STATE     = config::entrant::STATE;
+    using MESH      = config::entrant::MESH;
 
 private:
-    TechSharkLib::Transform3D* transform;
+    TechSharkLib::Transform3D*          transform;
+    TechSharkLib::StaticMeshRenderer*   renderer;
 
     DirectX::XMFLOAT3 firstPosition;
 
     struct KeyBind {
-        int keyLeft     = NULL;
-        int keyRight    = NULL;
-        int keyUp       = NULL;
-        int keyDown     = NULL;
+        int left     = -1;
+        int right    = -1;
+        int up       = -1;
+        int down     = -1;
     } keyBind;
-    bool activeKey;
-
-    static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(ENTRANT_HAND::VALUE)> meshes;
-    int meshNo;
-    enum TYPE : int {PC = 0, NPC, VALUE};
-    static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(TYPE::VALUE)> heads;
-    bool isSecondEntrant;
-
-    DirectX::XMFLOAT3 rotations[DIRECTION::DIRECTION_NUM];
-    int direction;
+    int onlyPushedKey;
+    unsigned int typeFlags;
+    STATE state;
 
     EntrantDesc description;
+
+    static std::array<TechSharkLib::StaticMeshID, static_cast<size_t>(MESH::NUM)> meshes;
 
 public:
     Entrant() = delete;
     Entrant(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const EntrantDesc& desc) : 
-        transform{nullptr},
+        transform{nullptr}, renderer{nullptr},
         firstPosition{},
-        keyBind{}, activeKey{false},
-        meshNo{static_cast<int>(ENTRANT_HAND::NONE)},
-        isSecondEntrant{false},
-        rotations{}, direction{DIRECTION::NONE},
+        keyBind{}, onlyPushedKey{NULL},
+        typeFlags{TYPE_FLAG::NONE},
+        state{STATE::NONE},
         description{desc},
         TechSharkLib::Component{selfId, owner}
     {
     }
-    ~Entrant() override {}
 
     void Init() override;
     void Setup() override;
-    void Update(float /*deltaTime*/) override {}
-    void Render(float /*scrollX*/, float /*scrollY*/) override;
-    void Deinit() override;
+    void Update(float /*deltaTime*/);
+    void Render(float /*deltaTime*/, float /*deltaTime*/) override {}
+    void Deinit() override {}
 
-    int KeyInputSingle();
-    int KeyInput();
-    bool IsActiveKey() const noexcept { return activeKey; }
-    const KeyBind* GetKeyBind() const { return &keyBind; }
-    const DirectX::XMFLOAT3& Position() { return transform->Position(); }
-    const DirectX::XMFLOAT3& FirstPosition() { return firstPosition; }
+    void DrawDebugGUI() override {}
 
-    void SetMeshNo(ENTRANT_HAND hand);
-    void SetDirection(int direction) { this->direction = direction; }
-    void SetPosition(float x, float y, float z) { transform->SetPosition(x, y, z); }
+    const DirectX::XMFLOAT3& Position() const { return transform->Position(); }
+    const DirectX::XMFLOAT3& FirstPosition() const noexcept { return firstPosition; }
+    int OnlyPushedKey() const noexcept { return onlyPushedKey; }
+    const KeyBind* GetKeyBindRef() const { return &keyBind; }
+    bool IsNPC() { return (typeFlags & TYPE_FLAG::IS_NPC); }
+    bool IsSecondPlayer() { return (typeFlags & TYPE_FLAG::IS_2ND) != NULL; }
+    
+    void SetMesh(STATE state);
     void SetPosition(const DirectX::XMFLOAT3& position) { transform->SetPosition(position); }
     void ResetPosition() { transform->SetPosition(firstPosition); }
-
+    
     static void LoadMeshes();
-    static void UnloadMeshes();
-
+    static void ReleaseMeshes();
 };
+
+#endif // !INCLUDED_ENTRANT_H

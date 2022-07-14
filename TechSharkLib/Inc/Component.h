@@ -65,6 +65,8 @@ namespace TechSharkLib
         virtual void Render(float /*scrollX*/, float /*scrollY*/) = 0;
         virtual void Deinit()   = 0;
 
+        virtual void DrawDebugGUI() = 0;
+
         void ChangeOwner(GameObject* nextOwner) { owner = nextOwner; }
 
         const ComponentID& SelfID() const noexcept { return selfId; }

@@ -79,8 +79,14 @@ namespace TechSharkLib
         void Render(float, float) override {}
         void Deinit() override;
 
+        void DrawDebugGUI () override;
+
         void CalcTransform();
-        void DrawDebugGUI();
+        DirectX::XMFLOAT4X4 CalcTransform(
+            const DirectX::XMFLOAT3& addPosition,
+            const DirectX::XMFLOAT3& addScale = {0.0f, 0.0f, 0.0f},
+            const DirectX::XMFLOAT3& addRotation = {0.0f, 0.0f, 0.0f}
+        );
 
         const DirectX::XMFLOAT3& Position() const noexcept { return position; }
         const DirectX::XMFLOAT3& Scale() const noexcept { return scale; }

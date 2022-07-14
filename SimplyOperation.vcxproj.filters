@@ -195,16 +195,7 @@
     <ClInclude Include="SourceCode\Config.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\GameMode.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\Strategy.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\GameRule.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\Entrant.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
     <ClInclude Include="TechSharkLib\Inc\AudioManager.h">
@@ -216,13 +207,31 @@
     <ClInclude Include="TechSharkLib\Inc\DirectXTKSound.h">
       <Filter>TechSharkLib\Inc</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\Obj3DDebugger.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\FourWayGuide.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\Utility.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\OBJDebugger.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Observer.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GameMode.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Entrant.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RockScissorsPaper.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\PushHands.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\DirectionBattle.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\OperateGuide.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
   </ItemGroup>
@@ -365,19 +374,7 @@
     <ClCompile Include="TechSharkLib\Src\StaticMeshRenderer.cpp">
       <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\Recipe.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\Config.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Entrant.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\GameMode.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\GameRule.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
     <ClCompile Include="TechSharkLib\Src\AudioManager.cpp">
@@ -389,13 +386,31 @@
     <ClCompile Include="TechSharkLib\Src\DirectXTKSound.cpp">
       <Filter>TechSharkLib\Src</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\Obj3DDebuger.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\FourWayGuide.cpp">
-      <Filter>Source\Src</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\Utility.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Recipe.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\OBJDebugger.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Entrant.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GameMode.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RockScissorsPaper.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\PushHands.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\DirectionBattle.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\OperateGuide.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
   </ItemGroup>

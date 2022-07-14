@@ -2,6 +2,7 @@
 
 //------< include >-----------------------------------------------------------------------
 #include "../TechSharkLib/Inc/Scene.h"
+#include "Config.h"
 
 //========================================================================================
 // 
@@ -11,7 +12,8 @@
 class SceneResultSingle : public TechSharkLib::Scene
 {
 private:
-    int result;
+    using RESULT = config::rule::RESULT;
+    RESULT result;
 
     void Init() override;
     void Setup() override;
@@ -20,7 +22,7 @@ private:
     void Deinit() override;
 
 public:
-    SceneResultSingle(int result) : result{result}, TechSharkLib::Scene{} {}
+    SceneResultSingle(RESULT result) : result{result}, TechSharkLib::Scene{} {}
     ~SceneResultSingle() override {}
 
 };

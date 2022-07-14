@@ -1,184 +1,176 @@
 //------< include >-----------------------------------------------------------------------
 #include "Recipe.h"
 #include "../TechSharkLib/Inc/GameObject.h"
-#include <crtdbg.h>
 #include "../TechSharkLib/Inc/Transform3D.h"
 #include "../TechSharkLib/Inc/StaticMeshRenderer.h"
-#include "Obj3DDebugger.h"
+#include "../TechSharkLib/Inc/TechSharkLib.h"
+#include "OBJDebugger.h"
+#include "Config.h"
 #include "Entrant.h"
-#include "../TechSharkLib/Inc/KeyAssign.h"
 #include "GameMode.h"
-#include "FourWayGuide.h"
+#include "OperateGuide.h"
+#include "../TechSharkLib/Inc/Camera.h"
 
+//------< using >-------------------------------------------------------------------------
+
+using TechSharkLib::GameObjectID;
+using TechSharkLib::Transform3DDesc;
 using TechSharkLib::Transform3D;
+using TechSharkLib::StaticMeshRendererDesc;
 using TechSharkLib::StaticMeshRenderer;
-using TechSharkLib::BIT_NO;
-using TechSharkLib::Float3;
 
+//========================================================================================
+// 
+//      Recipe
+// 
+//========================================================================================
 namespace recipe
 {
-    //------< using >-------------------------------------------------------------------------
-    using TechSharkLib::GameObjectManager;
-    using TechSharkLib::GameObject;
-    using TechSharkLib::Transform3D;
-    using TechSharkLib::StaticMeshRenderer;
-
-    void CreateMesh(GameObjectManager* objManager, const wchar_t* objFilePath, const char* debugName)
-    {
-        TechSharkLib::GameObjectID objId = objManager->CreateObject();
-
-        TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = { 0.0f, 0.0f, 0.0f };
-        transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
-        transformDesc.rotation  = { 0.0f, 0.0f, 0.0f };
-        objManager->AttachComponent<Transform3D>(objId, transformDesc);
-
-        TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
-        rendererDesc.objFilePath    = objFilePath;
-        rendererDesc.flipVCoord     = true;
-        rendererDesc.materialColor  = { 1.0f, 0.0f, 0.0f, 1.0f };
-        objManager->AttachComponent<StaticMeshRenderer>(objId, rendererDesc);
-
-        Obj3DDebuggerDesc debuggerDesc = {};
-        debuggerDesc.name = debugName;
-        objManager->AttachComponent<Obj3DDebugger>(objId, debuggerDesc);
-
-        objManager->Init(objId);
-        objManager->Setup(objId);
-    }
     void CreateMesh(
-        GameObjectManager* objManager,
+        TechSharkLib::GameObjectManager* objManager,
         const wchar_t* objFilePath,
         const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& scale, const DirectX::XMFLOAT3& rotation,
         const char* debugName
     )
     {
-        TechSharkLib::GameObjectID objId = objManager->CreateObject();
+        GameObjectID obj = objManager->CreateObject();
 
-        TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = position;
-        transformDesc.scale     = scale;
-        transformDesc.rotation  = rotation;
-        objManager->AttachComponent<Transform3D>(objId, transformDesc);
+        Transform3DDesc transformDesc   = {};
+        transformDesc.position          = position;
+        transformDesc.scale             = scale;
+        transformDesc.rotation          = rotation;
+        objManager->AttachComponent<Transform3D>(obj, transformDesc);
 
-        TechSharkLib::StaticMeshRendererDesc rendererDesc = {};
-        rendererDesc.objFilePath    = objFilePath;
-        rendererDesc.flipVCoord     = true;
-        rendererDesc.materialColor  = { 1.0f, 0.0f, 0.0f, 1.0f };
-        objManager->AttachComponent<StaticMeshRenderer>(objId, rendererDesc);
+        StaticMeshRendererDesc rendererDesc = {};
+        rendererDesc.staticMeshId           = TechSharkLib::LoadStaticMesh(objFilePath, true);
+        rendererDesc.materialColor          = {1.0f, 1.0f, 1.0f, 1.0f};
+        objManager->AttachComponent<StaticMeshRenderer>(obj, rendererDesc);
 
-        Obj3DDebuggerDesc debuggerDesc = {};
-        debuggerDesc.name = debugName;
-        objManager->AttachComponent<Obj3DDebugger>(objId, debuggerDesc);
+        OBJDebuggerDesc debuggerDesc    = {};
+        debuggerDesc.debugName          = debugName;
+        objManager->AttachComponent<OBJDebugger>(obj, debuggerDesc);
 
-        objManager->Init(objId);
-        objManager->Setup(objId);
+        objManager->Init(obj);
+        objManager->Setup(obj);
     }
 
-    void CreateEntrant01(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode)
+    void CreateEntrant01(
+        TechSharkLib::GameObjectManager* objManager,
+        GameMode* gameMode
+    )
     {
-        TechSharkLib::GameObjectID objId = objManager->CreateObject();
+        GameObjectID obj = objManager->CreateObject();
 
-        TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = { -1.0f, -0.5f, -1.0f };
-        transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
-        transformDesc.rotation  = { 1.8f, 0.0f, 0.0f };
-        objManager->AttachComponent<Transform3D>(objId, transformDesc);
+        Transform3DDesc transformDesc   = {};
+        transformDesc.position          = config::entrant::BEGIN_POS_FRONT;
+        //transformDesc.scale             = {1.0f, 1.0f, 1.0f};
+        transformDesc.rotation          = {0.0f, 0.0f, 0.0f};
+        objManager->AttachComponent<Transform3D>(obj, transformDesc);
 
-        EntrantDesc entrantDesc     = {};
-        entrantDesc.keyLeft         = BIT_NO::BIT_13;
-        entrantDesc.keyRight        = BIT_NO::BIT_12;
-        entrantDesc.keyUp           = BIT_NO::BIT_11;
-        entrantDesc.keyDown         = BIT_NO::BIT_14;
-        entrantDesc.activeKey       = true;
-        entrantDesc.isSecondEntrant = false;
-        objManager->AttachComponent<Entrant>(objId, entrantDesc);
-        Entrant* entrant = objManager->GetGameObjectRef(objId)->SearchComponent<Entrant>();
-        gameMode->SetEntrant01(entrant);
+        StaticMeshRendererDesc rendererDesc = {};
+        rendererDesc.materialColor          = {1.0f, 1.0f, 1.0f, 1.0f};
+        objManager->AttachComponent<StaticMeshRenderer>(obj, rendererDesc);
 
-        objManager->Init(objId);
-        objManager->Setup(objId);
+        EntrantDesc entrantDesc = {};
+        entrantDesc.keyLeft     = &config::key::left1;
+        entrantDesc.keyRight    = &config::key::right1;
+        entrantDesc.keyUp       = &config::key::up1;
+        entrantDesc.keyDown     = &config::key::down1;
+        entrantDesc.typeFlags   = config::entrant::TYPE_FLAG::NONE;
+        objManager->AttachComponent<Entrant>(obj, entrantDesc);
+        Entrant* entrant = objManager->GetGameObjectRef(obj)->SearchComponent<Entrant>();
+        _ASSERT_EXPR(entrant != nullptr, L"EntrantƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒŸõ‚ÉŽ¸”s");
+        _ASSERT_EXPR(gameMode->GetEntrant01Ref() == nullptr, L"Entrant01‚Í“o˜^Ï‚Ý");
+        gameMode->SetEntrant01Ref(entrant);
 
+        objManager->Init(obj);
+        objManager->Setup(obj);
     }
-    void CreateEntrant02(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode, bool isNPC)
-    {
-        TechSharkLib::GameObjectID objId = objManager->CreateObject();
 
-        TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = { 1.0f, 0.5f, 1.0f };
-        transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
-        transformDesc.rotation  = { 1.8f, 0.0f, 0.0f };
-        objManager->AttachComponent<Transform3D>(objId, transformDesc);
+    void CreateEntrant02(
+        TechSharkLib::GameObjectManager* objManager,
+        GameMode* gameMode,
+        bool isNPC
+    )
+    {
+        GameObjectID obj = objManager->CreateObject();
+
+        Transform3DDesc transformDesc   = {};
+        transformDesc.position          = config::entrant::BEGIN_POS_BACK;
+        //transformDesc.scale             = {1.0f, 1.0f, 1.0f};
+        transformDesc.rotation          = {0.0f, 0.0f, 0.0f};
+        objManager->AttachComponent<Transform3D>(obj, transformDesc);
+
+        StaticMeshRendererDesc rendererDesc = {};
+        rendererDesc.materialColor          = {1.0f, 1.0f, 1.0f, 1.0f};
+        objManager->AttachComponent<StaticMeshRenderer>(obj, rendererDesc);
 
         EntrantDesc entrantDesc = {};
         if (isNPC)
         {
-            entrantDesc.activeKey = false;
+            entrantDesc.typeFlags   = config::entrant::TYPE_FLAG::IS_2ND | config::entrant::TYPE_FLAG::IS_NPC;
         }
         else
         {
-            entrantDesc.keyLeft     = BIT_NO::BIT_17;
-            entrantDesc.keyRight    = BIT_NO::BIT_16;
-            entrantDesc.keyUp       = BIT_NO::BIT_15;
-            entrantDesc.keyDown     = BIT_NO::BIT_18;
-            entrantDesc.activeKey   = true;
+            entrantDesc.keyLeft     = &config::key::left2;
+            entrantDesc.keyRight    = &config::key::right2;
+            entrantDesc.keyUp       = &config::key::up2;
+            entrantDesc.keyDown     = &config::key::down2;
+            entrantDesc.typeFlags   = config::entrant::TYPE_FLAG::IS_2ND;
         }
-        entrantDesc.isSecondEntrant = true;
-        objManager->AttachComponent<Entrant>(objId, entrantDesc);
-        Entrant* entrant = objManager->GetGameObjectRef(objId)->SearchComponent<Entrant>();
-        gameMode->SetEntrant02(entrant);
+        objManager->AttachComponent<Entrant>(obj, entrantDesc);
+        Entrant* entrant = objManager->GetGameObjectRef(obj)->SearchComponent<Entrant>();
+        _ASSERT_EXPR(entrant != nullptr, L"EntrantƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒŸõ‚ÉŽ¸”s");
+        _ASSERT_EXPR(gameMode->GetEntrant02Ref() == nullptr, L"Entrant02‚Í“o˜^Ï‚Ý");
+        gameMode->SetEntrant02Ref(entrant);
 
-        objManager->Init(objId);
-        objManager->Setup(objId);
+        objManager->Init(obj);
+        objManager->Setup(obj);
     }
-
-    void CreateControllerGuide(
+    void CreateGuide(
         TechSharkLib::GameObjectManager* objManager,
-        const DirectX::XMFLOAT3& position
+        GameMode* gameMode,
+        TechSharkLib::Camera* defaultCamera,
+        const TechSharkLib::Float4& lightDirection
     )
     {
-        TechSharkLib::GameObjectID objId = objManager->CreateObject();
+        namespace stick     = config::model::stick;
+        namespace button    = config::model::button;
+        namespace guide     = config::guide;
+        using TechSharkLib::Float3;
+
+        TechSharkLib::GameObjectID obj = objManager->CreateObject();
 
         TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = position;
-        transformDesc.scale     = { 0.3f, 0.3f, 0.3f };
-        transformDesc.rotation  = { 1.8f, 0.0f, 0.0f };
-        objManager->AttachComponent<Transform3D>(objId, transformDesc);
+        transformDesc.position  = {-3.5f, -0.0f, 0.0f};
+        transformDesc.scale     = stick::SCALE;
+        transformDesc.rotation  = stick::ROTATE_NORMAL;
+        objManager->AttachComponent<Transform3D>(obj, transformDesc);
 
-        FourWayGuideDesc fourWayDesc    = {};
-        // Path
-        fourWayDesc.stickObjPath        = L"Data/Models/Stick_1/Stick_1.obj";
-        fourWayDesc.allowObjPath        = L"Data/Models/Arrow_button/Arrow_button.obj";
-        fourWayDesc.leanStickObjPath    = L"Data/Models/Stick_2/Stick_2.obj";
-        // Position
-        fourWayDesc.posBase             = position;
-        fourWayDesc.relativePosLeft     = Float3{ -0.6f, 0.0f, 0.0f };
-        fourWayDesc.relativePosRight    = Float3{ 0.6f, 0.0f, 0.0f };
-        fourWayDesc.relativePosUp       = Float3{ 0.0f, 0.6f, 0.0f };
-        fourWayDesc.relativePosDown     = Float3{ 0.0f, -0.6f, 0.0f };
-        // Scale
-        fourWayDesc.scaleBase           = Float3{ 0.2f, 0.2f, 0.2f };
-        fourWayDesc.scaleLeft           = Float3{ 0.025f, 0.025f, 0.025f };
-        fourWayDesc.scaleRight          = Float3{ 0.025f, 0.025f, 0.025f };
-        fourWayDesc.scaleUp             = Float3{ 0.025f, 0.025f, 0.025f };
-        fourWayDesc.scaleDown           = Float3{ 0.025f, 0.025f, 0.025f };
-        // Rotation
-        constexpr float RIGHT_ANGLE     = DirectX::XM_PIDIV2;
-        fourWayDesc.rotationBase        = Float3{ -RIGHT_ANGLE, 0.0f, 0.0f };
-        fourWayDesc.rotationLeft        = Float3{ 0.0f, RIGHT_ANGLE, -RIGHT_ANGLE };
-        fourWayDesc.rotationRight       = Float3{ 0.0f, -RIGHT_ANGLE, RIGHT_ANGLE };
-        fourWayDesc.rotationUp          = Float3{ RIGHT_ANGLE, DirectX::XM_PI, 0.0f };
-        fourWayDesc.rotationDown        = Float3{ -RIGHT_ANGLE, 0.0f, 0.0f };
-        // (Stick Ver.)
-        fourWayDesc.stickLeanUpRotation     = Float3{ 0.0f, -RIGHT_ANGLE, RIGHT_ANGLE };
-        fourWayDesc.stickLeanRightRotation  = Float3{ -RIGHT_ANGLE, 0.0f, 0.0f };
-        fourWayDesc.stickLeanDownRotation   = Float3{ 0.0f, RIGHT_ANGLE, -RIGHT_ANGLE };
-        fourWayDesc.stickLeanLeftRotation   = Float3{ RIGHT_ANGLE, DirectX::XM_PI, 0.0f };
+        OperateGuideDesc guideDesc = {};
+        guideDesc.relativePositions[static_cast<int>(guide::DIRECTION::LEFT)]   = Float3{-0.6f, 0.0f, 0.0f};
+        guideDesc.relativePositions[static_cast<int>(guide::DIRECTION::RIGHT)]  = Float3{0.6f, 0.0f, 0.0f};
+        guideDesc.relativePositions[static_cast<int>(guide::DIRECTION::UP)]     = Float3{0.0f, 0.6f, 0.0f};
+        guideDesc.relativePositions[static_cast<int>(guide::DIRECTION::DOWN)]   = Float3{0.0f, -0.6f, 0.0f};
+        guideDesc.scales[static_cast<int>(guide::DIRECTION::LEFT)]              = Float3{0.025f, 0.025f, 0.025f};
+        guideDesc.scales[static_cast<int>(guide::DIRECTION::RIGHT)]             = Float3{0.025f, 0.025f, 0.025f};
+        guideDesc.scales[static_cast<int>(guide::DIRECTION::UP)]                = Float3{0.025f, 0.025f, 0.025f};
+        guideDesc.scales[static_cast<int>(guide::DIRECTION::DOWN)]              = Float3{0.025f, 0.025f, 0.025f};
+        guideDesc.buttonRotations[static_cast<int>(guide::DIRECTION::LEFT)]     = button::ROTATE_LEFT;
+        guideDesc.buttonRotations[static_cast<int>(guide::DIRECTION::RIGHT)]    = button::ROTATE_RIGHT;
+        guideDesc.buttonRotations[static_cast<int>(guide::DIRECTION::UP)]       = button::ROTATE_UP;
+        guideDesc.buttonRotations[static_cast<int>(guide::DIRECTION::DOWN)]     = button::ROTATE_DOWN;
+        guideDesc.stickRotations[static_cast<int>(guide::DIRECTION::LEFT)]      = stick::ROTATE_LEFT;
+        guideDesc.stickRotations[static_cast<int>(guide::DIRECTION::RIGHT)]     = stick::ROTATE_RIGHT;
+        guideDesc.stickRotations[static_cast<int>(guide::DIRECTION::UP)]        = stick::ROTATE_UP;
+        guideDesc.stickRotations[static_cast<int>(guide::DIRECTION::DOWN)]      = stick::ROTATE_DOWN;
+        guideDesc.defaultCamera     = defaultCamera;
+        guideDesc.lightDirection    = lightDirection;
+        objManager->AttachComponent<OperateGuide>(obj, guideDesc);
+        OperateGuide* operateGuide = objManager->GetGameObjectRef(obj)->SearchComponent<OperateGuide>();
+        gameMode->AddObserver(operateGuide->GetGuideObserverRef());
 
-        objManager->AttachComponent<FourWayGuide>(objId, fourWayDesc);
-
-        objManager->Init(objId);
-        objManager->Setup(objId);
+        objManager->Init(obj);
+        objManager->Setup(obj);
     }
-
 }

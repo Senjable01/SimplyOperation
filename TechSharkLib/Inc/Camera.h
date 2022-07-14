@@ -60,9 +60,12 @@ namespace TechSharkLib
         const DirectX::XMFLOAT4& Up() const noexcept { return up; }
         const DirectX::XMFLOAT4& Front() const noexcept { return front; }
         const DirectX::XMFLOAT4& Right() const noexcept { return right; }
-
         const DirectX::XMFLOAT4X4& View() const noexcept { return view; }
         const DirectX::XMFLOAT4X4& Projection() const noexcept { return projection; }
+
+        void SetEye(const DirectX::XMFLOAT4& eye) { this->eye = eye; }
+        void SetFocus(const DirectX::XMFLOAT4& focus) { this->focus = focus; }
+        void SetUp(const DirectX::XMFLOAT4& up) { this->up = up; }
 
     };
 }

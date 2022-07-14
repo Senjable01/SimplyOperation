@@ -10,12 +10,11 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
-#include "GameMode.h"
-#include "GameRule.h"
-#include "Entrant.h"
 #include "Config.h"
 #include "Recipe.h"
-#include <thread>
+#include "Entrant.h"
+#include "RockScissorsPaper.h"
+#include "OperateGuide.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::SpriteID;
@@ -31,18 +30,16 @@ using TechSharkLib::StaticMeshRenderer;
 //------< namespace >---------------------------------------------------------------------
 namespace
 {
-    int     loadNum             = 0;
-
     TechSharkLib::KeyAssignList keyAssignList = {
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home},
-        config::key::left0,
-        config::key::right0,
-        config::key::up0,
-        config::key::down0,
         config::key::left1,
         config::key::right1,
         config::key::up1,
         config::key::down1,
+        config::key::left2,
+        config::key::right2,
+        config::key::up2,
+        config::key::down2,
     };
 
 }
@@ -59,50 +56,32 @@ namespace
 
 void SceneGameSingle::Init()
 {
-    Entrant::LoadMeshes();
 }
 
 void SceneGameSingle::Setup()
 {
+    /* シーン */
     Scene::Setup();
+
+    /* ウィンドウ */
     TechSharkLib::SetDisplayFrameRate(true);
-    TechSharkLib::SetAssignData(0, keyAssignList, {});
 
+    /* 描画関連 */
     camera = {};
-
     camera.LookAt({0.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
     camera.CalcAndSetPerspectiveMatrix(TechSharkLib::ToRadian(30.0f), TechSharkLib::AspectRatio(), 0.1f, 100.0f);
-    
-    //std::thread th(CreateGameObjects, &objManager, &gameMode);
-    //th.join();
-    CreateGameObjects(&objManager, &gameMode);
     lightDirection = Float4{ 0.0f, 0.0f, 10.0f, 1.0f };
-
     TechSharkLib::SetProjector(TechSharkLib::SCENE_CONSTANTS::DEFAULT);
 
-    gameMode.SetNextRule<RockScissorsPaper>();
-
-    loadNum++;
-}
-
-void SceneGameSingle::CreateGameObjects(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode)
-{
-    recipe::CreateMesh(
-        objManager,
-        L"./Data/Models/Haikei/Haikei.obj",
-        {0.0f, 0.0f, 24.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
-        "Haikei"
-    );
-    //recipe::CreateMesh(
-    //    objManager,
-    //    L"./Data/Models/Hand_yubisasi_A/Hand_yubisasi_A.obj",
-    //    {0.0f, 0.0f, -2.0f}, {0.1f, 0.1f, 0.1f}, {0.0f, 0.0f, 0.0f},
-    //    "Haikei"
-    //);
-
-    recipe::CreateEntrant01(objManager, gameMode);
-    recipe::CreateEntrant02(objManager, gameMode, true);
-    recipe::CreateControllerGuide(objManager, {-3.5f, -0.0f, 0.0f});
+    /* 一般 */
+    TechSharkLib::SetAssignData(0, keyAssignList, {});
+    recipe::CreateEntrant01(&objManager, &gameMode);
+    recipe::CreateEntrant02(&objManager, &gameMode, true);
+    recipe::CreateGuide(&objManager, &gameMode, &camera, lightDirection);
+    Entrant::LoadMeshes();
+    OperateGuide::LoadMeshes();
+    gameMode.SetCamera(&camera);
+    gameMode.Start<RockScissorsPaper>();
 }
 
 void SceneGameSingle::Update(float deltaTime)
@@ -113,16 +92,17 @@ void SceneGameSingle::Update(float deltaTime)
         return;
     }
 
-    objManager.Update(deltaTime);
-    gameMode.Update(deltaTime);
     if (gameMode.IsFinished())
     {
         Scene::ChangeScene<SceneResultSingle>(gameMode.LastResult());
+        return;
     }
+
+    objManager.Update(deltaTime);
+    gameMode.Update(deltaTime);
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
-    ImGui::Text(u8"ロード数 %d", loadNum);
     if (ImGui::Button(u8"リロード"))
     {
         Scene::ChangeScene<SceneGameSingle>();
@@ -148,15 +128,16 @@ void SceneGameSingle::Render()
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
     TechSharkLib::Project(&camera, lightDirection);
 
+    gameMode.Render();
     objManager.Render();
 }
 
 void SceneGameSingle::Deinit()
 {
+    gameMode.End();
     objManager.Deinit();
+    Entrant::ReleaseMeshes();
+    OperateGuide::ReleaseMeshes();
 
     TechSharkLib::SetDisplayFrameRate(false);
-
-    gameMode.Clear();
-    Entrant::UnloadMeshes();
 }

@@ -25,15 +25,6 @@ namespace TechSharkLib
     //========================================================================================
 
     //------------------------------------------------------------------------------
-    // destructor
-    //------------------------------------------------------------------------------
-
-    StaticMeshRenderer::~StaticMeshRenderer()
-    {
-        TechSharkLib::Release(meshId);
-    }
-
-    //------------------------------------------------------------------------------
     // member function
     //------------------------------------------------------------------------------
 
@@ -44,12 +35,13 @@ namespace TechSharkLib
     }
     void StaticMeshRenderer::Setup()
     {
-        meshId = TechSharkLib::LoadStaticMesh(description.objFilePath.c_str(), description.flipVCoord);
-        materialColor = description.materialColor;
+        meshId          = description.staticMeshId;
+        materialColor   = description.materialColor;
     }
     void StaticMeshRenderer::Render(float, float)
     {
         if (transform == nullptr) return;
+        if (isRenderable == false) return;
 
         const DirectX::XMFLOAT4X4 local = transform->Transform();
         TechSharkLib::Render(meshId, local, materialColor);
@@ -57,11 +49,9 @@ namespace TechSharkLib
     void StaticMeshRenderer::Deinit()
     {
         transform       = nullptr;
-        TechSharkLib::Release(meshId);
         materialColor   = {0.0f, 0.0f, 0.0f, 1.0f};
         description     = {};
     }
-
     void StaticMeshRenderer::DrawDebugGUI()
     {
         if (ImGui::CollapsingHeader("StaticMeshRenderer"))

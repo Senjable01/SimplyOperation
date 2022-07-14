@@ -9,19 +9,14 @@
 // 
 //========================================================================================
 template<typename Subject>
-class Behavior
+class Strategy
 {
 private:
     virtual void Run(Subject*) = 0;
 
 public:
-    virtual ~Behavior() {}
+    virtual ~Strategy() {}
 
-    void operator()(Subject* subject) { Run(subject); }
+    void operator()(Subject* subject) { Run(subject); };
 
 };
-
-//------< using >-------------------------------------------------------------------------
-
-template<typename Arg>
-using Strategy = std::unique_ptr<Behavior<Arg>>;

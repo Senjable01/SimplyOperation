@@ -168,12 +168,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Config.h" />
-    <ClInclude Include="SourceCode\FourWayGuide.h" />
+    <ClInclude Include="SourceCode\DirectionBattle.h" />
     <ClInclude Include="SourceCode\Entrant.h" />
     <ClInclude Include="SourceCode\GameMode.h" />
-    <ClInclude Include="SourceCode\GameRule.h" />
-    <ClInclude Include="SourceCode\Obj3DDebugger.h" />
+    <ClInclude Include="SourceCode\OBJDebugger.h" />
+    <ClInclude Include="SourceCode\Observer.h" />
+    <ClInclude Include="SourceCode\OperateGuide.h" />
+    <ClInclude Include="SourceCode\PushHands.h" />
     <ClInclude Include="SourceCode\Recipe.h" />
+    <ClInclude Include="SourceCode\RockScissorsPaper.h" />
     <ClInclude Include="SourceCode\SceneGameSingle.h" />
     <ClInclude Include="SourceCode\SceneResultSingle.h" />
     <ClInclude Include="SourceCode\SceneSelect.h" />
@@ -235,16 +238,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Config.cpp" />
-    <ClCompile Include="SourceCode\FourWayGuide.cpp" />
+    <ClCompile Include="SourceCode\DirectionBattle.cpp" />
     <ClCompile Include="SourceCode\Entrant.cpp" />
     <ClCompile Include="SourceCode\GameMode.cpp" />
-    <ClCompile Include="SourceCode\GameRule.cpp" />
-    <ClCompile Include="SourceCode\Obj3DDebuger.cpp" />
+    <ClCompile Include="SourceCode\OBJDebugger.cpp" />
+    <ClCompile Include="SourceCode\OperateGuide.cpp" />
+    <ClCompile Include="SourceCode\PushHands.cpp" />
+    <ClCompile Include="SourceCode\Recipe.cpp" />
+    <ClCompile Include="SourceCode\RockScissorsPaper.cpp" />
     <ClCompile Include="SourceCode\SceneGameSingle.cpp" />
     <ClCompile Include="SourceCode\SceneResultSingle.cpp" />
     <ClCompile Include="SourceCode\SceneTitle.cpp" />
     <ClCompile Include="SourceCode\SceneSelect.cpp" />
-    <ClCompile Include="SourceCode\Recipe.cpp" />
     <ClCompile Include="SourceCode\Utility.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui_demo.cpp" />

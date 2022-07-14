@@ -18,15 +18,13 @@ private:
     TechSharkLib::Camera    camera;
     TechSharkLib::Float4    lightDirection;
     TechSharkLib::GameObjectManager objManager;
-    GameMode gameMode;
+    GameMode                gameMode;
 
     void Init() override;
     void Setup() override;
     void Update(float/*deltaTime*/) override;
     void Render() override;
     void Deinit() override;
-
-    static void CreateGameObjects(TechSharkLib::GameObjectManager* objManager, GameMode* gameMode);
 
 public:
     SceneGameSingle() : 

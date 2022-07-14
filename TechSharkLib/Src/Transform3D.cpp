@@ -44,14 +44,6 @@ namespace TechSharkLib
         description = {};
     }
 
-    void Transform3D::CalcTransform()
-    {
-        DirectX::XMMATRIX mtrixScale    = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
-        DirectX::XMMATRIX mtrixRotation = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-        DirectX::XMMATRIX mtrixPosition = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
-        DirectX::XMStoreFloat4x4(&transform, mtrixScale * mtrixRotation * mtrixPosition);
-    }
-
     void Transform3D::DrawDebugGUI()
     {
         #if USE_IMGUI
@@ -63,6 +55,27 @@ namespace TechSharkLib
         }
 
         #endif // USE_IMGUI
+    }
+
+    void Transform3D::CalcTransform()
+    {
+        DirectX::XMMATRIX mtrixScale    = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+        DirectX::XMMATRIX mtrixRotation = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+        DirectX::XMMATRIX mtrixPosition = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
+        DirectX::XMStoreFloat4x4(&transform, mtrixScale * mtrixRotation * mtrixPosition);
+    }
+    DirectX::XMFLOAT4X4 Transform3D::CalcTransform(
+        const DirectX::XMFLOAT3& addPosition,
+        const DirectX::XMFLOAT3& addScale,
+        const DirectX::XMFLOAT3& addRotation
+    )
+    {
+        DirectX::XMMATRIX mtrixScale    = DirectX::XMMatrixScaling(scale.x + addScale.x, scale.y + addScale.y, scale.z + addScale.y);
+        DirectX::XMMATRIX mtrixRotation = DirectX::XMMatrixRotationRollPitchYaw(rotation.x + addRotation.x, rotation.y + addRotation.y, rotation.z + addRotation.z);
+        DirectX::XMMATRIX mtrixPosition = DirectX::XMMatrixTranslation(position.x + addPosition.x, position.y + addPosition.y, position.z + addPosition.z);
+        DirectX::XMFLOAT4X4 transform = {};
+        DirectX::XMStoreFloat4x4(&transform, mtrixScale * mtrixRotation * mtrixPosition);
+        return transform;
     }
 
     //------------------------------------------------------------------------------

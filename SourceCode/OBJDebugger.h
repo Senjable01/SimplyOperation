@@ -1,52 +1,57 @@
-#pragma once
+#ifndef INCLUDED_OBJ_DEBUGGER_H
+#define INCLUDED_OBJ_DEBUGGER_H
 
 //------< include >-----------------------------------------------------------------------
 #include "../TechSharkLib/Inc/Component.h"
-#include <string>
 #include "../TechSharkLib/Inc/Transform3D.h"
 #include "../TechSharkLib/Inc/StaticMeshRenderer.h"
-#include <vector>
+#include <string>
 
 //========================================================================================
 // 
-//      Obj3DDebuggerDesc
+//      OBJDebuggerDesc
 // 
 //========================================================================================
-struct Obj3DDebuggerDesc
+struct OBJDebuggerDesc
 {
-    std::string name;
+    std::string debugName;
 };
 
 //========================================================================================
 // 
-//      Obj3DDebugger
+//      OBJDebugger
 // 
 //========================================================================================
-class Obj3DDebugger : public TechSharkLib::Component
+class OBJDebugger : public TechSharkLib::Component
 {
-TSL_DEFINE_COMPONENT(Obj3DDebugger);
+TSL_DEFINE_COMPONENT(OBJDebugger);
 private:
     TechSharkLib::Transform3D*          transform;
     TechSharkLib::StaticMeshRenderer*   renderer;
 
-    std::string name;
+    std::string debugName;
 
-    Obj3DDebuggerDesc description;
+    OBJDebuggerDesc description;
 
 public:
-    Obj3DDebugger() = delete;
-    Obj3DDebugger(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const Obj3DDebuggerDesc& desc) : 
+    OBJDebugger() = delete;
+    OBJDebugger(const TechSharkLib::ComponentID& selfId, TechSharkLib::GameObject* owner, const OBJDebuggerDesc& desc) : 
         transform{nullptr}, renderer{nullptr},
+        debugName{},
         description{desc},
         TechSharkLib::Component{selfId, owner}
     {
     }
-    ~Obj3DDebugger() override {}
+    ~OBJDebugger() override {}
 
     void Init() override;
     void Setup() override;
     void Update(float /*deltaTime*/) override;
     void Render(float /*scrollX*/, float /*scrollY*/) override {}
-    void Deinit() override {}
+    void Deinit() {}
+
+    void DrawDebugGUI() override;
 
 };
+
+#endif // !INCLUDED_OBJ_DEBUGGER_H

@@ -26,13 +26,12 @@ namespace TechSharkLib
     //========================================================================================
     struct StaticMeshRendererDesc
     {
-        std::wstring        objFilePath;
-        bool                flipVCoord;
+        StaticMeshID        staticMeshId;
         DirectX::XMFLOAT4   materialColor;
 
-        StaticMeshRendererDesc() : objFilePath{}, flipVCoord{false}, materialColor{0.0f, 0.0f, 0.0f, 1.0f} {}
-        StaticMeshRendererDesc(const wchar_t* objFilePath, bool reverseVCoord, const DirectX::XMFLOAT4& materialColor) :
-            objFilePath{objFilePath}, flipVCoord{reverseVCoord}, materialColor{materialColor}
+        StaticMeshRendererDesc() : staticMeshId{}, materialColor{0.0f, 0.0f, 0.0f, 1.0f} {}
+        StaticMeshRendererDesc(const StaticMeshID& staticMeshId, const DirectX::XMFLOAT4& materialColor) :
+            staticMeshId{staticMeshId}, materialColor{materialColor}
         {
         }
     };
@@ -54,6 +53,7 @@ namespace TechSharkLib
 
         StaticMeshID            meshId;
         DirectX::XMFLOAT4       materialColor;
+        bool                    isRenderable;
 
         StaticMeshRendererDesc  description;
 
@@ -61,12 +61,12 @@ namespace TechSharkLib
         StaticMeshRenderer() = delete;
         StaticMeshRenderer(const ComponentID& selfId, GameObject* owner, const StaticMeshRendererDesc& desc) : 
             transform{nullptr},
-            meshId{}, materialColor{0.0f, 0.0f, 0.0f, 1.0f},
+            meshId{}, materialColor{0.0f, 0.0f, 0.0f, 1.0f}, isRenderable{true},
             description{desc},
             Component{selfId, owner}
         {
         }
-        ~StaticMeshRenderer() override;
+        ~StaticMeshRenderer() override {}
 
         void Init() override;
         void Setup() override;
@@ -74,13 +74,13 @@ namespace TechSharkLib
         void Render(float, float) override;
         void Deinit() override;
 
-        void DrawDebugGUI();
+        void DrawDebugGUI() override;
 
         const StaticMeshID& MeshID() const noexcept { return meshId; }
         const DirectX::XMFLOAT4& MaterialColor() const noexcept { return materialColor; }
+        bool IsRenderable() const noexcept { return isRenderable; }
 
         void SetMeshID(const StaticMeshID& meshId) { this->meshId = meshId; }
-        void ReloadMesh(const wchar_t* objFilePath);
         void SetMaterialColor(float red, float green, float blue, float alpha)
         {
             materialColor.x = red;
@@ -88,6 +88,7 @@ namespace TechSharkLib
             materialColor.z = blue;
             materialColor.w = alpha;
         }
+        void SetRenderablity(bool isAvailable) { this->isRenderable = isAvailable; }
 
     };
 

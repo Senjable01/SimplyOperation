@@ -8,11 +8,6 @@
 
 #endif // USE_IMGUI
 
-//TODO:01 各シーンを作成
-// ステージ選択、ゲーム(vsNPC)、リザルト(vsNPC)など、必要なシーンを作成する。
-// ひとまずキーで遷移できるようにする。
-// Title.h / Title.cpp およびTechSharkLib、ImGuiは編集しないこと。
-
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
 

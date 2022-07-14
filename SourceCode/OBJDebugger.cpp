@@ -1,5 +1,5 @@
 //------< include >-----------------------------------------------------------------------
-#include "Obj3DDebugger.h"
+#include "OBJDebugger.h"
 #include "../TechSharkLib/Inc/GameObject.h"
 #include "../TechSharkLib/Inc/Configulation.h"
 #if USE_IMGUI
@@ -9,44 +9,42 @@
 
 //========================================================================================
 // 
-//      Obj3DDebbger
+//      OBJDebugger
 // 
 //========================================================================================
 
 //------------------------------------------------------------------------------
-// member function
 //------------------------------------------------------------------------------
 
-void Obj3DDebugger::Init()
+void OBJDebugger::Init()
 {
-    using TechSharkLib::Transform3D;
-    using TechSharkLib::StaticMeshRenderer;
-
-    transform = GetOwnerRef()->SearchComponent<Transform3D>();
+    transform = GetOwnerRef()->SearchComponent<TechSharkLib::Transform3D>();
     _ASSERT_EXPR(transform != nullptr, L"Transform3Dコンポーネントの検索に失敗");
-    renderer = GetOwnerRef()->SearchComponent<StaticMeshRenderer>();
+    renderer = GetOwnerRef()->SearchComponent<TechSharkLib::StaticMeshRenderer>();
     _ASSERT_EXPR(renderer != nullptr, L"StaticMeshRendererコンポーネントの検索に失敗");
 }
-
-void Obj3DDebugger::Setup()
+void OBJDebugger::Setup()
 {
-    name = description.name;
+    debugName = description.debugName;
+}
+void OBJDebugger::Update(float /*deltaTime*/)
+{
+    DrawDebugGUI();
 }
 
-void Obj3DDebugger::Update(float /*deltaTime*/)
+void OBJDebugger::DrawDebugGUI()
 {
     #if USE_IMGUI
-    ImGui::Begin(name.c_str());
+    ImGui::Begin(debugName.c_str());
     transform->DrawDebugGUI();
     renderer->DrawDebugGUI();
     ImGui::End();
 
     #endif // USE_IMGUI
-
 }
 
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // instance
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
-TSL_IMPLEMENT_COMPONENT(Obj3DDebugger, "Obj3DDebugger");
+TSL_IMPLEMENT_COMPONENT(OBJDebugger, "OBJDebugger");
