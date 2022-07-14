@@ -79,19 +79,19 @@ void Entrant::SetMesh(STATE state)
         case STATE::ROCK:
             transform->SetScale(hand::SCALE);
             transform->SetRotation(IsNPC() ? hand::ROTATE_BACK : hand::ROTATE_FRONT);
-            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(MESH::ROCK)));
+            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(IsSecondPlayer() ? MESH::ROCK_2P : MESH::ROCK_1P)));
             break;
 
         case STATE::SCISSORS:
             transform->SetScale(hand::SCALE);
             transform->SetRotation(IsNPC() ? hand::ROTATE_BACK : hand::ROTATE_FRONT);
-            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(MESH::SCISSORS)));
+            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(IsSecondPlayer() ? MESH::SCISSORS_2P : MESH::SCISSORS_1P)));
             break;
 
         case STATE::PAPER:
             transform->SetScale(hand::SCALE);
             transform->SetRotation(IsNPC() ? hand::ROTATE_BACK : hand::ROTATE_FRONT);
-            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(MESH::PAPER)));
+            renderer->SetMeshID(Entrant::meshes.at(static_cast<size_t>(IsSecondPlayer() ? MESH::PAPER_2P : MESH::PAPER_1P)));
             break;
 
         case STATE::UP:
@@ -125,11 +125,14 @@ void Entrant::SetMesh(STATE state)
 
 void Entrant::LoadMeshes()
 {
-    meshes.at(static_cast<size_t>(MESH::ROCK))      = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_guu/puroto_guu.obj", true);
-    meshes.at(static_cast<size_t>(MESH::SCISSORS))  = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_choki/puroto_choki.obj", true);
-    meshes.at(static_cast<size_t>(MESH::PAPER))     = TechSharkLib::LoadStaticMesh(L"./Data/Models/puroto_paa/puroto_paa.obj", true);
-    meshes.at(static_cast<size_t>(MESH::FINGER_1P)) = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_yubisasi_A/Hand_yubisasi_A.obj", true);
-    meshes.at(static_cast<size_t>(MESH::FINGER_2P)) = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_yubisasi_B/Hand_yubisasi_B.obj", true);
+    meshes.at(static_cast<size_t>(MESH::ROCK_1P))       = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_guu_A/Hand_guu_A.obj", true);
+    meshes.at(static_cast<size_t>(MESH::ROCK_2P))       = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_guu_B/Hand_guu_B.obj", true);
+    meshes.at(static_cast<size_t>(MESH::SCISSORS_1P))   = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_choki_A/Hand_choki_A.obj", true);
+    meshes.at(static_cast<size_t>(MESH::SCISSORS_2P))   = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_choki_B/Hand_choki_B.obj", true);
+    meshes.at(static_cast<size_t>(MESH::PAPER_1P))      = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_paa_A/Hand_paa_A.obj", true);
+    meshes.at(static_cast<size_t>(MESH::PAPER_2P))      = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_paa_B/Hand_paa_B.obj", true);
+    meshes.at(static_cast<size_t>(MESH::FINGER_1P))     = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_yubisasi_A/Hand_yubisasi_A.obj", true);
+    meshes.at(static_cast<size_t>(MESH::FINGER_2P))     = TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_yubisasi_B/Hand_yubisasi_B.obj", true);
 }
 void Entrant::ReleaseMeshes()
 {

@@ -106,9 +106,12 @@ namespace config
 
         enum class MESH : int
         {
-            ROCK = 0,
-            SCISSORS,
-            PAPER,
+            ROCK_1P = 0,
+            SCISSORS_1P,
+            PAPER_1P,
+            ROCK_2P,
+            SCISSORS_2P,
+            PAPER_2P,
             FINGER_1P,
             FINGER_2P,
             NUM

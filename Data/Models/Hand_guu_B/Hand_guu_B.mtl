@@ -1,7 +1,7 @@
-newmtl lambert5SG
+newmtl lambert2SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd puroto_guu_TEX.png
+map_Kd Hand_guu_B_TEX.png
 Ni 1.00

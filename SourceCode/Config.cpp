@@ -60,9 +60,9 @@ namespace config
 
         namespace hand
         {
-            const TechSharkLib::Float3 SCALE            = {0.3f, 0.3f, 0.3f};
-            const TechSharkLib::Float3 ROTATE_FRONT     = {rad::DEG_90, rad::DEG_0, rad::DEG_180};
-            const TechSharkLib::Float3 ROTATE_BACK      = {rad::DEG_90, rad::DEG_0, rad::DEG_0};
+            const TechSharkLib::Float3 SCALE            = {0.08f, 0.08f, 0.08f};
+            const TechSharkLib::Float3 ROTATE_FRONT     = {rad::DEG_0, rad::DEG_180, rad::DEG_0};
+            const TechSharkLib::Float3 ROTATE_BACK      = {rad::DEG_0, rad::DEG_0, rad::DEG_0};
         }
 
         namespace finger

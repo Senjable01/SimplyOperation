@@ -61,7 +61,7 @@ void SceneResultSingle::Setup()
     TechSharkLib::SetAssignData(0, keyAssignList, {});
 
     rotateZPerSec = config::background::ROTATE_Z_PER_SEC;
-    toTitle.Setup(300.0f, 100.0f, 128.0f, 64.0f, 1.0f, 0.4f, 0.4f, 0.5f);
+    toTitle.Setup(0.0f, 0.0f, 128.0f, 64.0f, 1.0f, 0.4f, 0.4f, 0.5f);
 }
 
 void SceneResultSingle::Update(float deltaTime)
