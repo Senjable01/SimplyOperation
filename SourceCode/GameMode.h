@@ -9,6 +9,7 @@
 #include "../TechSharkLib/Inc/Camera.h"
 #include "../TechSharkLib/Inc/StaticMeshID.h"
 #include "OperateGuide.h"
+#include "Backgrounds.h"
 
 //------< class >-------------------------------------------------------------------------
 
@@ -47,7 +48,8 @@ public:
 class GameMode
 {
 public:
-    using RESULT = config::rule::RESULT;
+    using RESULT    = config::rule::RESULT;
+    using BG_NO     = config::background::GAME_BG_NO;
     enum class ENTRANT : int {_01, _02, NUM};
 
 private:
@@ -65,7 +67,8 @@ private:
     bool onceSkipAddSec; //TODO: ロード時間が延びてdeltaTimeが大きくなることの対策(根本的な解決ではない)
     RESULT lastResult;
     bool isFinished;
-    Subject<OperateGuide::STATE> subject;
+    Subject<OperateGuide::STATE>    guideSubject;
+    Subject<Backgrounds::No>        backgroundsSubject;
 
     void Setup();
 
@@ -74,7 +77,7 @@ public:
         gameRule{nullptr}, nextRule{nullptr}, camera{nullptr}, firstCameraFocus{},
         entrant02Head{}, headPos{}, headScale{}, headRotation{}, firstHeadRotation{},
         entrants{}, timerSec{0.0f}, onceSkipAddSec{true}, lastResult{RESULT::NONE}, isFinished{false},
-        subject{}
+        guideSubject{}
     {
     }
     
@@ -117,8 +120,10 @@ public:
     void SetEntrant02Ref(Entrant* entrant02) { entrants.at(static_cast<size_t>(ENTRANT::_02)) = entrant02; }
     void SetCamera(TechSharkLib::Camera* camera) { this->camera = camera; }
 
-    void AddObserver(Observer<OperateGuide::STATE>* observer) { subject.AddObserver(observer); }
-    void NotyfyToObserver(OperateGuide::STATE state) { subject.Notify(state); }
+    void AddGuideObserver(Observer<OperateGuide::STATE>* observer) { guideSubject.AddObserver(observer); }
+    void NotyfyToGuide(OperateGuide::STATE state) { guideSubject.Notify(state); }
+    void AddBackgroundsObserver(Observer<Backgrounds::No>* observer) { backgroundsSubject.AddObserver(observer); }
+    void NotyfyToBackgrounds(BG_NO state) { backgroundsSubject.Notify(static_cast<Backgrounds::No>(state)); }
 
 };
 

@@ -22,6 +22,25 @@ namespace config
         extern TechSharkLib::KeyAssign down2;
     }
 
+    namespace background
+    {
+        extern const TechSharkLib::Float2 POSITION;
+        extern const TechSharkLib::Float2 SCALE;
+        extern const TechSharkLib::Float2 TEXEL_SIZE;
+        extern const TechSharkLib::Float2 PIVOT;
+        extern const TechSharkLib::Float4 COLOR;
+        enum class GAME_BG_NO : unsigned int {
+            RSP_FIRST = 1,  // さいしょはグー
+            RSP_RECEPTION,  // じゃんけん
+            RSP_JUDGE,      // ポン！
+            PH_RECEPTION,   // 抗え！
+            DB_RECEPTION,   // あっちむいて
+            DB_JUDGE        // ほい！
+        };
+
+        constexpr float ROTATE_Z_PER_SEC = DirectX::XMConvertToRadians(150.0f); // (リザルト画面用パラメーター)
+    }
+
     namespace model
     {
         namespace button // Arrow Button

@@ -234,6 +234,12 @@
     <ClInclude Include="SourceCode\OperateGuide.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Backgrounds.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ClickField.h">
+      <Filter>Source\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TechSharkLib\Src\ResourceManager.cpp">
@@ -411,6 +417,9 @@
       <Filter>Source\Src</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\OperateGuide.cpp">
+      <Filter>Source\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ClickField.cpp">
       <Filter>Source\Src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -173,9 +173,9 @@ namespace TechSharkLib
     const unsigned int KeyCodes::Pa1                = 0xfd;
     const unsigned int KeyCodes::OemClear           = 0xfe;
 
-    static const unsigned int mouseLeft             = VK_LBUTTON;
-    static const unsigned int mouseMiddle           = VK_MBUTTON;
-    static const unsigned int mouseRight            = VK_RBUTTON;
+    const unsigned int KeyCodes::MouseLeft          = VK_LBUTTON;
+    const unsigned int KeyCodes::MouseMiddle        = VK_MBUTTON;
+    const unsigned int KeyCodes::MouseRight         = VK_RBUTTON;
 
     const unsigned int KeyCodes::PadUp              = 0;
     const unsigned int KeyCodes::PadDown            = 1;

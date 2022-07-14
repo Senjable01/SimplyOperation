@@ -8,6 +8,7 @@
 #include "../Inc/Input.h"
 #include "../Inc/AudioManager.h"
 #include "../Inc/ResourceManager.h"
+#include "../Inc/Primitive.h"
 #if USE_IMGUI
 #include "../Inc/ImGuiCtrl.h"
 
@@ -38,6 +39,7 @@ namespace TechSharkLib
         AudioManager        audioManager        = {};
         ResourceManager*    resourceManager     = nullptr; // (キャッシュ用)
 
+        std::unique_ptr<PrimitiveRect> primitiveRect;
     } manager;
 
     //------< function >----------------------------------------------------------------------
@@ -58,6 +60,7 @@ namespace TechSharkLib
         imgui::Initialize(windowHandle, manager.graphics.GetDevice(), manager.graphics.GetContext());
 
         #endif // USE_IMGUI
+        manager.primitiveRect = std::make_unique<TechSharkLib::PrimitiveRect>(manager.graphics.GetDevice());
     }
     void Uninitialize()
     {
@@ -112,6 +115,23 @@ namespace TechSharkLib
     void SetRasterizerState(RASTERIZER_STATE state)
     {
         manager.graphics.SetRasterizerState(state);
+    }
+
+    /* Primitive */
+    void DrawRect(
+        float posX, float posY,
+        float width, float height,
+        float red, float green, float blue, float alpha
+    )
+    {
+        manager.primitiveRect->Render(
+            manager.graphics.GetContext(),
+            posX, posY,
+            width, height,
+            0.0f, 0.0f,
+            0.0f,
+            red, green, blue, alpha
+        );
     }
 
     /* Sprite */

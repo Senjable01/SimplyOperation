@@ -49,6 +49,13 @@ namespace TechSharkLib
     void SetBlendState(BLEND_STATE state);
     void SetRasterizerState(RASTERIZER_STATE state);
 
+    /* Primitive */
+    void DrawRect(
+        float posX, float posY,
+        float width, float height,
+        float red, float green, float blue, float alpha
+    );
+
     /* Sprite */
     SpriteID LoadSprite(const wchar_t* filePath);
     void Render(

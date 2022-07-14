@@ -168,7 +168,7 @@ namespace recipe
         guideDesc.lightDirection    = lightDirection;
         objManager->AttachComponent<OperateGuide>(obj, guideDesc);
         OperateGuide* operateGuide = objManager->GetGameObjectRef(obj)->SearchComponent<OperateGuide>();
-        gameMode->AddObserver(operateGuide->GetGuideObserverRef());
+        gameMode->AddGuideObserver(operateGuide->GetGuideObserverRef());
 
         objManager->Init(obj);
         objManager->Setup(obj);

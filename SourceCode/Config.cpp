@@ -27,6 +27,16 @@ namespace config
         TechSharkLib::KeyAssign down2   = { BIT_NO::BIT_18, KeyCodes::Down };
     }
 
+    namespace background
+    {
+        const TechSharkLib::Float2 SCREEN_SIZE  = {1280.0f, 720.0f};
+        const TechSharkLib::Float2 POSITION     = SCREEN_SIZE / 2;
+        const TechSharkLib::Float2 SCALE        = {0.5f, 0.5f};
+        const TechSharkLib::Float2 TEXEL_SIZE   = {2560.0f, 1440.0f};
+        const TechSharkLib::Float2 PIVOT        = TEXEL_SIZE / 2;
+        const TechSharkLib::Float4 COLOR        = {1.0f, 1.0f, 1.0f, 1.0f};
+    }
+
     namespace model
     {
         namespace button

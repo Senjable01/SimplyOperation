@@ -56,6 +56,13 @@ namespace
 
 void SceneGameSingle::Init()
 {
+    using BG_NO = config::background::GAME_BG_NO;
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::RSP_FIRST),        L"Data/Images/1_saisyo_ha_Gu.png");
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::RSP_RECEPTION),    L"Data/Images/2_JANKEN.png");
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::RSP_JUDGE),        L"Data/Images/3_PON.png");
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::PH_RECEPTION),     L"Data/Images/4_Aragae.png");
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::DB_RECEPTION),     L"Data/Images/5_Atti_muite.png");
+    backgrounds.AddBackground(static_cast<Backgrounds::No>(BG_NO::DB_JUDGE),         L"Data/Images/6_Hoi.png");
 }
 
 void SceneGameSingle::Setup()
@@ -82,6 +89,7 @@ void SceneGameSingle::Setup()
     OperateGuide::LoadMeshes();
     gameMode.SetCamera(&camera);
     gameMode.Start<RockScissorsPaper>();
+    gameMode.AddBackgroundsObserver(backgrounds.GetObserverRef());
 }
 
 void SceneGameSingle::Update(float deltaTime)
@@ -100,6 +108,7 @@ void SceneGameSingle::Update(float deltaTime)
 
     objManager.Update(deltaTime);
     gameMode.Update(deltaTime);
+    backgrounds.Update();
 
     #if USE_IMGUI
     ImGui::Begin("GameSingle");
@@ -125,7 +134,11 @@ void SceneGameSingle::Update(float deltaTime)
 
 void SceneGameSingle::Render()
 {
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::NONE);
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
+    backgrounds.Render();
+
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::TEST_AND_WRITE);
     TechSharkLib::Project(&camera, lightDirection);
 
     gameMode.Render();
@@ -134,6 +147,7 @@ void SceneGameSingle::Render()
 
 void SceneGameSingle::Deinit()
 {
+    backgrounds.Deinit();
     gameMode.End();
     objManager.Deinit();
     Entrant::ReleaseMeshes();

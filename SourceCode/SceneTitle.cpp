@@ -7,7 +7,7 @@
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
 
 #endif // USE_IMGUI
-#include "../TechSharkLib/Inc/Transform3D.h"
+#include "Config.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
@@ -32,6 +32,7 @@ namespace
 
 void SceneTitle::Init()
 {
+    background = TechSharkLib::LoadSprite(L"Data/Images/Title.png");
 }
 
 void SceneTitle::Setup()
@@ -59,10 +60,22 @@ void SceneTitle::Update(float)
 
 void SceneTitle::Render()
 {
+    namespace back = config::background;
 
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::NONE);
+    TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
+
+    TechSharkLib::Render(
+        background,
+        back::POSITION.x, back::POSITION.y,
+        back::SCALE.x, back::SCALE.y,
+        back::PIVOT.x, back::PIVOT.y,
+        0.0f,
+        back::COLOR.x, back::COLOR.y, back::COLOR.z, back::COLOR.w
+    );
 }
 
 void SceneTitle::Deinit()
 {
-
+    TechSharkLib::Release(background);
 }

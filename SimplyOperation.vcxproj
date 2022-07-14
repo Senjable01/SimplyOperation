@@ -167,6 +167,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Backgrounds.h" />
+    <ClInclude Include="SourceCode\ClickField.h" />
     <ClInclude Include="SourceCode\Config.h" />
     <ClInclude Include="SourceCode\DirectionBattle.h" />
     <ClInclude Include="SourceCode\Entrant.h" />
@@ -237,6 +239,7 @@
     <ClInclude Include="TechSharkLib\Inc\WindowProcedure.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\ClickField.cpp" />
     <ClCompile Include="SourceCode\Config.cpp" />
     <ClCompile Include="SourceCode\DirectionBattle.cpp" />
     <ClCompile Include="SourceCode\Entrant.cpp" />

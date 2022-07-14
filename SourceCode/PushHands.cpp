@@ -51,7 +51,8 @@ void PushHands::Setup(GameMode* gameMode)
     }
 
     gameMode->RezeroTimer();
-    gameMode->NotyfyToObserver(OperateGuide::STATE::PH);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::PH);
+    gameMode->NotyfyToBackgrounds(GameMode::BG_NO::PH_RECEPTION);
 }
 
 void PushHands::Reception(GameMode* gameMode)
@@ -132,7 +133,7 @@ void PushHands::Judge(GameMode* gameMode)
 
     /* 次のフェーズへ移行 */
     gameMode->RezeroTimer();
-    gameMode->NotyfyToObserver(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
     phase = PHASE::IDLE;
 }
 GameMode::RESULT PushHands::JudgeResult()

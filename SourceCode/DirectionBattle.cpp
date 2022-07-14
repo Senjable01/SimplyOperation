@@ -46,7 +46,8 @@ void DirectionBattle::Setup(GameMode* gameMode)
     gameMode->GetEntrant01Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->GetEntrant02Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->RezeroTimer();
-    gameMode->NotyfyToObserver(OperateGuide::STATE::DB);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::DB);
+    gameMode->NotyfyToBackgrounds(GameMode::BG_NO::DB_RECEPTION);
 }
 
 void DirectionBattle::Reception(GameMode* gameMode)
@@ -140,7 +141,8 @@ void DirectionBattle::Judge(GameMode* gameMode)
 
     // 次のフェーズへ移行
     gameMode->RezeroTimer();
-    gameMode->NotyfyToObserver(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToBackgrounds(GameMode::BG_NO::DB_JUDGE);
     phase = PHASE::IDLE;
 
 }

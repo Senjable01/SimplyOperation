@@ -40,7 +40,8 @@ void RockScissorsPaper::Setup(GameMode* gameMode)
     entrant02Hand = Entrant::STATE::NONE;
     gameMode->GetEntrant01Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->GetEntrant02Ref()->SetMesh(Entrant::STATE::NONE);
-    gameMode->NotyfyToObserver(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_FIRST);
 }
 
 void RockScissorsPaper::Reception(GameMode* gameMode)
@@ -59,7 +60,8 @@ void RockScissorsPaper::Reception(GameMode* gameMode)
         // 時間内なら手は変更可能
         ShootHandByInput(gameMode->GetEntrant01Ref(), &entrant01Hand);
         ShootHandByInput(gameMode->GetEntrant02Ref(), &entrant02Hand);
-        gameMode->NotyfyToObserver(OperateGuide::STATE::RSP);
+        gameMode->NotyfyToGuide(OperateGuide::STATE::RSP);
+        gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_RECEPTION);
     }
 
 }
@@ -128,7 +130,8 @@ void RockScissorsPaper::Judge(GameMode* gameMode)
 
     // 次のフェーズへ移行
     gameMode->RezeroTimer();
-    gameMode->NotyfyToObserver(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
+    gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_JUDGE);
     phase = PHASE::IDLE;
 
 }

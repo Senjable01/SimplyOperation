@@ -2,6 +2,7 @@
 
 //------< include >-----------------------------------------------------------------------
 #include "../TechSharkLib/Inc/Scene.h"
+#include "../TechSharkLib/Inc/SpriteID.h"
 
 //========================================================================================
 // 
@@ -11,6 +12,8 @@
 class SceneTitle : public TechSharkLib::Scene
 {
 private:
+    TechSharkLib::SpriteID background;
+
     void Init() override;
     void Setup() override;
     void Update(float) override;
@@ -18,7 +21,7 @@ private:
     void Deinit() override;
 
 public:
-    SceneTitle() : TechSharkLib::Scene{} {}
+    SceneTitle() : background{}, TechSharkLib::Scene{} {}
     ~SceneTitle() override {}
 
 };

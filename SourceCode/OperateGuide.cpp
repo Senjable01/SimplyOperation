@@ -22,8 +22,11 @@ void OperateGuide::Init()
 
     transform = GetOwnerRef()->SearchComponent<Transform3D>();
     _ASSERT_EXPR(transform != nullptr, L"Transform3Dコンポーネントの検索に失敗");
+    #if _DEBUG
     StaticMeshRenderer* renderer = GetOwnerRef()->SearchComponent<StaticMeshRenderer>();
     _ASSERT_EXPR(renderer == nullptr, L"StaticMeshRendererコンポーネントを取り除いてください。");
+
+    #endif // _DEBUG
 }
 void OperateGuide::Setup()
 {
