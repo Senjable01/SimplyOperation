@@ -54,10 +54,14 @@ namespace TechSharkLib
     }
     void StaticMeshRenderer::DrawDebugGUI()
     {
+        #if USE_IMGUI
         if (ImGui::CollapsingHeader("StaticMeshRenderer"))
         {
             ImGui::ColorEdit4("materialColor", &materialColor.x);
         }
+
+        #endif // USE_IMGUI
+
     }
 
     //------------------------------------------------------------------------------

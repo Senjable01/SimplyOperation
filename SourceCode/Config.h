@@ -42,8 +42,19 @@ namespace config
             DB_JUDGE        // ほい！
         };
 
-        constexpr float ROTATE_Z_PER_SEC_WIN01  = DirectX::XMConvertToRadians(100.0f); // (リザルト画面用パラメーター)
+        constexpr float ROTATE_Z_PER_SEC_WIN01  = DirectX::XMConvertToRadians(0.0f); // (リザルト画面用パラメーター)
         constexpr float ROTATE_Z_PER_SEC_LOSE01 = DirectX::XMConvertToRadians(250.0f); // (リザルト画面用パラメーター)
+    }
+
+    namespace button
+    {
+        extern const TechSharkLib::Float2 COMMON_SPR_SIZE;
+        extern const TechSharkLib::Float2 SCALE;
+        extern const TechSharkLib::Float2 SIZE;
+        extern const TechSharkLib::Float2 START_POS;
+        extern const TechSharkLib::Float2 BACK_POS;
+        extern const TechSharkLib::Float2 EXIT_POS;
+        extern const TechSharkLib::Float2 RETRY_POS;
     }
 
     namespace model

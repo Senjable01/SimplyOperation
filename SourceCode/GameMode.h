@@ -112,7 +112,10 @@ public:
         }
     }
     void FinishGame() { isFinished = true; }
-    void SetCameraFocus(const TechSharkLib::Float4& focus) { camera->SetFocus(focus); }
+    void SetCameraFocus(const TechSharkLib::Float4& focus)
+    {
+        camera->LookAt(camera->Eye(), focus, camera->Up());
+    }
     void ResetCameraFocus() { camera->SetFocus(firstCameraFocus); }
     void SetEntrant02HeadRotation(const TechSharkLib::Float3& rotation) { headRotation = rotation; }
     void ResetEntrant02HeadRotation() { headRotation = firstHeadRotation; }

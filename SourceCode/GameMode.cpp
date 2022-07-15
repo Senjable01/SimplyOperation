@@ -110,7 +110,7 @@ void GameMode::Update(float deltaTime)
         onceSkipAddSec = false;
         return;
     }
-    elapsedSec += deltaTime;
+    timerSec += deltaTime;
 
     #endif // USE_IMGUI
 }

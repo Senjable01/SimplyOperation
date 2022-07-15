@@ -72,8 +72,11 @@ void SceneGameSingle::Setup()
     /* シーン */
     Scene::Setup();
 
+    #if DEBUG_MODE
     /* ウィンドウ */
     TechSharkLib::SetDisplayFrameRate(true);
+
+    #endif // DEBUG_MODE
 
     /* 描画関連 */
     camera = {};

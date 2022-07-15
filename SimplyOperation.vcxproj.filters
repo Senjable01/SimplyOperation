@@ -165,9 +165,6 @@
     <ClInclude Include="TechSharkLib\ImGui\imstb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\SceneSelect.h">
-      <Filter>Source\Inc</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\SceneGameSingle.h">
       <Filter>Source\Inc</Filter>
     </ClInclude>
@@ -361,9 +358,6 @@
     </ClCompile>
     <ClCompile Include="TechSharkLib\ImGui\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\SceneSelect.cpp">
-      <Filter>Source\Src</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\SceneGameSingle.cpp">
       <Filter>Source\Src</Filter>

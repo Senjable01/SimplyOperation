@@ -40,6 +40,17 @@ namespace config
         const TechSharkLib::Float2 UI_SCALE     = SCALE / 4;
     }
 
+    namespace button
+    {
+        const TechSharkLib::Float2 COMMON_SPR_SIZE  = {2560.0f, 1440.0f};
+        const TechSharkLib::Float2 SCALE            = {0.125f, 0.125f};
+        const TechSharkLib::Float2 SIZE             = COMMON_SPR_SIZE * 0.125f;
+        const TechSharkLib::Float2 START_POS        = {128.0f, 546.0f};
+        const TechSharkLib::Float2 EXIT_POS         = {765.0f, 546.0f};
+        const TechSharkLib::Float2 BACK_POS         = {128.0f, 546.0f};
+        const TechSharkLib::Float2 RETRY_POS        = {765.0f, 546.0f};
+    }
+
     namespace model
     {
         namespace button

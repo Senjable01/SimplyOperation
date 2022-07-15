@@ -182,7 +182,6 @@
     <ClInclude Include="SourceCode\RockScissorsPaper.h" />
     <ClInclude Include="SourceCode\SceneGameSingle.h" />
     <ClInclude Include="SourceCode\SceneResultSingle.h" />
-    <ClInclude Include="SourceCode\SceneSelect.h" />
     <ClInclude Include="SourceCode\SceneTitle.h" />
     <ClInclude Include="SourceCode\Strategy.h" />
     <ClInclude Include="SourceCode\Utility.h" />
@@ -254,7 +253,6 @@
     <ClCompile Include="SourceCode\SceneGameSingle.cpp" />
     <ClCompile Include="SourceCode\SceneResultSingle.cpp" />
     <ClCompile Include="SourceCode\SceneTitle.cpp" />
-    <ClCompile Include="SourceCode\SceneSelect.cpp" />
     <ClCompile Include="SourceCode\Utility.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui.cpp" />
     <ClCompile Include="TechSharkLib\ImGui\imgui_demo.cpp" />

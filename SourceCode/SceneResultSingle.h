@@ -18,9 +18,12 @@ private:
     RESULT result;
 
     TechSharkLib::SpriteID  backResult;
+    TechSharkLib::SpriteID  backToTitle;
+    TechSharkLib::SpriteID  retry;
     float                   rotationZ;
     float                   rotateZPerSec;
     ClickField              toTitle;
+    ClickField              toGame;
 
     void Init() override;
     void Setup() override;
@@ -31,9 +34,9 @@ private:
 public:
     SceneResultSingle(RESULT result) : 
         result{result},
-        backResult{},
+        backResult{}, backToTitle{}, retry{},
         rotationZ{0.0f}, rotateZPerSec{},
-        toTitle{},
+        toTitle{}, toGame{},
         TechSharkLib::Scene{}
     {
     }

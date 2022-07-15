@@ -7,10 +7,10 @@
 //------< macro >-------------------------------------------------------------------------
 
 // デバッグ機能(0: OFF, 1: ON)
-#define DEBUG_MODE (_DEBUG | 1)
+#define DEBUG_MODE (_DEBUG | 0)
 
 // ImGui(0: OFF, 1: ON)
-#define USE_IMGUI (1)
+#define USE_IMGUI (0)
 
 // 固定長フレーム(0: 無制限, 1 ~ : FIXED_LENGTH_FRAMEフレームで固定 )
 #define FIXED_LENGTH_FRAME (0)
