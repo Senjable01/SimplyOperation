@@ -29,6 +29,10 @@ namespace config
         extern const TechSharkLib::Float2 TEXEL_SIZE;
         extern const TechSharkLib::Float2 PIVOT;
         extern const TechSharkLib::Float4 COLOR;
+
+        extern const TechSharkLib::Float2 UI_POS;
+        extern const TechSharkLib::Float2 UI_SCALE;
+
         enum class GAME_BG_NO : unsigned int {
             RSP_FIRST = 1,  // さいしょはグー
             RSP_RECEPTION,  // じゃんけん
@@ -91,6 +95,13 @@ namespace config
             extern const TechSharkLib::Float3 ROTATE_RIGHT_BACK;    // Player02から見て右(01から見て左)
             extern const TechSharkLib::Float3 ROTATE_DOWN_BACK;     // Player02から見て上
             extern const TechSharkLib::Float3 ROTATE_LEFT_BACK;     // Player02から見て左(01から見て右)
+        }
+
+        namespace stage
+        {
+            extern const TechSharkLib::Float3 POSITION;
+            extern const TechSharkLib::Float3 SCALE;
+            extern const TechSharkLib::Float3 ROTATION;
         }
 
     }
@@ -162,7 +173,7 @@ namespace config
             constexpr float BEGIN_RECEPTION_SEC = 4.0f;
             constexpr float RECEPTION_TIME      = 3.0f;
             constexpr float END_RECEPTION_SEC   = BEGIN_RECEPTION_SEC + RECEPTION_TIME;
-            constexpr float END_IDLE_SEC        = 0.5f;
+            constexpr float END_IDLE_SEC        = 1.5f;
         }
 
         namespace push // Push Hands
@@ -183,6 +194,7 @@ namespace config
         {
             constexpr float END_RECEPTION_SEC   = 2.5f;
             constexpr float END_IDLE_SEC        = 2.5f;
+            constexpr float MOVE_CAMERA_SEC     = 0.5f;
         }
     }
 
@@ -203,6 +215,12 @@ namespace config
         extern const TechSharkLib::Float4 ACTIVE_COLOR;
         extern const TechSharkLib::Float4 SELECT_COLOR;
 
+    }
+
+    namespace music
+    {
+        constexpr int TITLE_SELECT  = 0;
+        constexpr int GAME          = 1;
     }
 }
 

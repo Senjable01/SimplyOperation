@@ -43,6 +43,8 @@ void DirectionBattle::Setup(GameMode* gameMode)
         L"âüÇµçáÇ¢ÇÃèüîsåãâ Ç™ïsìKêÿ"
     );
     roleFlag = (lastResult == GameMode::RESULT::WIN_1P) ? ROLE::ATK_DEF : ROLE::DEF_ATK;
+    MoveCamera      = nullptr;
+    cameraMoveSec   = config::rule::direction::MOVE_CAMERA_SEC;
     gameMode->GetEntrant01Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->GetEntrant02Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->RezeroTimer();
@@ -135,7 +137,32 @@ void DirectionBattle::Judge(GameMode* gameMode)
     }
     else
     {
-        gameMode->SetCameraFocus(DirectionBattle::cameraFocuses.at(entrant01Direction));
+        TechSharkLib::Float4 cameraFocus        = gameMode->FirstCameraFocus();
+        TechSharkLib::Float4 movedCameraFocus   = DirectionBattle::cameraFocuses.at(entrant01Direction);
+        TechSharkLib::Float4 moveSec            = (movedCameraFocus - cameraFocus) / cameraMoveSec;
+        moveSec.z = cameraFocus.z;
+        MoveCamera = [cameraFocus, moveSec, movedCameraFocus, gameMode]() -> void {
+            TechSharkLib::Float4 after = cameraFocus;
+            float timerSec = gameMode->TimerSec();
+            
+            after.x += moveSec.x * timerSec;
+            if (0.0f < moveSec.x)
+                after.x = (std::min)(after.x, movedCameraFocus.x);
+            else
+                after.x = (std::max)(after.x, movedCameraFocus.x);
+            after.y += moveSec.y * timerSec;
+            if (0.0f < moveSec.y)
+                after.y = (std::min)(after.y, movedCameraFocus.y);
+            else
+                after.y = (std::max)(after.x, movedCameraFocus.y);
+            after.z += moveSec.z * timerSec;
+            if (0.0f < moveSec.z)
+                after.z = (std::min)(after.z, movedCameraFocus.z);
+            else
+                after.z = (std::max)(after.z, movedCameraFocus.z);
+            gameMode->SetCameraFocus(after);
+
+        };
         gameMode->GetEntrant02Ref()->SetMesh(entrant02Direction);
     }
 
@@ -170,6 +197,7 @@ void DirectionBattle::Idle(GameMode* gameMode)
     {
         entrant01Direction = Entrant::STATE::NONE;
         entrant02Direction = Entrant::STATE::NONE;
+        MoveCamera = nullptr;
         gameMode->GetEntrant01Ref()->SetMesh(Entrant::STATE::NONE);
         gameMode->GetEntrant02Ref()->SetMesh(Entrant::STATE::NONE);
         gameMode->ResetCameraFocus();
@@ -185,6 +213,9 @@ void DirectionBattle::Idle(GameMode* gameMode)
             gameMode->FinishGame();
         }
     }
+
+    if (MoveCamera) MoveCamera();
+
 }
 
 void DirectionBattle::DrawDebugGUI()
@@ -214,8 +245,8 @@ std::map<Entrant::STATE, TechSharkLib::Float4> DirectionBattle::cameraFocuses = 
     {Entrant::STATE::DOWN,  config::entrant::CAMERA_LOOK_DOWN}
 };
 std::map<Entrant::STATE, TechSharkLib::Float3> DirectionBattle::headRotations = {
-    {Entrant::STATE::LEFT,  config::model::head::ROTATE_RIGHT_BACK}, // ç∂âEîΩì]
-    {Entrant::STATE::RIGHT, config::model::head::ROTATE_LEFT_BACK}, // ç∂âEîΩì]
+    {Entrant::STATE::LEFT,  config::model::head::ROTATE_RIGHT_BACK},    // ç∂âEîΩì]
+    {Entrant::STATE::RIGHT, config::model::head::ROTATE_LEFT_BACK},     // ç∂âEîΩì]
     {Entrant::STATE::UP,    config::model::head::ROTATE_UP_BACK},
     {Entrant::STATE::DOWN,  config::model::head::ROTATE_DOWN_BACK}
 };

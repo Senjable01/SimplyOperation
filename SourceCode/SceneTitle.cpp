@@ -8,6 +8,7 @@
 
 #endif // USE_IMGUI
 #include "Config.h"
+#include "Audio.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
@@ -18,6 +19,8 @@ namespace
     TechSharkLib::KeyAssignList keyAssignList = {
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Home}
     };
+
+    int soundNo = sound::DECISION;
 }
 
 //========================================================================================
@@ -52,6 +55,8 @@ void SceneTitle::Update(float)
     #if USE_IMGUI
     ImGui::Begin("Title");
     ImGui::Text("Home : SceneSelect");
+    ImGui::SliderInt("No", &soundNo, sound::RSP_PREPARE, sound::LOSE01);
+    if (ImGui::Button("Play")) TechSharkLib::Play(sound::XWB_VOICE, soundNo);
     ImGui::End();
 
     #endif // USE_IMGUI

@@ -28,7 +28,6 @@ private:
     TechSharkLib::Float2    scale;
     TechSharkLib::Float2    pivot;
     float                   rotationZ;
-    TechSharkLib::Float4    color;
     class Observer_ : public Observer<No>
     {
     private:
@@ -46,11 +45,10 @@ private:
 public:
     Backgrounds() : 
         spriteNo{ERROR_NO},
-        position{config::background::POSITION}, 
-        scale{config::background::SCALE},
+        position{config::background::UI_POS}, 
+        scale{config::background::UI_SCALE},
         pivot{config::background::PIVOT},
-        rotationZ{0.0f},
-        color{config::background::COLOR}
+        rotationZ{0.0f}
     {
         spriteMap.emplace(ERROR_NO, TechSharkLib::ERROR_SPRITE_ID);
     }
@@ -64,16 +62,17 @@ public:
     {
         spriteNo = observer.LastReport();
     }
-    void Render()
+    void Render(float red, float green, float blue, float alpha)
     {
         if (spriteNo == ERROR_NO) return;
+        
         TechSharkLib::Render(
             spriteMap.at(spriteNo),
             position.x, position.y,
             scale.x, scale.y,
             pivot.x, pivot.y,
             rotationZ,
-            color.x, color.y, color.z, color.w
+            red, green, blue, alpha
         );
     }
     void Deinit()

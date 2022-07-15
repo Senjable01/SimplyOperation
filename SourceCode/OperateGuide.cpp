@@ -74,6 +74,7 @@ void OperateGuide::Update(float deltaTime)
 void OperateGuide::Render(float /*scrollX*/, float /*scrollY*/)
 {
     TechSharkLib::Project(&camera, description.lightDirection);
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::NONE);
     switch (guideObserver.State())
     {
     case STATE::NONE:
@@ -93,6 +94,7 @@ void OperateGuide::Render(float /*scrollX*/, float /*scrollY*/)
         break;
     }
     TechSharkLib::Project(description.defaultCamera, description.lightDirection);
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::TEST_AND_WRITE);
 }
 
 void OperateGuide::NoneRendering()

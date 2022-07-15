@@ -21,10 +21,10 @@ namespace config
         TechSharkLib::KeyAssign right1  = { BIT_NO::BIT_12, KeyCodes::D };
         TechSharkLib::KeyAssign left1   = { BIT_NO::BIT_13, KeyCodes::A };
         TechSharkLib::KeyAssign down1   = { BIT_NO::BIT_14, KeyCodes::S };
-        TechSharkLib::KeyAssign up2     = { BIT_NO::BIT_15, KeyCodes::Up };
-        TechSharkLib::KeyAssign right2  = { BIT_NO::BIT_16, KeyCodes::Right };
-        TechSharkLib::KeyAssign left2   = { BIT_NO::BIT_17, KeyCodes::Left };
-        TechSharkLib::KeyAssign down2   = { BIT_NO::BIT_18, KeyCodes::Down };
+        TechSharkLib::KeyAssign up2     = { BIT_NO::BIT_11, KeyCodes::Up };
+        TechSharkLib::KeyAssign right2  = { BIT_NO::BIT_12, KeyCodes::Right };
+        TechSharkLib::KeyAssign left2   = { BIT_NO::BIT_13, KeyCodes::Left };
+        TechSharkLib::KeyAssign down2   = { BIT_NO::BIT_14, KeyCodes::Down };
     }
 
     namespace background
@@ -35,6 +35,9 @@ namespace config
         const TechSharkLib::Float2 TEXEL_SIZE   = {2560.0f, 1440.0f};
         const TechSharkLib::Float2 PIVOT        = TEXEL_SIZE / 2;
         const TechSharkLib::Float4 COLOR        = {1.0f, 1.0f, 1.0f, 1.0f};
+
+        const TechSharkLib::Float2 UI_POS       = {160.0f, 90.0f};
+        const TechSharkLib::Float2 UI_SCALE     = SCALE / 4;
     }
 
     namespace model
@@ -60,14 +63,14 @@ namespace config
 
         namespace hand
         {
-            const TechSharkLib::Float3 SCALE            = {0.08f, 0.08f, 0.08f};
+            const TechSharkLib::Float3 SCALE            = {0.2f, 0.2f, 0.2f};
             const TechSharkLib::Float3 ROTATE_FRONT     = {rad::DEG_0, rad::DEG_180, rad::DEG_0};
             const TechSharkLib::Float3 ROTATE_BACK      = {rad::DEG_0, rad::DEG_0, rad::DEG_0};
         }
 
         namespace finger
         {
-            const TechSharkLib::Float3 SCALE                = {0.08f, 0.08f, 0.08f};
+            const TechSharkLib::Float3 SCALE                = {0.24f, 0.24f, 0.24f};
             const TechSharkLib::Float3 ROTATE_UP_FRONT      = {rad::DEG_0, rad::DEG_0, rad::DEG_0};
             const TechSharkLib::Float3 ROTATE_RIGHT_FRONT   = {rad::DEG_0, rad::DEG_0, -rad::DEG_90};
             const TechSharkLib::Float3 ROTATE_DOWN_FRONT    = {rad::DEG_0, rad::DEG_0, -rad::DEG_180};
@@ -81,7 +84,7 @@ namespace config
         namespace head
         {
             const TechSharkLib::Float3 POSITION             = {0.0f, 0.0f, 2.0f};
-            const TechSharkLib::Float3 SCALE                = {1.4f, 1.4f, 1.4f};
+            const TechSharkLib::Float3 SCALE                = {1.2f, 1.2f, 1.2f};
             const TechSharkLib::Float3 ROTATE_NORMAL_BACK   = {rad::DEG_0, rad::DEG_180, rad::DEG_0};
             const TechSharkLib::Float3 ROTATE_UP_BACK       = {-rad::DEG_30, rad::DEG_180, rad::DEG_0};
             const TechSharkLib::Float3 ROTATE_RIGHT_BACK    = {rad::DEG_0, -rad::DEG_120, rad::DEG_0};
@@ -89,12 +92,19 @@ namespace config
             const TechSharkLib::Float3 ROTATE_LEFT_BACK     = {rad::DEG_0, rad::DEG_120, rad::DEG_0};
         }
 
+        namespace stage
+        {
+            const TechSharkLib::Float3 POSITION = {0.0f, 0.0f, 0.0f};
+            const TechSharkLib::Float3 SCALE    = {0.5f, 0.5f, 0.5f};
+            const TechSharkLib::Float3 ROTATION = {0.0f, rad::DEG_180 , 0.0f};
+        }
+
     }
 
     namespace entrant
     {
-        const TechSharkLib::Float3 BEGIN_POS_FRONT      = {-0.5f, -0.2f, -1.0f};
-        const TechSharkLib::Float3 BEGIN_POS_BACK       = {0.5f, 0.2f, 1.0f};
+        const TechSharkLib::Float3 BEGIN_POS_FRONT      = {-0.5f, -1.7f, -1.0f};
+        const TechSharkLib::Float3 BEGIN_POS_BACK       = {0.5f, -1.2f, 1.0f};
         const TechSharkLib::Float4 CAMERA_LOOK_LEFT     = {-2.0f, 0.0f, 0.0f, 1.0f};
         const TechSharkLib::Float4 CAMERA_LOOK_RIGHT    = { 2.0f, 0.0f, 0.0f, 1.0f};
         const TechSharkLib::Float4 CAMERA_LOOK_UP       = {0.0f, 2.0f, 0.0f, 1.0f};

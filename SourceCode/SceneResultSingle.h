@@ -28,8 +28,6 @@ private:
     void Render() override;
     void Deinit() override;
 
-
-
 public:
     SceneResultSingle(RESULT result) : 
         result{result},

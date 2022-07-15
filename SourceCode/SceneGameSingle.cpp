@@ -42,6 +42,7 @@ namespace
         config::key::down2,
     };
 
+    TechSharkLib::Float4 color = { 0.4f, 0.4f, 0.4f, 1.0f };
 }
 
 //========================================================================================
@@ -82,6 +83,8 @@ void SceneGameSingle::Setup()
 
     /* ˆê”Ê */
     TechSharkLib::SetAssignData(0, keyAssignList, {});
+    namespace stage = config::model::stage;
+    recipe::CreateMesh(&objManager, L"Data/Models/Haikei/Haikei.obj", stage::POSITION, stage::SCALE, stage::ROTATION, "Back 3D");
     recipe::CreateEntrant01(&objManager, &gameMode);
     recipe::CreateEntrant02(&objManager, &gameMode, true);
     recipe::CreateGuide(&objManager, &gameMode, &camera, lightDirection);
@@ -120,6 +123,7 @@ void SceneGameSingle::Update(float deltaTime)
     }
     ImGui::SameLine();
     ImGui::Text(" / Home");
+    ImGui::ColorEdit4("Back Color", &color.x);
     ImGui::NewLine();
     camera.DrawDebugGUI();
     if (ImGui::CollapsingHeader("3D"))
@@ -134,15 +138,21 @@ void SceneGameSingle::Update(float deltaTime)
 
 void SceneGameSingle::Render()
 {
+    TechSharkLib::ClearView(0.4f, 0.4f, 0.4f, 1.0f);
+
     TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::NONE);
     TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
-    backgrounds.Render();
 
     TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::TEST_AND_WRITE);
     TechSharkLib::Project(&camera, lightDirection);
 
     gameMode.Render();
     objManager.Render();
+
+    TechSharkLib::SetDepthState(TechSharkLib::DEPTH_STATE::NONE);
+    TechSharkLib::SetRasterizerState(TechSharkLib::RASTERIZER_STATE::SOLID);
+    backgrounds.Render(1.0f, 1.0f, 1.0f, 1.0f);
+
 }
 
 void SceneGameSingle::Deinit()

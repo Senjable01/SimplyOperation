@@ -5,6 +5,7 @@
 #include "GameMode.h"
 #include <map>
 #include "../TechSharkLib/Inc/Vector.h"
+#include <functional>
 
 //========================================================================================
 // 
@@ -21,6 +22,8 @@ private:
         DEF_ATK         // 1P ... DEF / 2P ... DEF
     };
     ROLE roleFlag;
+    std::function<void()> MoveCamera;
+    float cameraMoveSec;
 
     void Setup(GameMode* gameMode) override;
     void Reception(GameMode* gameMode) override;
@@ -39,6 +42,7 @@ public:
         entrant01Direction{Entrant::STATE::NONE},
         entrant02Direction{Entrant::STATE::NONE},
         roleFlag{},
+        MoveCamera{nullptr}, cameraMoveSec{0.0f},
         GameRule{}
     {
     }
