@@ -48,13 +48,13 @@ void OperateGuide::Update(float deltaTime)
         // 傾きの状態をスキップする
         if (currentState == STATE::RSP && currentLean == static_cast<int>(DIRECTION::DOWN))
         {
-            currentLean = static_cast<int>(DIRECTION::NONE);
+            currentLean = static_cast<int>(DIRECTION::LEFT);
         }
         if (currentState == STATE::PH)
         {
             if (static_cast<int>(DIRECTION::UP) <= currentLean)
             {
-                currentLean = static_cast<int>(DIRECTION::NONE);
+                currentLean = static_cast<int>(DIRECTION::LEFT);
             }
         }
 
@@ -62,7 +62,9 @@ void OperateGuide::Update(float deltaTime)
         timerSec = 0.0f;
     }
 
-    timerSec += deltaTime;
+    timerSec += (currentState == STATE::PH) ? 
+        deltaTime * 4 :
+        deltaTime * 1;
 
     STATE nextState = guideObserver.State();
     if (currentState != nextState)
@@ -99,9 +101,6 @@ void OperateGuide::Render(float /*scrollX*/, float /*scrollY*/)
 
 void OperateGuide::NoneRendering()
 {
-    // スティック
-    StickRendering(false);
-
     // 矢印ボタン
     AllowButtonRendering(DIRECTION::LEFT,   false);
     AllowButtonRendering(DIRECTION::UP,     false);
@@ -110,9 +109,6 @@ void OperateGuide::NoneRendering()
 }
 void OperateGuide::RSPRendering()
 {
-    // スティック
-    StickRendering(true);
-
     // 矢印ボタン
     AllowButtonRendering(DIRECTION::LEFT,   true);
     AllowButtonRendering(DIRECTION::UP,     true);
@@ -122,9 +118,6 @@ void OperateGuide::RSPRendering()
 }
 void OperateGuide::PHRendering()
 {
-    // スティック
-    StickRendering(true);
-
     // 矢印ボタン
     AllowButtonRendering(DIRECTION::LEFT,   true);
     AllowButtonRendering(DIRECTION::UP,     false);
@@ -133,34 +126,11 @@ void OperateGuide::PHRendering()
 }
 void OperateGuide::DBRendering()
 {
-    // スティック
-    StickRendering(true);
-
     // 矢印ボタン
     AllowButtonRendering(DIRECTION::LEFT,   true);
     AllowButtonRendering(DIRECTION::UP,     true);
     AllowButtonRendering(DIRECTION::RIGHT,  true);
     AllowButtonRendering(DIRECTION::DOWN,   true);
-}
-void OperateGuide::StickRendering(bool isActive)
-{
-    DirectX::XMFLOAT4 color = isActive ?
-        config::guide::ACTIVE_COLOR :
-        config::guide::DISABLE_COLOR;
-    if (isActive == false || currentLean == static_cast<int>(DIRECTION::NONE))
-    {
-        DirectX::XMFLOAT4X4 local = transform->Transform();
-        TechSharkLib::Render(meshes.at(MESH::STICK), local, color);
-    }
-    else
-    {
-        DirectX::XMFLOAT4X4 local = util::CalcTransform(
-            transform->Scale(),
-            description.stickRotations[static_cast<int>(currentLean)],
-            transform->Position()
-        );
-        TechSharkLib::Render(meshes.at(MESH::LEAN), local, color);
-    }
 }
 void OperateGuide::AllowButtonRendering(DIRECTION direction, bool isActive)
 {

@@ -11,7 +11,7 @@
 #include <string>
 
 #endif // USE_IMGUI
-//#include "Config.h"
+#include "Audio.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::BIT_NO;
@@ -60,8 +60,19 @@ void SceneResultSingle::Setup()
     Scene::Setup();
     TechSharkLib::SetAssignData(0, keyAssignList, {});
 
-    rotateZPerSec = config::background::ROTATE_Z_PER_SEC;
+    rotateZPerSec = (result == RESULT::WIN_1P) ?
+        config::background::ROTATE_Z_PER_SEC_WIN01 :
+        config::background::ROTATE_Z_PER_SEC_LOSE01;
     toTitle.Setup(0.0f, 0.0f, 128.0f, 64.0f, 1.0f, 0.4f, 0.4f, 0.5f);
+
+    TechSharkLib::Play(
+        sound::XWB_SOUND,
+        result == RESULT::WIN_1P ? sound::RAP : sound::EXPLOSIVE
+    );
+    TechSharkLib::Play(
+        sound::XWB_VOICE,
+        result == RESULT::WIN_1P ? sound::WIN01 : sound::LOSE01
+    );
 }
 
 void SceneResultSingle::Update(float deltaTime)

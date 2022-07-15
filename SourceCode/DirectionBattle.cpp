@@ -7,6 +7,8 @@
 #include <string>
 
 #endif // USE_IMGUI
+#include "../TechSharkLib/Inc/TechSharkLib.h"
+#include "Audio.h"
 
 #if USE_IMGUI
 //------< namespace >---------------------------------------------------------------------
@@ -50,6 +52,7 @@ void DirectionBattle::Setup(GameMode* gameMode)
     gameMode->RezeroTimer();
     gameMode->NotyfyToGuide(OperateGuide::STATE::DB);
     gameMode->NotyfyToBackgrounds(GameMode::BG_NO::DB_RECEPTION);
+    TechSharkLib::Play(sound::XWB_VOICE, sound::DB_RECEPTION);
 }
 
 void DirectionBattle::Reception(GameMode* gameMode)
@@ -140,26 +143,29 @@ void DirectionBattle::Judge(GameMode* gameMode)
         TechSharkLib::Float4 cameraFocus        = gameMode->FirstCameraFocus();
         TechSharkLib::Float4 movedCameraFocus   = DirectionBattle::cameraFocuses.at(entrant01Direction);
         TechSharkLib::Float4 moveSec            = (movedCameraFocus - cameraFocus) / cameraMoveSec;
-        moveSec.z = cameraFocus.z;
+        moveSec.w = cameraFocus.w;
         MoveCamera = [cameraFocus, moveSec, movedCameraFocus, gameMode]() -> void {
             TechSharkLib::Float4 after = cameraFocus;
             float timerSec = gameMode->TimerSec();
-            
+            // x
             after.x += moveSec.x * timerSec;
             if (0.0f < moveSec.x)
                 after.x = (std::min)(after.x, movedCameraFocus.x);
             else
                 after.x = (std::max)(after.x, movedCameraFocus.x);
+            // y
             after.y += moveSec.y * timerSec;
             if (0.0f < moveSec.y)
                 after.y = (std::min)(after.y, movedCameraFocus.y);
             else
-                after.y = (std::max)(after.x, movedCameraFocus.y);
+                after.y = (std::max)(after.y, movedCameraFocus.y);
+            // z
             after.z += moveSec.z * timerSec;
             if (0.0f < moveSec.z)
                 after.z = (std::min)(after.z, movedCameraFocus.z);
             else
                 after.z = (std::max)(after.z, movedCameraFocus.z);
+
             gameMode->SetCameraFocus(after);
 
         };
@@ -170,6 +176,7 @@ void DirectionBattle::Judge(GameMode* gameMode)
     gameMode->RezeroTimer();
     gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
     gameMode->NotyfyToBackgrounds(GameMode::BG_NO::DB_JUDGE);
+    TechSharkLib::Play(sound::XWB_VOICE, sound::DB_JUDGE);
     phase = PHASE::IDLE;
 
 }
@@ -214,8 +221,8 @@ void DirectionBattle::Idle(GameMode* gameMode)
         }
     }
 
-    if (MoveCamera) MoveCamera();
-
+    if (MoveCamera)
+        MoveCamera();
 }
 
 void DirectionBattle::DrawDebugGUI()

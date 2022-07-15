@@ -9,7 +9,7 @@ namespace audio
 namespace music
 {
     constexpr int TITLE_MUSIC   = 0;
-    constexpr int GAME          = 0;
+    constexpr int GAME          = 1;
 }
 
 namespace sound

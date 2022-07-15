@@ -42,7 +42,8 @@ namespace config
             DB_JUDGE        // ほい！
         };
 
-        constexpr float ROTATE_Z_PER_SEC = DirectX::XMConvertToRadians(150.0f); // (リザルト画面用パラメーター)
+        constexpr float ROTATE_Z_PER_SEC_WIN01  = DirectX::XMConvertToRadians(100.0f); // (リザルト画面用パラメーター)
+        constexpr float ROTATE_Z_PER_SEC_LOSE01 = DirectX::XMConvertToRadians(250.0f); // (リザルト画面用パラメーター)
     }
 
     namespace model
@@ -170,8 +171,8 @@ namespace config
 
         namespace rsp // Rock Scissors Paper
         {
-            constexpr float BEGIN_RECEPTION_SEC = 4.0f;
-            constexpr float RECEPTION_TIME      = 3.0f;
+            constexpr float BEGIN_RECEPTION_SEC = 2.0f;
+            constexpr float RECEPTION_TIME      = 2.0f;
             constexpr float END_RECEPTION_SEC   = BEGIN_RECEPTION_SEC + RECEPTION_TIME;
             constexpr float END_IDLE_SEC        = 1.5f;
         }
@@ -179,7 +180,7 @@ namespace config
         namespace push // Push Hands
         {
             constexpr int   BASE_PUSH_COUNT     = 50;
-            constexpr int   PENALTY_PUSH_COUNT  = 35;
+            constexpr int   PENALTY_PUSH_COUNT  = 20;
             constexpr float SHAKE_INTERVAL      = 1.0f / 50;
             constexpr float NPC_PUSH_INTERVAL   = 0.2f;
             constexpr int   NPC_MAX_PUSH_NUM    = 3;

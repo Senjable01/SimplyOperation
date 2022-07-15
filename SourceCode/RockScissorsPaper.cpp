@@ -9,6 +9,8 @@
 #include <string>
 
 #endif // USE_IMGUI
+#include "../TechSharkLib/Inc/TechSharkLib.h"
+#include "Audio.h"
 
 #if USE_IMGUI
 //------< namespace >---------------------------------------------------------------------
@@ -38,10 +40,12 @@ void RockScissorsPaper::Setup(GameMode* gameMode)
 {
     entrant01Hand = Entrant::STATE::NONE;
     entrant02Hand = Entrant::STATE::NONE;
+    oncePlayReceptionVoice = true;
     gameMode->GetEntrant01Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->GetEntrant02Ref()->SetMesh(Entrant::STATE::NONE);
     gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
     gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_FIRST);
+    TechSharkLib::Play(sound::XWB_VOICE, sound::RSP_PREPARE);
 }
 
 void RockScissorsPaper::Reception(GameMode* gameMode)
@@ -62,6 +66,11 @@ void RockScissorsPaper::Reception(GameMode* gameMode)
         ShootHandByInput(gameMode->GetEntrant02Ref(), &entrant02Hand);
         gameMode->NotyfyToGuide(OperateGuide::STATE::RSP);
         gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_RECEPTION);
+        if (oncePlayReceptionVoice)
+        {
+            TechSharkLib::Play(sound::XWB_VOICE, sound::RSP_RECEPTION);
+            oncePlayReceptionVoice = false;
+        }
     }
 
 }
@@ -132,6 +141,7 @@ void RockScissorsPaper::Judge(GameMode* gameMode)
     gameMode->RezeroTimer();
     gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
     gameMode->NotyfyToBackgrounds(GameMode::BG_NO::RSP_JUDGE);
+    TechSharkLib::Play(sound::XWB_VOICE, sound::RSP_JUDGE);
     phase = PHASE::IDLE;
 
 }

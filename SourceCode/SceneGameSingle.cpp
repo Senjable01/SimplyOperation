@@ -15,6 +15,7 @@
 #include "Entrant.h"
 #include "RockScissorsPaper.h"
 #include "OperateGuide.h"
+#include "Audio.h"
 
 //------< using >-------------------------------------------------------------------------
 using TechSharkLib::SpriteID;
@@ -93,6 +94,7 @@ void SceneGameSingle::Setup()
     gameMode.SetCamera(&camera);
     gameMode.Start<RockScissorsPaper>();
     gameMode.AddBackgroundsObserver(backgrounds.GetObserverRef());
+    TechSharkLib::Play(music::GAME, true);
 }
 
 void SceneGameSingle::Update(float deltaTime)
@@ -164,4 +166,6 @@ void SceneGameSingle::Deinit()
     OperateGuide::ReleaseMeshes();
 
     TechSharkLib::SetDisplayFrameRate(false);
+
+    TechSharkLib::Stop(music::GAME);
 }

@@ -14,6 +14,7 @@ class RockScissorsPaper final : public GameRule
 private:
     Entrant::STATE entrant01Hand;
     Entrant::STATE entrant02Hand;
+    bool oncePlayReceptionVoice;
 
     void Setup(GameMode* gameMode) override;
     void Reception(GameMode* gameMode) override;
@@ -26,7 +27,7 @@ private:
 
 public:
     explicit RockScissorsPaper() : 
-        entrant01Hand{Entrant::STATE::NONE}, entrant02Hand{Entrant::STATE::NONE},
+        entrant01Hand{Entrant::STATE::NONE}, entrant02Hand{Entrant::STATE::NONE}, oncePlayReceptionVoice{true},
         GameRule{}
     {
     }

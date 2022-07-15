@@ -42,6 +42,7 @@ void SceneTitle::Setup()
 {
     Scene::Setup();
     TechSharkLib::SetAssignData(0, keyAssignList, {});
+    TechSharkLib::Play(music::TITLE_MUSIC, true);
 }
 
 void SceneTitle::Update(float)
@@ -49,6 +50,7 @@ void SceneTitle::Update(float)
     if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_00)
     {
         Scene::ChangeScene<SceneSelect>();
+        TechSharkLib::Play(sound::XWB_SOUND, sound::DECISION);
         return;
     }
 
@@ -82,5 +84,6 @@ void SceneTitle::Render()
 
 void SceneTitle::Deinit()
 {
+    TechSharkLib::Stop(music::TITLE_MUSIC);
     TechSharkLib::Release(background);
 }

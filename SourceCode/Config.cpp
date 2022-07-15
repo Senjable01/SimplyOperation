@@ -123,9 +123,9 @@ namespace config
 
     namespace guide
     {
-        const TechSharkLib::Float4 DISABLE_COLOR    = {0.5f, 0.5f, 0.5f, 0.5f};
-        const TechSharkLib::Float4 ACTIVE_COLOR     = {1.0f, 1.0f, 1.0f, 0.8f};
-        const TechSharkLib::Float4 SELECT_COLOR     = {1.0f, 0.4f, 0.4f, 1.0f};
+        const TechSharkLib::Float4 DISABLE_COLOR    = {0.6f, 0.6f, 0.6f, 0.5f};
+        const TechSharkLib::Float4 ACTIVE_COLOR     = {1.0f, 1.0f, 1.0f, 1.0f};
+        const TechSharkLib::Float4 SELECT_COLOR     = {1.0f, 0.1f, 0.1f, 1.0f};
     }
 
 }

@@ -76,7 +76,6 @@ private:
     void RSPRendering();
     void PHRendering();
     void DBRendering();
-    void StickRendering(bool isActive);
     void AllowButtonRendering(DIRECTION direction, bool isActive);
 
     static std::map<MESH, TechSharkLib::StaticMeshID>   meshes;

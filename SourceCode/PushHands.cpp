@@ -9,6 +9,8 @@
 #endif // USE_IMGUI
 #include "RockScissorsPaper.h"
 #include "DirectionBattle.h"
+#include "../TechSharkLib/Inc/TechSharkLib.h"
+#include "Audio.h"
 
 //========================================================================================
 // 
@@ -53,6 +55,7 @@ void PushHands::Setup(GameMode* gameMode)
     gameMode->RezeroTimer();
     gameMode->NotyfyToGuide(OperateGuide::STATE::PH);
     gameMode->NotyfyToBackgrounds(GameMode::BG_NO::PH_RECEPTION);
+    TechSharkLib::Play(sound::XWB_VOICE, sound::PH_RECEPTION);
 }
 
 void PushHands::Reception(GameMode* gameMode)
@@ -129,11 +132,16 @@ void PushHands::Judge(GameMode* gameMode)
     pushRequire02 = (std::max)(pushRequire02, 0);
 
     /* 勝敗を判定、送信 */
-    gameMode->SetResult(JudgeResult());
+    auto result = JudgeResult();
+    gameMode->SetResult(result);
 
     /* 次のフェーズへ移行 */
     gameMode->RezeroTimer();
     gameMode->NotyfyToGuide(OperateGuide::STATE::NONE);
+    TechSharkLib::Play(
+        sound::XWB_VOICE,
+        (result == GameMode::RESULT::WIN_1P) ? sound::PH_WIN01 : sound::PH_LOSE01
+    );
     phase = PHASE::IDLE;
 }
 GameMode::RESULT PushHands::JudgeResult()
