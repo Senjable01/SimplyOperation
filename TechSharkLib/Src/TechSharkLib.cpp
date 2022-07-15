@@ -276,6 +276,22 @@ namespace TechSharkLib
     {
         return manager.inputManager.keyState(gamePadNo);
     }
+    float LeftStickX(size_t gamePadNo)
+    {
+        return manager.inputManager.LeftStickX(gamePadNo);
+    }
+    float LeftStickY(size_t gamePadNo)
+    {
+        return manager.inputManager.LeftStickY(gamePadNo);
+    }
+    float RightStickX(size_t gamePadNo)
+    {
+        return manager.inputManager.RightStickX(gamePadNo);
+    }
+    float RightStickY(size_t gamePadNo)
+    {
+        return manager.inputManager.RightStickY(gamePadNo);
+    }
 
     /* Audio */
     void UpdateAudio(float deltaTime)

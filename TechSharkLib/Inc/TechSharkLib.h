@@ -118,6 +118,10 @@ namespace TechSharkLib
     const KeyBit& keyTrigger(size_t gamePadNo);
     const KeyBit& keyTriggerUp(size_t gamePadNo);
     const KeyBit& keyState(size_t gamePadNo);
+    float LeftStickX(size_t gamePadNo);
+    float LeftStickY(size_t gamePadNo);
+    float RightStickX(size_t gamePadNo);
+    float RightStickY(size_t gamePadNo);
 
     /* Audio */
     //UNDONE:09 音楽用、サウンド用のIDを用意する。

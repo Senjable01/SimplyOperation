@@ -176,6 +176,11 @@ namespace TechSharkLib
                 inputState.leftStickY   = SafeGetParameter(gamePads[i].thumbSticks.leftY);
                 inputState.rightStickX  = SafeGetParameter(gamePads[i].thumbSticks.rightX);
                 inputState.rightStickY  = SafeGetParameter(gamePads[i].thumbSticks.rightY);
+                // ジョイスティックのパラメーターをチェック
+                if (std::isnan(inputState.leftStickX))  inputState.leftStickX   = 0.0f;
+                if (std::isnan(inputState.leftStickY))  inputState.leftStickY   = 0.0f;
+                if (std::isnan(inputState.rightStickX)) inputState.rightStickX  = 0.0f;
+                if (std::isnan(inputState.rightStickY)) inputState.rightStickY  = 0.0f;
 
                 // トリガー
                 inputState.leftTrigger  = SafeGetParameter(gamePads[i].triggers.left);

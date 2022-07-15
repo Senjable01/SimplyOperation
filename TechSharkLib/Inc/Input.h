@@ -92,6 +92,10 @@ namespace TechSharkLib
         const KeyBit& keyTrigger(size_t gamePadNo) { return GetInputState(gamePadNo)->keyTrigger; }
         const KeyBit& keyTriggerUp(size_t gamePadNo) { return GetInputState(gamePadNo)->keyTriggerUp; }
         const KeyBit& keyState(size_t gamePadNo) { return GetInputState(gamePadNo)->keyState; }
+        float LeftStickX(size_t gamePadNo) { return GetInputState(gamePadNo)->leftStickX; }
+        float LeftStickY(size_t gamePadNo) { return GetInputState(gamePadNo)->leftStickY; }
+        float RightStickX(size_t gamePadNo) { return GetInputState(gamePadNo)->rightStickX; }
+        float RightStickY(size_t gamePadNo) { return GetInputState(gamePadNo)->rightStickY; }
 
     };
 
