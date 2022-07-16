@@ -31,11 +31,12 @@ namespace
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Left},
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Right},
         {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Down},
-        {BIT_NO::BIT_01, TechSharkLib::KeyCodes::MouseLeft},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::MouseLeft},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::MouseRight},
     };
 
     TechSharkLib::Float2 pos;
-    TechSharkLib::Float2 pos2;
+    TechSharkLib::Float2 scale = {1.0f, 1.0f};
 
 }
 
@@ -52,8 +53,7 @@ namespace
 void SceneTitle::Init()
 {
     background  = TechSharkLib::LoadSprite(L"Data/Images/Title.png");
-    start       = TechSharkLib::LoadSprite(L"Data/Images/start.png");
-    exit        = TechSharkLib::LoadSprite(L"Data/Images/exit.png");
+    specialThanks = TechSharkLib::LoadSprite(L"Data/Images/HIMAWARI.png");
 }
 
 void SceneTitle::Setup()
@@ -62,20 +62,10 @@ void SceneTitle::Setup()
 
     Scene::Setup();
     TechSharkLib::SetAssignData(0, keyAssignList, {});
-    toGame.Setup(
-        button::START_POS.x, button::START_POS.y,
-        button::SIZE.x, button::SIZE.y,
-        1.0f, 0.0f, 0.0f, 0.5f
-    );
-    toExit.Setup(
-        button::EXIT_POS.x, button::EXIT_POS.y,
-        button::SIZE.x, button::SIZE.y,
-        1.0f, 0.0f, 0.0f, 0.5f
-    );
     TechSharkLib::Play(music::TITLE_MUSIC, true);
 }
 
-void SceneTitle::Update(float deltaTime)
+void SceneTitle::Update(float /*deltaTime*/)
 {
     if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_00)
     {
@@ -83,31 +73,15 @@ void SceneTitle::Update(float deltaTime)
         TechSharkLib::Play(sound::XWB_SOUND, sound::DECISION);
         return;
     }
-    if (1.0f < elapsedSec) //UNDONE:Result‚©‚çƒ{ƒ^ƒ“‚Å–ß‚Á‚Ä‚­‚é‚ÆtoGame‚ª‰Ÿ‚³‚ê‚Ä‚µ‚Ü‚¤‚±‚Æ‚Ì‘Îô
-    {
-        if (toGame.IsClicked(1 << BIT_NO::BIT_01))
-        {
-            Scene::ChangeScene<SceneGameSingle>();
-            TechSharkLib::Play(sound::XWB_SOUND, sound::DECISION);
-            return;
-        }
-        if (toExit.IsClicked(1 << BIT_NO::BIT_01))
-        {
-            PostQuitMessage(0);
-            return;
-        }
-    }
 
     #if USE_IMGUI
     ImGui::Begin("Title");
     ImGui::Text("Home : SceneSelect");
     ImGui::SliderFloat2("pos", &pos.x, 0.0f, 1280.0f);
-    ImGui::SliderFloat2("pos2", &pos2.x, 0.0f, 1280.0f);
+    ImGui::SliderFloat2("pos2", &scale.x, 0.0f, 1.0f);
     ImGui::End();
 
     #endif // USE_IMGUI
-
-    elapsedSec += deltaTime;
 }
 
 void SceneTitle::Render()
@@ -127,30 +101,18 @@ void SceneTitle::Render()
         back::COLOR.x, back::COLOR.y, back::COLOR.z, back::COLOR.w
     );
     TechSharkLib::Render(
-        start,
-        button::START_POS.x, button::START_POS.y,
-        button::SCALE.x,    button::SCALE.y,
+        specialThanks,
+        0.0f, 670.0f,
+        0.3f, 0.3f,
         0.0f, 0.0f,
         0.0f,
         1.0f, 1.0f, 1.0f, 1.0f
     );
-    TechSharkLib::Render(
-        exit,
-        button::EXIT_POS.x, button::EXIT_POS.y,
-        button::SCALE.x,    button::SCALE.y,
-        0.0f, 0.0f,
-        0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
-    );
-
-    toGame.Render();
-    toExit.Render();
 }
 
 void SceneTitle::Deinit()
 {
     TechSharkLib::Stop(music::TITLE_MUSIC);
     TechSharkLib::Release(background);
-    TechSharkLib::Release(start);
-    TechSharkLib::Release(exit);
+    TechSharkLib::Release(specialThanks);
 }

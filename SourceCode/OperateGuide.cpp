@@ -109,6 +109,11 @@ void OperateGuide::NoneRendering()
 }
 void OperateGuide::RSPRendering()
 {
+    // Žè
+    RockRendering();
+    ScissorsRendering();
+    PaperRendering();
+
     // –îˆóƒ{ƒ^ƒ“
     AllowButtonRendering(DIRECTION::LEFT,   true);
     AllowButtonRendering(DIRECTION::UP,     true);
@@ -157,12 +162,46 @@ void OperateGuide::AllowButtonRendering(DIRECTION direction, bool isActive)
     TechSharkLib::Render(OperateGuide::meshes.at(MESH::ALLOW), local, color);
 }
 
+void OperateGuide::RockRendering()
+{
+    DirectX::XMFLOAT4X4 local = util::CalcTransform(
+        { 0.06,0.06,0.06 },
+        { 0,0,0 },
+        { -4.50, -0.93 ,0 }
+    );
+    TechSharkLib::Render(OperateGuide::meshes.at(MESH::ROCK_1P), local, config::guide::ACTIVE_COLOR);
+}
+
+void OperateGuide::ScissorsRendering()
+{
+    DirectX::XMFLOAT4X4 local = util::CalcTransform(
+        { 0.06,0.06,0.06 },
+        { 0,0,0 },
+        { -3.5, 0.3 ,0 }
+    );
+    TechSharkLib::Render(OperateGuide::meshes.at(MESH::SCISSORS_1P), local, config::guide::ACTIVE_COLOR);
+}
+
+void OperateGuide::PaperRendering()
+{
+    DirectX::XMFLOAT4X4 local = util::CalcTransform(
+        { 0.06,0.06,0.06 },
+        { 0,0,0 },
+        { -2.3,-0.93,0 }
+    );
+    TechSharkLib::Render(OperateGuide::meshes.at(MESH::PAPER_1P), local, config::guide::ACTIVE_COLOR);
+}
+
 void OperateGuide::LoadMeshes()
 {
     meshes.clear();
     meshes.emplace(MESH::STICK, TechSharkLib::LoadStaticMesh(L"Data/Models/Stick_1/Stick_1.obj", true));
     meshes.emplace(MESH::ALLOW, TechSharkLib::LoadStaticMesh(L"Data/Models/Arrow_button/Arrow_button.obj", true));
     meshes.emplace(MESH::LEAN,  TechSharkLib::LoadStaticMesh(L"Data/Models/Stick_2/Stick_2.obj", true));
+
+    meshes.emplace(MESH::ROCK_1P, TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_guu_A/Hand_guu_A.obj", true));
+    meshes.emplace(MESH::SCISSORS_1P, TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_choki_A/Hand_choki_A.obj", true));
+    meshes.emplace(MESH::PAPER_1P, TechSharkLib::LoadStaticMesh(L"./Data/Models/Hand_paa_A/Hand_paa_A.obj", true));
 }
 void OperateGuide::ReleaseMeshes()
 {

@@ -43,7 +43,7 @@ namespace config
         };
 
         constexpr float ROTATE_Z_PER_SEC_WIN01  = DirectX::XMConvertToRadians(0.0f); // (リザルト画面用パラメーター)
-        constexpr float ROTATE_Z_PER_SEC_LOSE01 = DirectX::XMConvertToRadians(250.0f); // (リザルト画面用パラメーター)
+        constexpr float ROTATE_Z_PER_SEC_LOSE01 = DirectX::XMConvertToRadians(160.0f); // (リザルト画面用パラメーター)
     }
 
     namespace button
@@ -213,7 +213,7 @@ namespace config
     namespace guide
     {
         enum class DIRECTION : int { LEFT = 0, RIGHT, UP, DOWN, NONE, NUM, WAY4 = 4 };
-        enum class MESH : int { STICK, ALLOW, LEAN };
+        enum class MESH : int { STICK, ALLOW, LEAN, ROCK_1P, SCISSORS_1P, PAPER_1P };
         enum class STATE : int {
             RSP,    // Rock Scissors Paper
             PH,     // Push Hands

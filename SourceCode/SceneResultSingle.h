@@ -4,7 +4,6 @@
 #include "../TechSharkLib/Inc/Scene.h"
 #include "Config.h"
 #include "../TechSharkLib/Inc/SpriteID.h"
-#include "ClickField.h"
 
 //========================================================================================
 // 
@@ -18,12 +17,8 @@ private:
     RESULT result;
 
     TechSharkLib::SpriteID  backResult;
-    TechSharkLib::SpriteID  backToTitle;
-    TechSharkLib::SpriteID  retry;
     float                   rotationZ;
     float                   rotateZPerSec;
-    ClickField              toTitle;
-    ClickField              toGame;
 
     void Init() override;
     void Setup() override;
@@ -34,9 +29,8 @@ private:
 public:
     SceneResultSingle(RESULT result) : 
         result{result},
-        backResult{}, backToTitle{}, retry{},
+        backResult{},
         rotationZ{0.0f}, rotateZPerSec{},
-        toTitle{}, toGame{},
         TechSharkLib::Scene{}
     {
     }

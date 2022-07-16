@@ -3,7 +3,6 @@
 //------< include >-----------------------------------------------------------------------
 #include "../TechSharkLib/Inc/Scene.h"
 #include "../TechSharkLib/Inc/SpriteID.h"
-#include "ClickField.h"
 
 //========================================================================================
 // 
@@ -14,11 +13,7 @@ class SceneTitle : public TechSharkLib::Scene
 {
 private:
     TechSharkLib::SpriteID background;
-    TechSharkLib::SpriteID start;
-    TechSharkLib::SpriteID exit;
-    ClickField toGame;
-    ClickField toExit;
-    float       elapsedSec;
+    TechSharkLib::SpriteID specialThanks;
 
     void Init() override;
     void Setup() override;
@@ -27,7 +22,7 @@ private:
     void Deinit() override;
 
 public:
-    SceneTitle() : background{}, start{}, exit{}, toGame{}, toExit{}, elapsedSec{}, TechSharkLib::Scene{} {}
+    SceneTitle() : background{}, specialThanks{}, TechSharkLib::Scene{} {}
     ~SceneTitle() override {}
 
 };

@@ -116,7 +116,10 @@ public:
     {
         camera->LookAt(camera->Eye(), focus, camera->Up());
     }
-    void ResetCameraFocus() { camera->SetFocus(firstCameraFocus); }
+    void ResetCameraFocus()
+    {
+        camera->LookAt(camera->Eye(), firstCameraFocus, camera->Up());
+    }
     void SetEntrant02HeadRotation(const TechSharkLib::Float3& rotation) { headRotation = rotation; }
     void ResetEntrant02HeadRotation() { headRotation = firstHeadRotation; }
     void SetEntrant01Ref(Entrant* entrant01) { entrants.at(static_cast<size_t>(ENTRANT::_01)) = entrant01; }

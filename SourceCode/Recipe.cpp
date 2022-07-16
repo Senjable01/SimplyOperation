@@ -142,7 +142,7 @@ namespace recipe
         TechSharkLib::GameObjectID obj = objManager->CreateObject();
 
         TechSharkLib::Transform3DDesc transformDesc = {};
-        transformDesc.position  = {-3.5f, -0.0f, 0.0f};
+        transformDesc.position  = {-3.5f, -0.5f, 0.0f};
         transformDesc.scale     = stick::SCALE;
         transformDesc.rotation  = stick::ROTATE_NORMAL;
         objManager->AttachComponent<Transform3D>(obj, transformDesc);

@@ -77,6 +77,9 @@ private:
     void PHRendering();
     void DBRendering();
     void AllowButtonRendering(DIRECTION direction, bool isActive);
+    void RockRendering();
+    void ScissorsRendering();
+    void PaperRendering();
 
     static std::map<MESH, TechSharkLib::StaticMeshID>   meshes;
 

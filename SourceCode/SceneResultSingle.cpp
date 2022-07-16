@@ -1,13 +1,12 @@
 //------< include >-----------------------------------------------------------------------
 #include "SceneResultSingle.h"
 #include "../TechSharkLib/Inc/KeyAssign.h"
-#include "SceneGameSingle.h"
 #include "../TechSharkLib/Inc/TechSharkLib.h"
 #include "SceneTitle.h"
-//#include "SceneSelect.h"
 #include "../TechSharkLib/Inc/Configulation.h"
 #if USE_IMGUI
 #include "../TechSharkLib/Inc/ImGuiCtrl.h"
+#include <map>
 #include <string>
 
 #endif // USE_IMGUI
@@ -20,7 +19,18 @@ using TechSharkLib::BIT_NO;
 namespace
 {
     TechSharkLib::KeyAssignList keyAssignList = {
-        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::MouseLeft}
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Enter},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Space},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::W},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::A},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::S},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::D},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Up},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Left},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Right},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::Down},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::MouseLeft},
+        {BIT_NO::BIT_00, TechSharkLib::KeyCodes::MouseRight},
     };
     #if USE_IMGUI
     std::map<config::rule::RESULT, std::string> resultNameMap = {
@@ -53,8 +63,6 @@ void SceneResultSingle::Init()
         L"./Data/Images/YOU_WIN.png" : 
         L"./Data/Images/YOU_LOSE.png"
     );
-    backToTitle = TechSharkLib::LoadSprite(L"Data/Images/back_to_title.png");
-    retry       = TechSharkLib::LoadSprite(L"Data/Images/retry.png");
 }
 
 void SceneResultSingle::Setup()
@@ -67,8 +75,6 @@ void SceneResultSingle::Setup()
     rotateZPerSec = (result == RESULT::WIN_1P) ?
         config::background::ROTATE_Z_PER_SEC_WIN01 :
         config::background::ROTATE_Z_PER_SEC_LOSE01;
-    toTitle.Setup(button::BACK_POS.x, button::BACK_POS.y, button::SIZE.x, button::SIZE.x, 1.0f, 0.0f, 0.0f, 0.5f);
-    toGame.Setup(button::RETRY_POS.x, button::RETRY_POS.y, button::SIZE.x, button::SIZE.x, 1.0f, 0.0f, 0.0f, 0.5f);
 
     TechSharkLib::Play(
         sound::XWB_SOUND,
@@ -82,14 +88,9 @@ void SceneResultSingle::Setup()
 
 void SceneResultSingle::Update(float deltaTime)
 {
-    if (toTitle.IsClicked(1 << BIT_NO::BIT_00))
+    if (TechSharkLib::keyTrigger(0) & BIT_NO::BIT_00)
     {
         Scene::ChangeScene<SceneTitle>();
-        return;
-    }
-    if (toGame.IsClicked(1 << BIT_NO::BIT_00))
-    {
-        Scene::ChangeScene<SceneGameSingle>();
         return;
     }
 
@@ -129,31 +130,10 @@ void SceneResultSingle::Render()
         rotationZ,
         back::COLOR.x, back::COLOR.y, back::COLOR.z, back::COLOR.w
     );
-    TechSharkLib::Render(
-        backToTitle,
-        button::START_POS.x, button::START_POS.y,
-        button::SCALE.x, button::SCALE.y,
-        0.0f, 0.0f,
-        0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
-    );
-    TechSharkLib::Render(
-        retry,
-        button::EXIT_POS.x, button::EXIT_POS.y,
-        button::SCALE.x, button::SCALE.y,
-        0.0f, 0.0f,
-        0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
-    );
-
-    toTitle.Render();
-    toGame.Render();
 
 }
 
 void SceneResultSingle::Deinit()
 {
     TechSharkLib::Release(backResult);
-    TechSharkLib::Release(backToTitle);
-    TechSharkLib::Release(retry);
 }
